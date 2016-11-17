@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ifhhA7.Controllers
+namespace IHffA7.Controllers
 {
     public class HomeController : Controller
     {
@@ -24,31 +24,6 @@ namespace ifhhA7.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-
-        public ActionResult Films()
-        {
-            return View();
-        }
-
-        public ActionResult Restaurants()
-        {
-            return View();
-        }
-
-        public ActionResult IHff()
-        {
-            return View();
-        }
-
-        public ActionResult OrderTicket()
-        {
-            return View();
-        }
-
-        public ActionResult ViewSchedule()
-        {
             return View();
         }
     }
