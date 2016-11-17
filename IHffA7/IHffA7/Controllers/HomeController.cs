@@ -26,5 +26,20 @@ namespace IHffA7.Controllers
 
             return View();
         }
+
+
+        public ActionResult OrderTicket(int eventId)
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult ViewSchedule()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }
