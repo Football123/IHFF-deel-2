@@ -181,10 +181,12 @@
     <Compile Include="Models\dbModels\Filmvoorstelling.cs" />
     <Compile Include="Models\dbModels\Locatie.cs" />
     <Compile Include="Models\dbModels\Reservering.cs" />
+    <Compile Include="Models\dbModels\Restaurant.cs" />
     <Compile Include="Models\dbModels\Special.cs" />
     <Compile Include="Models\dbModels\Wishlist.cs" />
+    <Compile Include="Models\dbModels\WishlistItem.cs" />
     <Compile Include="Models\Dinner.cs" />
-    <Compile Include="Models\Film.cs" />
+    <Compile Include="Models\Filmview.cs" />
     <Compile Include="Models\IhffA7Context.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
@@ -253,11 +255,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Film\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Dinner\" />
-    <Folder Include="Views\Film\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

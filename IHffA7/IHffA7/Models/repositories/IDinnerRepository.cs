@@ -10,7 +10,7 @@ namespace IHffA7.Models.repositories
     {
         IEnumerable<Dinner> GetRestaurants();
         IEnumerable<Dinner> GetRestaurants(string dag);
-        Film GetRestaurant(Dinner dinner);
+        Filmview GetRestaurant(Dinner dinner);
         void AddRestaurant(Dinner dinner);
         void RemoveRestaurant(Dinner dinner);
     }
