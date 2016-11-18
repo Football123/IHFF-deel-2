@@ -178,6 +178,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dinner.cs" />
     <Compile Include="Models\Film.cs" />
+    <Compile Include="Models\IhffA7Context.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
     <Compile Include="Models\IdentityModels.cs" />
