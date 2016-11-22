@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IHffA7.Models.dbModels;
 
 namespace IHffA7.Models
 {
     class Repository : IRepository
     {
-        public void GetHTLMContentEN(string pagina)
-        {
-            throw new NotImplementedException();
-        }
+        IhffA7Context ctx = new IhffA7Context();
 
-        public void GetHTLMContentNL(string pagina)
+        IEnumerable<Testtabel> IRepository.GetallConten()
         {
-            throw new NotImplementedException();
+            return ctx.Teststabels.ToList();
+        }
+        public void Addrij(Testtabel rij)
+        {
+            ctx.Teststabels.Add(rij);
+            ctx.SaveChanges();
         }
     }
 }

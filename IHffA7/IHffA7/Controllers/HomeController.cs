@@ -3,14 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using IHffA7.Models.dbModels;
+using IHffA7.Models;
 
 namespace IHffA7.Controllers
 {
     public class HomeController : Controller
     {
+        private IRepository repository = new Repository();
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<Testtabel> i= repository.GetallConten();
+
+            Testtabel z = new Testtabel( "jan");
+            repository.Addrij(z);
+
+            return View(i);
         }
 
         public ActionResult About()

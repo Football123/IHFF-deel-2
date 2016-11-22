@@ -16,8 +16,7 @@ namespace IHffA7.Controllers
         // GET: Film
         public ActionResult Index()
         {
-            Activiteit test = filmrepository.GetLocatie();
-            return View(test);
+            return View();
         }
 
         public ActionResult AddToWishlist(int eventId, int typeId, int aantPersonen)

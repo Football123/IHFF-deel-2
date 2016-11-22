@@ -23,12 +23,6 @@ namespace IHffA7.Models
             throw new NotImplementedException();
         }
 
-        public Activiteit GetLocatie()
-        {
-            //return ctx.Locatie.SingleOrDefault();
-            return ctx.Activiteit.SingleOrDefault(d => (d.Id == 1));
-        }
-
         public IEnumerable<Filmview> GetFilms()
         {
             throw new NotImplementedException();

@@ -183,6 +183,7 @@
     <Compile Include="Models\dbModels\Reservering.cs" />
     <Compile Include="Models\dbModels\Restaurant.cs" />
     <Compile Include="Models\dbModels\Special.cs" />
+    <Compile Include="Models\dbModels\Testtabel.cs" />
     <Compile Include="Models\dbModels\Wishlist.cs" />
     <Compile Include="Models\dbModels\WishlistItem.cs" />
     <Compile Include="Models\Dinner.cs" />

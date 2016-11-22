@@ -11,7 +11,6 @@ namespace IHffA7.Models
     {
         IEnumerable<Filmview> GetFilms();
         IEnumerable<Filmview> GetFilms(string dag);
-        Activiteit GetLocatie();
         Filmview GetFilm(Filmview film);
         void AddFilm(Filmview film);
         void RemoveFilm(Filmview film);

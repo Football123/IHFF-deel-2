@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<IHffA7.Models.dbModels.Testtabel>
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -12,6 +13,18 @@
     <div class="col-md-4">
         <h2>Getting started</h2>
         <p>
+            
+            @{
+                ViewBag.Title = "Index";
+            }
+            @foreach (var c in Model)
+            {
+                @c.Id.ToString();
+                @c.Naam.ToString();
+            }
+            <h2>Index</h2>
+
+
             ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
             enables a clean separation of concerns and gives you full control over markup
             for enjoyable, agile development.
