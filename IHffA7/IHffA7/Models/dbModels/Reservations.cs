@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 
 namespace IHffA7.Models.dbModels
 {
-    public class Reservering
+    public class Reservations
     {
         public int Id { get; set; }
         public int WishlistId { get; set; }
-        public string Naam { get; set; }
+        public string Name { get; set; }
         public string Email { get; set; }
-        public string Betaalmethode { get; set; }
+        public string PaymentMethod { get; set; }
 
-        public Reservering(int id, int wishlistId, string naam, string email, string betaalmethode)
+        public Reservations(int id, int wishlistId, string name, string email, string paymentMethod)
         {
             this.Id = id;
             this.WishlistId = wishlistId;
-            this.Naam = naam;
+            this.Name = name;
             this.Email = email;
-            this.Betaalmethode = betaalmethode;
+            this.PaymentMethod = paymentMethod;
         }
     }
 

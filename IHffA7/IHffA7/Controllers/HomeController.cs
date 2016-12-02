@@ -5,27 +5,31 @@ using System.Web;
 using System.Web.Mvc;
 using IHffA7.Models.dbModels;
 using IHffA7.Models;
+using IHffA7.Models.repositories;
 
 namespace IHffA7.Controllers
 {
     public class HomeController : Controller
     {
-        private IRepository repository = new Repository();
+        WishlistRepository wishListRepository = new WishlistRepository();
         public ActionResult Index()
         {
-            IEnumerable<Testtabel> i= repository.GetallConten();
+            IEnumerable<Locations> test2 = wishListRepository.GetLocations();
 
-            Testtabel z = new Testtabel( "jan");
-            repository.Addrij(z);
+            IEnumerable<WishlistItems> test = wishListRepository.GetWishlistItems(1);
+            Activities activiteit = wishListRepository.GetActiviteit(1);
 
-            return View(i);
+            FilmScreenings filmvoorstelling = wishListRepository.GetFilmvoorstelling(1);
+            Films film = wishListRepository.GetFilm(1);
+            return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
+            
 
-            return View();
+            return View(wishListRepository.GetFilm(1));
         }
 
         public ActionResult Contact()

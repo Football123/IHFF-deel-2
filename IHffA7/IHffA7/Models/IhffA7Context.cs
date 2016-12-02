@@ -10,20 +10,20 @@ namespace IHffA7.Models
 {
     public class IhffA7Context : DbContext
     {
-        public IhffA7Context() : base("IHffA7_iHFF1617S_A7")
+        public IhffA7Context() : base("iHFF1617S_A7")
         {
-            Database.SetInitializer<IhffA7Context>(null);
+           // Database.SetInitializer<IhffA7Context>(null);
         }
-        /*public DbSet<Activiteit> Activiteit { get; set; }
-        public DbSet<Film> Film { get; set; }
-        public DbSet<Filmvoorstelling> Filmvoorstelling { get; set; }
-        public DbSet<Reservering> Reservering { get; set; }
-        public DbSet<Locatie> Locatie { get; set; }
-        public DbSet<Restaurant> Restaurant { get; set; }
-        public DbSet<Special> Special { get; set; }
-        public DbSet<Wishlist> Wishlist { get; set; }
-        public DbSet<WishlistItem> WishlistItem { get; set; }*/
-
+        public DbSet<Activities> Activity { get; set; }
+        public DbSet<Films> Film { get; set; }
+        public DbSet<FilmScreenings> FilmScreening { get; set; }
+        public DbSet<Reservations> Reservation { get; set; }
+        public DbSet<Locations> Location { get; set; }
+        public DbSet<Restaurants> Restaurant { get; set; }
+        public DbSet<Specials> Special { get; set; }
+        public DbSet<Wishlists> Wishlist { get; set; }
+        public DbSet<WishlistItems> WishlistItem { get; set; }
+        //for test purpose only!
         public DbSet<Testtabel> Teststabels { get; set; }
 
 

@@ -11,7 +11,6 @@ namespace IHffA7.Controllers
 {
     public class FilmController : Controller
     {
-        private IFilmRepository filmrepository = new FilmRepository();
 
         // GET: Film
         public ActionResult Index()

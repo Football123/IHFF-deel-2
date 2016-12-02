@@ -172,31 +172,26 @@
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\dbModels\Activiteit.cs" />
-    <Compile Include="Models\dbModels\Film.cs" />
-    <Compile Include="Models\dbModels\Filmvoorstelling.cs" />
-    <Compile Include="Models\dbModels\Locatie.cs" />
-    <Compile Include="Models\dbModels\Reservering.cs" />
-    <Compile Include="Models\dbModels\Restaurant.cs" />
-    <Compile Include="Models\dbModels\Special.cs" />
+    <Compile Include="Models\dbModels\Activities.cs" />
+    <Compile Include="Models\dbModels\Films.cs" />
+    <Compile Include="Models\dbModels\FilmScreenings.cs" />
+    <Compile Include="Models\dbModels\Locations.cs" />
+    <Compile Include="Models\dbModels\Reservations.cs" />
+    <Compile Include="Models\dbModels\Restaurants.cs" />
+    <Compile Include="Models\dbModels\Specials.cs" />
     <Compile Include="Models\dbModels\Testtabel.cs" />
-    <Compile Include="Models\dbModels\Wishlist.cs" />
-    <Compile Include="Models\dbModels\WishlistItem.cs" />
-    <Compile Include="Models\Dinner.cs" />
-    <Compile Include="Models\Filmview.cs" />
+    <Compile Include="Models\dbModels\Wishlists.cs" />
+    <Compile Include="Models\dbModels\WishlistItems.cs" />
     <Compile Include="Models\IhffA7Context.cs" />
-    <Compile Include="Models\repositories\DinnerRepository.cs" />
-    <Compile Include="Models\repositories\FilmRepository.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\repositories\IDinnerRepository.cs" />
-    <Compile Include="Models\repositories\IFilmRepository.cs" />
-    <Compile Include="Models\repositories\IRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\repositories\Repository.cs" />
+    <Compile Include="Models\repositories\WishlistRepository.cs" />
+    <Compile Include="Models\WishlistItemFilm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -257,6 +252,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Film\Index.cshtml" />
+    <Content Include="Views\WishList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
