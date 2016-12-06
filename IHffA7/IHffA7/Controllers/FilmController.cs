@@ -15,6 +15,7 @@ namespace IHffA7.Controllers
         // GET: Film
         public ActionResult Index()
         {
+            //Hier komen alle films
             return View();
         }
 

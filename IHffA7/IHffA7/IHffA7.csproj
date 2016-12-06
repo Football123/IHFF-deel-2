@@ -180,7 +180,7 @@
     <Compile Include="Models\dbModels\Activities.cs" />
     <Compile Include="Models\dbModels\Films.cs" />
     <Compile Include="Models\dbModels\FilmScreenings.cs" />
-    <Compile Include="Models\dbModels\Locations.cs" />
+    <Compile Include="Models\Locations.cs" />
     <Compile Include="Models\dbModels\Reservations.cs" />
     <Compile Include="Models\dbModels\Restaurants.cs" />
     <Compile Include="Models\dbModels\Specials.cs" />
