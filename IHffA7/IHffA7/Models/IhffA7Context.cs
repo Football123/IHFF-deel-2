@@ -20,7 +20,7 @@ namespace IHffA7.Models
         public DbSet<Reservations> Reservation { get; set; }
         public DbSet<Locations> Location { get; set; }
         public DbSet<Restaurants> Restaurant { get; set; }
-        public DbSet<Specials> Special { get; set; }
+        //public DbSet<Specials> Special { get; set; }
         public DbSet<Wishlists> Wishlist { get; set; }
         public DbSet<WishlistItems> WishlistItem { get; set; }
         //for test purpose only!

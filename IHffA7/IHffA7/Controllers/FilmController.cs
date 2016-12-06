@@ -11,14 +11,22 @@ namespace IHffA7.Controllers
 {
     public class FilmController : Controller
     {
-
+        private IhffA7Context db = new IhffA7Context();
         // GET: Film
         public ActionResult Index()
         {
             //Hier komen alle films
+            var films = (from film in db.Film select film);
+            ViewBag.Film = films.ToList();
             return View();
         }
 
+        public ActionResult Detail(int id)
+        {
+            var detail = (from film in db.Film select film);
+            ViewBag.Details = detail.ToList();
+            return View();
+        }
         public ActionResult AddToWishlist(int eventId, int typeId, int aantPersonen)
         {
             return View();

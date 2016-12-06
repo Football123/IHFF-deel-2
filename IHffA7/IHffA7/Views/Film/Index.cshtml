@@ -3,5 +3,13 @@
     ViewBag.Title = "Index";
 }
 
+<h2>Filmoverzicht</h2>
 
+@foreach (var film in ViewBag.Film)
+{
+    @film.Title
+    @film.Id
+
+@Html.ActionLink("Meer info", "Detail", "Film", new { id = film.Id}, null)
+}
 
