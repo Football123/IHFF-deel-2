@@ -1,4 +1,4 @@
-﻿@model IHffA7.Models.WishlistItemFilm
+﻿@model IList<IHffA7.Models.WishlistItemFilm>
 @{
     ViewBag.Title = "Index";
 }
@@ -6,9 +6,9 @@
 <h2>FILMS</h2>
 <table>
     <tr>
-        <th>Film</th><th>aantal kaarten</th><th>Prijs per kaart</th>
+        <th>Film</th><th>aantal kaarten</th><th>Prijs per kaart</th><th>Prijs Totaal</th>
     </tr>
-    @foreach (var c in Model.WishlistItemsFilmList)
+    @foreach (var c in Model)
     {
         <tr>
             <td>
@@ -18,6 +18,7 @@
                 <br />
                 @c.Activiteit.EndTime
                 <br />
+                @c.Location.Name
 
             </td>
             <td>
@@ -25,6 +26,9 @@
             </td>
             <td>
                 @c.Activiteit.Price
+            </td>
+            <td>
+                @c.TotalPrice
             </td>
            </tr>
     }

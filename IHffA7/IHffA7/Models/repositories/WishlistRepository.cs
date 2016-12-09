@@ -12,10 +12,9 @@ namespace IHffA7.Models.repositories
         IhffA7Context ctx = new IhffA7Context();
         public IEnumerable<WishlistItems>GetWishlistItems(int wishlistId)
         {
-            //return ctx.WishlistItem.Where(c => (c.WishlistId == wishlistId)).ToList();
-            return ctx.WishlistItem.ToList();
+            return ctx.WishlistItem.Where(c => (c.WishlistId == wishlistId)).ToList();
+            //return ctx.WishlistItem.ToList();
         }
-
         public IEnumerable<Locations> GetLocations()
         {
             return ctx.Location.ToList();
@@ -37,5 +36,23 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Film.SingleOrDefault(c => (c.Id == filmId));
         }
+
+        public IList<WishlistItemFilm> GetAllWishlistFilms(int wishlistId)
+        {
+            IEnumerable<WishlistItems> films = GetWishlistItems(wishlistId);
+            IList<WishlistItemFilm> WishlistItemsFilmList = new List<WishlistItemFilm>();
+            foreach (WishlistItems i in films)
+            {
+                
+                Activities activiteit = GetActiviteit(i.WishlistId);
+                FilmScreenings voorstelling = GetFilmvoorstelling(activiteit.Id);
+                Films film = GetFilm(voorstelling.FilmId);
+                Locations location = GetLocation(activiteit.LocationId);
+                decimal totalPriceFilm = i.NumberOfPersons * activiteit.Price;
+                WishlistItemsFilmList.Add(new WishlistItemFilm(i, activiteit, voorstelling, film, location, totalPriceFilm));
+            }
+            return (WishlistItemsFilmList);
+        }
+
     }
 }
