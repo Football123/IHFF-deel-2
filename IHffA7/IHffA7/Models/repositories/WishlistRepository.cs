@@ -20,6 +20,10 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Location.ToList();
         }
+        public Locations GetLocation(int id)
+        {
+            return ctx.Location.SingleOrDefault(c => (c.Id == id));
+        }
         public Activities GetActiviteit(int wishlistItem)
         {
             return ctx.Activity.SingleOrDefault(c => (c.Id == wishlistItem));

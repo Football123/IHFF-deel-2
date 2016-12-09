@@ -3,16 +3,29 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>FILMS</h2>
+<table>
+    <tr>
+        <th>Film</th><th>aantal kaarten</th><th>Prijs per kaart</th>
+    </tr>
+    @foreach (var c in Model.WishlistItemsFilmList)
+    {
+        <tr>
+            <td>
+                @c.Film.Title
+                <br />
+                @c.Activiteit.StartTime
+                <br />
+                @c.Activiteit.EndTime
+                <br />
 
-@{
-    ViewBag.Title = "Index";
-}
-@foreach(var c in Model.WishlistItemsFilmList)
-{
-    c.Film.Title.ToString();
-    c.Filmvoorstelling.MaxAvailableSeats.ToString();
-    c.WishlistItem.NumberOfPersons.ToString();
-}
-    <br />
-}
+            </td>
+            <td>
+                @c.WishlistItem.NumberOfPersons
+            </td>
+            <td>
+                @c.Activiteit.Price
+            </td>
+           </tr>
+    }
+</table>
