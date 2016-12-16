@@ -13,6 +13,7 @@ namespace IHffA7.Models.repositories
         public Films GetFilm(int filmId)
         {
             return ctx.Film.SingleOrDefault(c => (c.Id == filmId));
+            ///hoid
         }
     }
 }

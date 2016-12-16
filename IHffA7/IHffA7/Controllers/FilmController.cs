@@ -11,7 +11,7 @@ using IHffA7.Models.repositories;
 namespace IHffA7.Controllers
 {
     public class FilmController : Controller
-    {
+    {//hoi
         private FilmRepository filmRepository= new FilmRepository();
         private IhffA7Context db = new IhffA7Context();
         // GET: Film
