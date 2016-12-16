@@ -13,14 +13,16 @@ namespace IHffA7.Models.dbModels
         public DateTime EndTime { get; set; }
         public decimal Price { get; set; }
         public int LocationId { get; set; }
+        public bool Highlight { get; set; }
 
-        public Activities(int id, DateTime startTime, DateTime endTime, decimal price, int locationId)
+        public Activities(int id, DateTime startTime, DateTime endTime, decimal price, int locationId, bool highlight)
         {
             this.Id = id;
             this.StartTime = startTime;
             this.EndTime = endTime;
             this.Price = price;
             this.LocationId = locationId;
+            this.Highlight = highlight;
         }
         public Activities()
         {

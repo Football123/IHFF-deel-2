@@ -27,7 +27,7 @@ namespace IHffA7.Controllers
         {
             /*var detail = (from film in db.Film select film);
             ViewBag.Details = detail.ToList();*/
-            Films film = filmRepository.GetFilm(1);
+            Films film = filmRepository.GetFilm(filmId);
             return View(film);
         }
         public ActionResult AddToWishlist(int eventId, int typeId, int aantPersonen)
