@@ -17,7 +17,7 @@ namespace IHffA7.Controllers
         // GET: Film
         public ActionResult Index()
         {
-            //Hier komen alle filmsb
+            //Hier komen alle films
             var films = (from film in db.Film select film);
             ViewBag.Film = films.ToList();
             return View();
