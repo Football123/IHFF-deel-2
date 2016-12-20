@@ -21,7 +21,7 @@ namespace IHffA7.Models.repositories
             return ctx.WishlistItem.SingleOrDefault(c => (c.WishlistId == wishlistItemId));
         }
 
-        // niet meer ingebruiktt
+        // niet meer ingebruikt
         public IEnumerable<Locations> GetLocations()
         {
             return ctx.Location.ToList();
