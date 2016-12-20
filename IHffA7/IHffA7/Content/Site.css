@@ -22,3 +22,51 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#footer {
+    background-color: #333;
+    position: absolute;
+    min-height: 150px;
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+/**********************DINNER/RESTAURANTS**********************/
+.restaurantFullBlock
+{
+    width: 100%;
+    min-height: 200px;
+    #border: red 1px solid;
+}
+
+.restaurantLeftBlock
+{
+    float: left;
+    width: 49%;
+    min-height: 200px;
+    #border: blue 1px solid;
+    position: relative;
+}
+
+.restaurantRightBlock
+{
+    #background-image: url("~/Content/Images/restaurants/u1614.jpg");
+    #background-color: red;
+    float: right;
+    width: 49%;
+    #border: green 1px solid;
+    min-height: 200px;
+    position: relative;
+}
+
+.restaurantMiddleBlock
+{
+    background-color: white;
+    min-height: 50%;
+    margin: 15% 12.5%;
+    #border: black 1px solid;
+    position: relative;
+}

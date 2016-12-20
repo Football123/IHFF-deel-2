@@ -12,13 +12,16 @@ namespace IHffA7.Models.dbModels
         public string ActivityId { get; set; }
         public string DescriptionNL { get; set; }
         public string DescriptionEN { get; set; }
-        public string LunchStart { get; set; }
-        public string LunchEnd { get; set; }
-        public string DinnerStart { get; set; }
-        public string DinnerEnd { get; set; }
+        public DateTime LunchStart { get; set; }
+        public DateTime LunchEnd { get; set; }
+        public DateTime DinnerStart { get; set; }
+        public DateTime DinnerEnd { get; set; }
+        public int MaxAvailableSeats { get; set; }
+        public string RestaurantLogo { get; set; }
         //
         public Restaurants(int id, string activityId, string descriptionNL, string descriptionEN,
-            string lunchStart, string lunchEnd, string dinnerStart, string dinnerEnd)
+            DateTime lunchStart, DateTime lunchEnd, DateTime dinnerStart, DateTime dinnerEnd,
+            string restaurantLogo)
         {
             this.Id = id;
             this.ActivityId = activityId;
@@ -28,7 +31,7 @@ namespace IHffA7.Models.dbModels
             this.LunchEnd = lunchEnd;
             this.DinnerStart = dinnerStart;
             this.DinnerEnd = dinnerEnd;
-
+            this.RestaurantLogo = restaurantLogo;
         }
 
         public Restaurants()

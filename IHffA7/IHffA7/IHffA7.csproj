@@ -190,8 +190,11 @@
     <Compile Include="Models\IhffA7Context.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
+    <Compile Include="Models\repositories\IDinnerRepository.cs" />
     <Compile Include="Models\repositories\WishlistRepository.cs" />
+    <Compile Include="Models\RestaurantOverviewModel.cs" />
     <Compile Include="Models\SessionFilm.cs" />
     <Compile Include="Models\SessionRestaurant.cs" />
     <Compile Include="Models\WishlistItemFilm.cs" />
@@ -262,11 +265,11 @@
     <Content Include="Views\WishList\AddFilmToSesWishlist.cshtml" />
     <Content Include="Views\WishList\Test.cshtml" />
     <Content Include="Views\WishList\Index.cshtml" />
+    <Content Include="Views\Dinner\Restaurants.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\Dinner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
