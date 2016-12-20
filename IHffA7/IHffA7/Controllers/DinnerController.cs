@@ -9,7 +9,7 @@ namespace IHffA7.Controllers
     {
         private DinnerRepository dinnerRepository = new DinnerRepository();
 
-        // GET: DinnerPPPPP
+        // GET: Dinner
         public ActionResult Index()
         {
             return View();
