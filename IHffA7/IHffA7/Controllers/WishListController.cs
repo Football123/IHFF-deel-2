@@ -12,20 +12,49 @@ namespace IHffA7.Controllers
     public class WishListController : Controller
     {
         private WishlistRepository wishListRepository = new WishlistRepository();
-        public ActionResult TrueIndex()
-        { 
-            List<SessionFilm> filmlist = new List<SessionFilm>();
-            Session["filmlist"] = filmlist;
-            filmlist = (List<SessionFilm>)Session["filmlist"];
-            return View();
-        }
-
         public ActionResult Index()
-        { //GetWishlistFromDB(int wislistID) zou de echte naam moeten zijn en moet
-            IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(1);
+        {
+            List<SessionFilm> filmlist = new List<SessionFilm>();
+            IList<WishlistItemFilm> wishlistItemsFilmList;
+            if (Session["filmlist"] != null)
+            {
+                filmlist = (List<SessionFilm>)Session["filmlist"];
+                wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(filmlist);
+            }
+            else
+            {
+                wishlistItemsFilmList = null;
+            }
+
+            List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
+            IList<WishlistItemRestaurant> wishlistItemsRestaurantList;
+            if (Session["restaurantlist"] != null)
+            {
+                Session["restaurantlist"] = restaurantlist;
+                wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(restaurantlist);
+            }
+            else
+            {
+                wishlistItemsRestaurantList = null;
+            }
+
+            WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
+            //return View(wishlistItemsFilmList);
+            return View(model);
+        }
+        public ActionResult GoToIndexView(IList<WishlistItemFilm> wishlistItemsFilmList)
+        {
             return View(wishlistItemsFilmList);
         }
-        //alle films staan in de database
+
+        public ActionResult GetSavedWishlist(int wislistId)
+        { //GetWishlistFromDB(int wislistID) zou de echte naam moeten zijn en moet
+            IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(wislistId);
+  //to do de opgeslagen eenheden in de session list opslaan.
+            return RedirectToAction("GoToIndexView", "Wishlist", wishlistItemsFilmList);
+        }
+
+        //alle films staan al in de database
         public ActionResult AddFilmToSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
         {
             SessionFilm film = new SessionFilm(numberOfpersones, activityId, start, end);
@@ -33,6 +62,10 @@ namespace IHffA7.Controllers
             if (Session["filmlist"] == null)
             {
                 Session["filmlist"] = filmlist;
+            }
+            else
+            {
+                filmlist = (List<SessionFilm>)Session["filmlist"];
             }
             filmlist.Add(film);
             filmlist = (List<SessionFilm>)Session["filmlist"];
@@ -47,9 +80,21 @@ namespace IHffA7.Controllers
             {
                 Session["restaurantlist"] = restaurantlist;
             }
+            else
+            {
+                restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
+            }
             restaurantlist.Add(restaurant);
             restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
             return RedirectToAction("Index", "WishList");
+        }
+
+        public ActionResult SaveWishlist()
+        {
+            //save the wish list and get de wishlist id code, maak hier de code van
+            // get saveed wishlist kan dan niet meer, omdat de id er niet uit te halen is...
+            CodeGenerator.CreateCode("2");
+            return View();
         }
 
 

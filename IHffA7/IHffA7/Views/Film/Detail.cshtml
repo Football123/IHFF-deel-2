@@ -8,3 +8,14 @@
 <p>@Model.DescriptionEN</p>
 <p>@Model.Director<br/>
 @Model.Year</p>
+
+@Html.ActionLink("Add to wishlists", "AddFilmToSesWishlist", "WishList", new { numberOfpersones = 1, activityId = 1, start = "1 - 1 - 2016 15:30:00",
+                          end = "1 - 1 - 2016 15:30:00"}, null)
+
+@Html.ActionLink("Add to wishlists", "AddFilmToSesWishlist", "WishList", new
+{
+    numberOfpersones = 2,
+    activityId = 2,
+    start = "1 - 1 - 2016 15:30:00",
+    end = "1 - 1 - 2016 15:30:00"
+}, null)

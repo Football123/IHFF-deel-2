@@ -20,6 +20,8 @@ namespace IHffA7.Models.repositories
         {
             return ctx.WishlistItem.SingleOrDefault(c => (c.WishlistId == wishlistItemId));
         }
+
+        // niet meer ingebruik
         public IEnumerable<Locations> GetLocations()
         {
             return ctx.Location.ToList();
@@ -41,16 +43,48 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Film.SingleOrDefault(c => (c.Id == filmId));
         }
-        /*
-        public WishlistItemFilm GetWishlistItemFilm(int numberOfpersones, int activityId, DateTime start, DateTime end)
-        {
 
-        }*/
+        public IList<WishlistItemFilm> GetAllWishlistFilms(List<SessionFilm> filmFromSession)
+        {
+            IList<WishlistItemFilm> wishlistItemsFilmList = new List<WishlistItemFilm>();
+            foreach (SessionFilm movie in filmFromSession)
+            {
+                //"0" omdat het niet in de database hoeft te bestaan. bestaat alleen als de wishlist al in keer in de db is opgeslagen
+                WishlistItems wishlistItem = new WishlistItems(0, 0, 0, movie.NumberOfpersones);
+                Activities activiteit = ctx.Activity.SingleOrDefault(c => (c.Id == movie.ActivityId));
+                FilmScreenings voorstelling = ctx.FilmScreening.SingleOrDefault(c => (c.ActivityId == activiteit.Id));
+                Films film = ctx.Film.SingleOrDefault(c => (c.Id == voorstelling.FilmId));
+                Locations location = ctx.Location.SingleOrDefault(c => (c.Id == activiteit.LocationId));
+                decimal totalPriceFilm = wishlistItem.NumberOfPersons * activiteit.Price;
+                //WishlistItemFilm wishlistFilm = new WishlistItemFilm(wishlistItem, activiteit, location, totalPriceFilm, voorstelling, film);
+                wishlistItemsFilmList.Add(new WishlistItemFilm(wishlistItem, activiteit, location, totalPriceFilm, voorstelling, film));
+            }
+            return wishlistItemsFilmList;
+        }
+        public IList<WishlistItemRestaurant> GetAllWishlistRestaurants(List<SessionRestaurant> restaurantsFromSession)
+        {
+            IList<WishlistItemRestaurant> wishlistItemsRestaurantlist = new List<WishlistItemRestaurant>();
+            foreach (SessionRestaurant reservation in restaurantsFromSession)
+            {
+                //"0" omdat het niet in de database hoeft te bestaan. bestaat alleen als de wishlist al in keer in de db is opgeslagen en dat weet je heir "nog" niet
+                WishlistItems wishlistItem = new WishlistItems(0, 0, 0, reservation.NumberOfpersones);
+                // er is geen eind tijd, hights is n.v.t. 
+                // TODO PRIJS BINNENKRIJGEN! is nu maar even 111
+                Activities activiteit = new Activities(0, reservation.Start, new DateTime(0), 111, reservation.LocationId, false);
+                Restaurants restaurant = ctx.Restaurant.SingleOrDefault(c => (c.Id == reservation.RestaurantId));
+                Locations location = ctx.Location.SingleOrDefault(c => (c.Id == activiteit.LocationId));
+                decimal totalPriceFilm = wishlistItem.NumberOfPersons * activiteit.Price;
+                wishlistItemsRestaurantlist.Add(new WishlistItemRestaurant(wishlistItem, activiteit, location, totalPriceFilm, restaurant));
+            }
+            return wishlistItemsRestaurantlist;
+        }
+
+
 
         public IList<WishlistItemFilm> GetAllWishlistFilms(int wishlistId)
         {
             IEnumerable<WishlistItems> films = GetWishlistItems(wishlistId);
-            IList<WishlistItemFilm> WishlistItemsFilmList = new List<WishlistItemFilm>();
+            IList<WishlistItemFilm> wishlistItemsFilmList = new List<WishlistItemFilm>();
             foreach (WishlistItems i in films)
             {
                 Activities activiteit = GetActiviteit(i.WishlistId);
@@ -58,10 +92,12 @@ namespace IHffA7.Models.repositories
                 decimal totalPriceFilm = i.NumberOfPersons * activiteit.Price;
                 FilmScreenings voorstelling = GetFilmvoorstelling(activiteit.Id);
                 Films film = GetFilm(voorstelling.FilmId);
-                WishlistItemsFilmList.Add(new WishlistItemFilm(i, activiteit, location,totalPriceFilm, voorstelling, film));
+                wishlistItemsFilmList.Add(new WishlistItemFilm(i, activiteit, location,totalPriceFilm, voorstelling, film));
             }
-            return (WishlistItemsFilmList);
+            return (wishlistItemsFilmList);
         }
+
+
 
         //untested! geen geod idee zie comment hier onder decreciated
         public IList<WishlistItemFilm> GetAllWishlistFilms(IList<int> wishlistItems)
