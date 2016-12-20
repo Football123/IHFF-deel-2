@@ -1,0 +1,37 @@
+﻿@model IList<IHffA7.Models.WishlistItemFilm>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>FILMS</h2>
+<table>
+    <tr>
+        <th>Film</th><th>aantal kaarten</th><th>Prijs per kaart</th><th>Prijs Totaal</th>
+    </tr>
+    @foreach (var c in Model)
+    {
+<tr>
+            <td>
+                @c.Film.Title
+                <br />
+                @c.Activiteit.StartTime
+                <br />
+                @c.Activiteit.EndTime
+                <br />
+                @c.Location.Name
+
+            </td>
+            <td>
+                @c.WishlistItem.NumberOfPersons
+            </td>
+            <td>
+                @c.Activiteit.Price
+            </td>
+            <td>
+                @c.TotalPrice
+            </td>
+           </tr>
+    }
+</table>
+
+add somethiung to the session. @Html.ActionLink("DO IT HERE", "Test", "WishList")
