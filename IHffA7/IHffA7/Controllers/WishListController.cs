@@ -48,7 +48,7 @@ namespace IHffA7.Controllers
         }
 
         public ActionResult GetSavedWishlist(int wislistId)
-        { //GetWishlistFromDB(int wislistID) zou de echte naam moeten zijn en moet
+        { //GetWishlistFromDB(int wislistID) zou de echte naam moeten zijn en moettttt 
             IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(wislistId);
   //to do de opgeslagen eenheden in de session list opslaan.
             return RedirectToAction("GoToIndexView", "Wishlist", wishlistItemsFilmList);
