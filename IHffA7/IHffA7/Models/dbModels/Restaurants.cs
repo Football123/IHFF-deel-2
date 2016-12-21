@@ -9,7 +9,7 @@ namespace IHffA7.Models.dbModels
     public class Restaurants
     {
         public int Id { get; set; }
-        public string ActivityId { get; set; }
+        public int ActivityId { get; set; }
         public string DescriptionNL { get; set; }
         public string DescriptionEN { get; set; }
         public DateTime LunchStart { get; set; }
@@ -19,7 +19,7 @@ namespace IHffA7.Models.dbModels
         public int MaxAvailableSeats { get; set; }
         public string RestaurantLogo { get; set; }
         //
-        public Restaurants(int id, string activityId, string descriptionNL, string descriptionEN,
+        public Restaurants(int id, int activityId, string descriptionNL, string descriptionEN,
             DateTime lunchStart, DateTime lunchEnd, DateTime dinnerStart, DateTime dinnerEnd,
             string restaurantLogo)
         {
