@@ -48,7 +48,10 @@ namespace IHffA7.Controllers
             IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(wislistId);
             IList<WishlistItemRestaurant> wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(wislistId);
             WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
-
+            /*foreach(WishlistItemFilm film in wishlistItemsFilmList)
+            {
+                //AddFilmToSesWishlist()
+            }*/
             //to do de opgeslagen eenheden in de session list opslaan.
             return View("Index", model);
         }
