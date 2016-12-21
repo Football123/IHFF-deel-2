@@ -35,9 +35,15 @@
                 <td>
                     @c.TotalPrice
                 </td>
+                <td>
+                    ▼--------------F-I-L-M--------------▼
+                </td>
             </tr>
         }
     }
+    <tr>
+        <td>------------------------------------</td>
+    </tr>
     @if (Model.Restaurants != null)
     {
         foreach (var d in Model.Restaurants)
@@ -60,7 +66,15 @@
                 <td>
                     @d.TotalPrice
                 </td>
+                <td>
+                    ▲----R-E-S-T-A-U-R-A-N-T---▲
+                </td>
             </tr>
         }
     }
 </table>
+
+@Html.ActionLink("Get you wishlist you stored earlier (well, you get wislistid = 1) ;)", "GetSavedWishlist", "WishList", new
+{
+    wislistId = 1,
+}, null)
