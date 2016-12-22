@@ -36,6 +36,15 @@
                     @c.TotalPrice
                 </td>
                 <td>
+               @Html.ActionLink("Remove", "RemoveFilmFromSesWishlist", "WishList", new
+               {
+                   numberOfpersones = c.WishlistItem.NumberOfPersons,
+                   activityId = c.Activiteit.Id,
+                   start = c.Activiteit.StartTime,
+                   end = c.Activiteit.EndTime
+               }, null);
+                </td>
+                <td>
                     ▼--------------F-I-L-M--------------▼
                 </td>
             </tr>

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using IHffA7.Models.dbModels;
 using IHffA7.Models;
 using IHffA7.Models.repositories;
+using System.Security.Cryptography;
 
 namespace IHffA7.Controllers
 {
@@ -15,17 +16,18 @@ namespace IHffA7.Controllers
         public ActionResult Index()
         {
             List<SessionFilm> filmlist = new List<SessionFilm>();
+//Get filmsFromSession            
             IList<WishlistItemFilm> wishlistItemsFilmList;
-            if (Session["filmlist"] != null) //als bestaat, laad de items
+            if (Session["filmlist"] != null)
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
                 wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(filmlist);
             }
-            else // als niet bestaal maakt null, view model support geen nullables 
+            else // als niet bestaat maakt null, view model support geen nullables 
             {
                 wishlistItemsFilmList = null;
             }
-
+//Get restaurantsFromSession
             List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
             IList<WishlistItemRestaurant> wishlistItemsRestaurantList;
             if (Session["restaurantlist"] != null)
@@ -44,37 +46,88 @@ namespace IHffA7.Controllers
         }
 
         public ActionResult GetSavedWishlist(int wislistId)
-        { //GetWishlistFromDB(int wislistID) zou de goede naam kunnen zijn
+        { //GetWishlistFromDB
             IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(wislistId);
             IList<WishlistItemRestaurant> wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(wislistId);
             WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
-            /*foreach(WishlistItemFilm film in wishlistItemsFilmList)
+            //put this in the session to make this one editable.
+            foreach(WishlistItemFilm film in wishlistItemsFilmList)
             {
-                //AddFilmToSesWishlist()
-            }*/
-            //to do de opgeslagen eenheden in de session list opslaan.
-            return View("Index", model);
+                AddAFilmToSesWishlist(film.WishlistItem.NumberOfPersons, film.Activiteit.Id, film.Activiteit.StartTime, film.Activiteit.EndTime);
+            }
+            foreach(WishlistItemRestaurant restaurant in wishlistItemsRestaurantList)
+            {
+                AddARestaurantSesWishlist(restaurant.WishlistItem.NumberOfPersons, restaurant.Activiteit.StartTime, restaurant.Location.Id, restaurant.Restaurant.Id);
+            }
+            //store the wislistId in the session, so it can be edited and save changes. USE te code generator!
+            if(wishlistItemsFilmList.ElementAtOrDefault(0)!= null)
+            {
+                Session["wishlistcode"] = wishlistItemsFilmList.ElementAt(0).WishlistItem.WishlistId;
+            }
+            if (wishlistItemsRestaurantList.ElementAtOrDefault(0)!=null)
+            {
+                Session["wishlistcode"] = wishlistItemsRestaurantList.ElementAt(0).WishlistItem.WishlistId;
+            }
+            return RedirectToAction("Index");
+            //return View("Index", model);
         }
 
         //alle films staan al in de database
         public ActionResult AddFilmToSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
         {
+            AddAFilmToSesWishlist(numberOfpersones, activityId, start, end);
+            return RedirectToAction("Index", "WishList");
+        }
+
+        public ActionResult RemoveFilmFromSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
+        {
             SessionFilm film = new SessionFilm(numberOfpersones, activityId, start, end);
             List<SessionFilm> filmlist = new List<SessionFilm>();
-            if (Session["filmlist"] == null)
+            if (Session["filmlist"] != null)
+            {
+                filmlist = (List<SessionFilm>)Session["filmlist"];
+                foreach (var i in filmlist)
+                {
+                    if (i == film)
+                    {
+                        filmlist.Remove(i);
+                        filmlist = (List<SessionFilm>)Session["filmlist"];
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("invalidItem", "invalid item");
+            }
+            return RedirectToAction("Index");
+        }
+
+//AddAFilmToSesWishlist
+        public void AddAFilmToSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
+        {
+            SessionFilm film = new SessionFilm(numberOfpersones, activityId, start, end);
+            List<SessionFilm> filmlist = new List<SessionFilm>();
+            if (Session["filmlist"] == null) //als niet bestaat, maak aan
             {
                 Session["filmlist"] = filmlist;
             }
-            else
+            else // anderes ophalen
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
             }
             filmlist.Add(film);
-            filmlist = (List<SessionFilm>)Session["filmlist"];
+            Session["filmlist"] = filmlist; // wijzigingen opslaan
+        }
+        //Is een probleem, omdat een restaurant uniek aan een activiteit is gekoppeld. Specials kent het zelfde probleem. je hebt echt een restautantId nodig, de activity en dus de PK activity id bestaat dus ook niet
+        public ActionResult AddRestaurantSesWishlist(int numberOfpersones, DateTime startTime, int locationId, int restaurantId)
+        {
+            AddARestaurantSesWishlist(numberOfpersones, startTime, locationId, restaurantId);
             return RedirectToAction("Index", "WishList");
         }
 
-        public ActionResult AddRestaurantSesWishlist(int numberOfpersones, DateTime startTime, int locationId, int restaurantId)
+//AddARestaurantSesWishlist
+        public void AddARestaurantSesWishlist(int numberOfpersones, DateTime startTime, int locationId, int restaurantId)
         {
             SessionRestaurant restaurant = new SessionRestaurant(numberOfpersones, startTime, locationId, restaurantId);
             List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
@@ -87,15 +140,14 @@ namespace IHffA7.Controllers
                 restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
             }
             restaurantlist.Add(restaurant);
-            restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
-            return RedirectToAction("Index", "WishList");
+            Session["restaurantlist"] = restaurantlist;
         }
 
         public ActionResult SaveWishlist()
         {
             //save the wish list and get de wishlist id code, maak hier de code van
-            // get saveed wishlist kan dan niet meer, omdat de id er niet uit te halen is...
-            CodeGenerator.CreateCode("2");
+            // get saved wishlist kan dan niet meer, omdat de id er niet uit te halen is...
+            //CodeGenerator.CreateCode("2");
             return View();
         }
 

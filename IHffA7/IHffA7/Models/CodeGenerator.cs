@@ -1,65 +1,104 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.IO;
+using System.Linq;
 
 namespace IHffA7.Models
 {
-    public class CodeGenerator
+    public static class CodeGenerator
     {
-        public static string CreateCode(string WishlistId)
+        // This constant is used to determine the keysize of the encryption algorithm in bits.
+        // We divide this by 8 within the code below to get the equivalent number of bytes.
+        private const int Keysize = 256;
+
+        // This constant determines the number of iterations for the password bytes generation function.
+        private const int DerivationIterations = 1000;
+
+        public static string Encrypt(string plainText, string passPhrase)
         {
-            //aanmaken arrays
-            byte[] salt;
-            byte[] buffer2;
-            //check
-            if (WishlistId == null)
+            // Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
+            // so that the same Salt and IV values can be used when decrypting.  
+            var saltStringBytes = Generate256BitsOfRandomEntropy();
+            var ivStringBytes = Generate256BitsOfRandomEntropy();
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+            using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
             {
-                throw new ArgumentNullException("password");
+                var keyBytes = password.GetBytes(Keysize / 8);
+                using (var symmetricKey = new RijndaelManaged())
+                {
+                    symmetricKey.BlockSize = 256;
+                    symmetricKey.Mode = CipherMode.CBC;
+                    symmetricKey.Padding = PaddingMode.PKCS7;
+                    using (var encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes))
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                            {
+                                cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                                cryptoStream.FlushFinalBlock();
+                                // Create the final bytes as a concatenation of the random salt bytes, the random iv bytes and the cipher bytes.
+                                var cipherTextBytes = saltStringBytes;
+                                cipherTextBytes = cipherTextBytes.Concat(ivStringBytes).ToArray();
+                                cipherTextBytes = cipherTextBytes.Concat(memoryStream.ToArray()).ToArray();
+                                memoryStream.Close();
+                                cryptoStream.Close();
+                                return Convert.ToBase64String(cipherTextBytes);
+                            }
+                        }
+                    }
+                }
             }
-            //Rfc2898DeriveBytes is an implementation of PBKDF2 ( Key Derivation Function)
-            //kdf met salt
-            //wilekeurige lengte passwords
-            // random. dus zelft string waarde maar andere paswords.
-            // meer iteraraties = langer te doen om alle mogelijheden van 1 pasword te maken.
-            // 0x3e8 == 1000 iteraties0x10= 16
-            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(WishlistId, 0x10, 0x3e8))
-            {
-                salt = bytes.Salt;
-                buffer2 = bytes.GetBytes(0x20);
-            }
-            byte[] dst = new byte[0x31];
-            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
-            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
-            return Convert.ToBase64String(dst);
         }
-        public static bool VerifyWishlistCode(string wishlistCode, string wishlistId)
+
+        public static string Decrypt(string cipherText, string passPhrase)
         {
-            byte[] buffer4;
-            if (wishlistCode == null)
+            // Get the complete stream of bytes that represent:
+            // [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
+            var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
+            // Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
+            var saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
+            // Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
+            var ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
+            // Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
+            var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
+
+            using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
             {
-                return false;
+                var keyBytes = password.GetBytes(Keysize / 8);
+                using (var symmetricKey = new RijndaelManaged())
+                {
+                    symmetricKey.BlockSize = 256;
+                    symmetricKey.Mode = CipherMode.CBC;
+                    symmetricKey.Padding = PaddingMode.PKCS7;
+                    using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
+                    {
+                        using (var memoryStream = new MemoryStream(cipherTextBytes))
+                        {
+                            using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                            {
+                                var plainTextBytes = new byte[cipherTextBytes.Length];
+                                var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                                memoryStream.Close();
+                                cryptoStream.Close();
+                                return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                            }
+                        }
+                    }
+                }
             }
-            if (wishlistId == null)
+        }
+
+        private static byte[] Generate256BitsOfRandomEntropy()
+        {
+            var randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
+            using (var rngCsp = new RNGCryptoServiceProvider())
             {
-                throw new ArgumentNullException("password");
+                // Fill the array with cryptographically secure random bytes.
+                rngCsp.GetBytes(randomBytes);
             }
-            byte[] src = Convert.FromBase64String(wishlistCode);
-            if ((src.Length != 0x31) || (src[0] != 0))
-            {
-                return false;
-            }
-            byte[] dst = new byte[0x10];
-            Buffer.BlockCopy(src, 1, dst, 0, 0x10);
-            byte[] buffer3 = new byte[0x20];
-            Buffer.BlockCopy(src, 0x11, buffer3, 0, 0x20);
-            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(wishlistId, dst, 0x3e8))
-            {
-                buffer4 = bytes.GetBytes(0x20);
-            }
-            return buffer3.SequenceEqual(buffer4);
+            return randomBytes;
         }
     }
 }
