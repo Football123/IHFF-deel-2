@@ -88,7 +88,7 @@ namespace IHffA7.Controllers
                 filmlist = (List<SessionFilm>)Session["filmlist"];
                 foreach (var i in filmlist)
                 {
-                    if (i == film)
+                    if (film ==i)
                     {
                         filmlist.Remove(i);
                         filmlist = (List<SessionFilm>)Session["filmlist"];
@@ -123,7 +123,7 @@ namespace IHffA7.Controllers
         public ActionResult AddRestaurantSesWishlist(int numberOfpersones, DateTime startTime, int locationId, int restaurantId)
         {
             AddARestaurantSesWishlist(numberOfpersones, startTime, locationId, restaurantId);
-            return RedirectToAction("Index", "WishList");
+            return RedirectToAction("Index");
         }
 
 //AddARestaurantSesWishlist
