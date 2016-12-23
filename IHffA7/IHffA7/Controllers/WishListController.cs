@@ -12,36 +12,25 @@ namespace IHffA7.Controllers
 {
     public class WishListController : Controller
     {
-        private WishlistRepository wishListRepository = new WishlistRepository();
-        public ActionResult Index()
-        {
-//Get filmsFromSession
-            List<SessionFilm> filmlist = new List<SessionFilm>();            
-            IList<WishlistItemFilm> wishlistItemsFilmList;
-            if (Session["filmlist"] != null)
-            {
-                filmlist = (List<SessionFilm>)Session["filmlist"];
-                wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(filmlist);
-            }
-            else // als niet bestaat maakt null, view model support geen nullables 
-            {
-                wishlistItemsFilmList = null;
-            }
-//Get restaurantsFromSession
-            List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
-            IList<WishlistItemRestaurant> wishlistItemsRestaurantList;
-            if (Session["restaurantlist"] != null)
-            {
-                restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
-                wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(restaurantlist);
-            }
-            else
-            {
-                wishlistItemsRestaurantList = null;
-            }
+        private WishlistRepository wishListRepository;
 
+        public WishListController()
+        {
+            try {
+                wishListRepository = new WishlistRepository();
+            }
+            catch
+            {
+                
+            }
+        }
+
+        public ActionResult Index()
+        {   
+            IList<WishlistItemFilm> wishlistItemsFilmList = GetFilmsFromSession();
+            IList<WishlistItemRestaurant> wishlistItemsRestaurantList = GetRestaurantsFromSession();
             WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
-            //return View(wishlistItemsFilmList); // oude alleen films vie ging deze heen
+            //return View(wishlistItemsFilmList); // oude alleen films view ging deze heen
             return View(model);
         }
 
@@ -78,7 +67,7 @@ namespace IHffA7.Controllers
             AddAFilmToSesWishlist(numberOfpersones, activityId, start, end);
             return RedirectToAction("Index", "WishList");
         }
-
+//methode
         public ActionResult RemoveFilmFromSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
         {
             SessionFilm film = new SessionFilm(numberOfpersones, activityId, start, end);
@@ -86,6 +75,7 @@ namespace IHffA7.Controllers
             if (Session["filmlist"] != null)
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
+                filmlist.ToList();
                 foreach (var i in filmlist)
                 {
                     if (film ==i)
@@ -116,7 +106,8 @@ namespace IHffA7.Controllers
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
             }
-            filmlist.Add(film);
+            // check of hij niet bestaal in de lijst
+
             Session["filmlist"] = filmlist; // wijzigingen opslaan
         }
         //Is een probleem, omdat een restaurant uniek aan een activiteit is gekoppeld. Specials kent het zelfde probleem. je hebt echt een restautantId nodig, de activity en dus de PK activity id bestaat dus ook niet
@@ -143,6 +134,38 @@ namespace IHffA7.Controllers
             Session["restaurantlist"] = restaurantlist;
         }
 
+ //methode
+        public IList<WishlistItemFilm> GetFilmsFromSession()
+        {
+            List<SessionFilm> filmlist = new List<SessionFilm>();
+            IList<WishlistItemFilm> wishlistItemsFilmList;
+            if (Session["filmlist"] != null)
+            {
+                filmlist = (List<SessionFilm>)Session["filmlist"];
+                wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(filmlist);
+            }
+            else // als niet bestaat maakt null, view model support geen nullables 
+            {
+                wishlistItemsFilmList = null;
+            }
+            return wishlistItemsFilmList;
+        }
+//methode
+        public IList<WishlistItemRestaurant> GetRestaurantsFromSession()
+        {
+            List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
+            IList<WishlistItemRestaurant> wishlistItemsRestaurantList;
+            if (Session["restaurantlist"] != null)
+            {
+                restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
+                wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(restaurantlist);
+            }
+            else
+            {
+                wishlistItemsRestaurantList = null;
+            }
+            return wishlistItemsRestaurantList;
+        }
         public ActionResult RemoveRestaurantFromSesWishlist(int numberOfpersones, DateTime startTime, int locationId, int restaurantId)
         {
             {
