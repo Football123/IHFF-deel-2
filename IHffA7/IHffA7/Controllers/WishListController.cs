@@ -16,12 +16,12 @@ namespace IHffA7.Controllers
         {
             List<SessionFilm> filmlist = new List<SessionFilm>();
             IList<WishlistItemFilm> wishlistItemsFilmList;
-            if (Session["filmlist"] != null)
+            if (Session["filmlist"] != null) //als bestaat, laad de items
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
                 wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(filmlist);
             }
-            else
+            else // als niet bestaal maakt null, view model support geen nullables 
             {
                 wishlistItemsFilmList = null;
             }
@@ -39,19 +39,21 @@ namespace IHffA7.Controllers
             }
 
             WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
-            //return View(wishlistItemsFilmList);
+            //return View(wishlistItemsFilmList); // oude alleen films vie ging deze heen
             return View(model);
-        }
-        public ActionResult GoToIndexView(IList<WishlistItemFilm> wishlistItemsFilmList)
-        {
-            return View(wishlistItemsFilmList);
         }
 
         public ActionResult GetSavedWishlist(int wislistId)
-        { //GetWishlistFromDB(int wislistID) zou de echte naam moeten zijn en moet
+        { //GetWishlistFromDB(int wislistID) zou de goede naam kunnen zijn
             IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(wislistId);
-  //to do de opgeslagen eenheden in de session list opslaan.
-            return RedirectToAction("GoToIndexView", "Wishlist", wishlistItemsFilmList);
+            IList<WishlistItemRestaurant> wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(wislistId);
+            WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
+            /*foreach(WishlistItemFilm film in wishlistItemsFilmList)
+            {
+                //AddFilmToSesWishlist()
+            }*/
+            //to do de opgeslagen eenheden in de session list opslaan.
+            return View("Index", model);
         }
 
         //alle films staan al in de database

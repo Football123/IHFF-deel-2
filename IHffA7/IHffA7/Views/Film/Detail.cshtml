@@ -3,19 +3,49 @@
     ViewBag.Title = "Detail";
 }
 
-<h2>@Model.Title</h2>
+<h2>@ViewBag.Title</h2>
 
+<p>@Model.Title</p>
 <p>@Model.DescriptionEN</p>
 <p>@Model.Director<br/>
 @Model.Year</p>
 
-@Html.ActionLink("Add to wishlists", "AddFilmToSesWishlist", "WishList", new { numberOfpersones = 1, activityId = 1, start = "1 - 1 - 2016 15:30:00",
-                          end = "1 - 1 - 2016 15:30:00"}, null)
+<h3>Tijden en Kaarten</h3>
 
-@Html.ActionLink("Add to wishlists", "AddFilmToSesWishlist", "WishList", new
-{
-    numberOfpersones = 2,
-    activityId = 2,
-    start = "1 - 1 - 2016 15:30:00",
-    end = "1 - 1 - 2016 15:30:00"
-}, null)
+<table>
+    <tr>
+        <th>Tijd en datum</th> 
+        <th>Locatie</th>
+        <th>Hoeveelheid kaarten</th>
+        <th>Prijs per kaart: €7,50</th>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>@Html.ActionLink("Add to wishlists", "AddFilmToSesWishlist", "WishList", new
+       {
+           numberOfpersones = 1,
+           activityId = 1,
+           start = "1 - 1 - 2016 15:30:00",
+           end = "1 - 1 - 2016 15:30:00"
+       }, null) @Html.ActionLink("Add to wishlists", "AddFilmToSesWishlist", "WishList", new
+           {
+               numberOfpersones = 2,
+               activityId = 2,
+               start = "1 - 1 - 2016 15:30:00",
+               end = "1 - 1 - 2016 15:30:00"
+           }, null)</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<h4>Combineer Food & Film</h4>
+
+
+
