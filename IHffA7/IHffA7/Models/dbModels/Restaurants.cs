@@ -16,7 +16,6 @@ namespace IHffA7.Models.dbModels
         public DateTime LunchEnd { get; set; }
         public DateTime DinnerStart { get; set; }
         public DateTime DinnerEnd { get; set; }
-        public int MaxAvailableSeats { get; set; }
         public string RestaurantLogo { get; set; }
         //
         public Restaurants(int id, string activityId, string descriptionNL, string descriptionEN,

@@ -1,6 +1,4 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -22,28 +20,89 @@ select,
 textarea {
     max-width: 280px;
 }
-
+/****************************HOME******************************/
 #footer {
     background-color: #333;
-    position: absolute;
     min-height: 150px;
     width: 100%;
     right: 0;
-    bottom: 0;
     left: 0;
     text-align: center;
+    position: absolute;
+    padding-top: 1.5%;
 }
 
+#upperfooter {
+    background-color: #f1f1f1;
+    min-height: 150px;
+    width: 100%;
+    right: 0;
+    left: 0;
+    padding-bottom: 2.5%;
+    padding-top: 1%;
+}
+
+table {
+    width: 90%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+th, td {
+    width: 25%;
+    padding: 5px 0;
+}
+
+#header {
+    min-height: 105px;
+    padding-top: 40px;
+    background-color: #f1f1f1;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+nav ul li {
+    width: 16.66%;
+    float: left;
+    text-align: center;
+    background-color: #fff;
+    color: #333;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: #000 1px solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.homeUpperButton {
+    float: right;
+    width: 128px;
+    height: 39px;
+    background-color: #fff;
+    box-sizing: border-box;
+    border: #333 1px solid;
+    border-radius: 5px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    text-align: center;
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-right: 2%;
+}
 /**********************DINNER/RESTAURANTS**********************/
-.restaurantFullBlock
-{
+.restaurantFullBlock {
     width: 100%;
     min-height: 200px;
     #border: red 1px solid;
 }
 
-.restaurantLeftBlock
-{
+.restaurantLeftBlock {
     float: left;
     width: 49%;
     min-height: 200px;
@@ -51,8 +110,7 @@ textarea {
     position: relative;
 }
 
-.restaurantRightBlock
-{
+.restaurantRightBlock {
     #background-image: url("~/Content/Images/restaurants/u1614.jpg");
     #background-color: red;
     float: right;
@@ -62,8 +120,7 @@ textarea {
     position: relative;
 }
 
-.restaurantMiddleBlock
-{
+.restaurantMiddleBlock {
     background-color: white;
     min-height: 50%;
     margin: 15% 12.5%;

@@ -8,39 +8,61 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("IHFF deel 2", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Restaurant", "Restaurants", "Dinner")</li>
-                    <li>@Html.ActionLink("Film", "Index", "Film")</li>
-                    <li>@Html.ActionLink("Wishlist", "Index", "WishList")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
+    <header id="header">
+        <img src="~/Content/Images/home/logo_u146.png" width="285" height="55"/>
+        <div class="homeUpperButton">My Wishlist</div>
+    </header>
+    <nav id="navMenu">
+        <ul>
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Restaurant", "Restaurants", "Dinner")</li>
+            <li>@Html.ActionLink("Film", "Index", "Film")</li>
+            <li>@Html.ActionLink("Wishlist", "Index", "WishList")</li>
+        </ul>
+    </nav>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer id="footer">
-            <img src="~/Content/Images/home/u52.png" />
-            <p style="color: white">
-                &copy; @DateTime.Now.Year - My ASP.NET Application
-            </p>
-        </footer>
     </div>
+    <hr />
+        <footer>
+            <div id="upperfooter">
+                <h2 style="margin: 2% 0 0 10%;">Locaties</h2>
+                <table>
+                    <tr>
+                        <th>Philharmonie</th>
+                        <th>Toneelstuk</th>
+                        <th>Patronaat</th>
+                        <th>Path&#233;</th>
+                    </tr>
+                    <tr>
+                        <td>(Specials locatie)</td>
+                        <td>(Film locatie)</td>
+                        <td>(Specials locatie)</td>
+                        <td>(Film locatie)</td>
+                    </tr>
+                    <tr>
+                        <td>Lange Begijnestraat 11</td>
+                        <td>Lange Begijnestraat 9</td>
+                        <td>Zijlstraat 2</td>
+                        <td>Zijlvest 41-43</td>
+                    </tr>
+                    <tr>
+                        <td>2011 HH Haarlem</td>
+                        <td>2011 HH Haarlem</td>
+                        <td>2013 DN Haarlem</td>
+                        <td>2011 VB Haarlem</td>
+                    </tr>
+                </table>
+            </div>
+            <div id="footer">
+                <img src="~/Content/Images/home/u52.png" />
+                <p style="color: white; margin-top: 1.5%;">
+                    &copy; @DateTime.Now.Year - My ASP.NET Application
+                </p>
+            </div>
+        </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
