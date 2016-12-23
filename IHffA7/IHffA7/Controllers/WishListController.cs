@@ -15,8 +15,8 @@ namespace IHffA7.Controllers
         private WishlistRepository wishListRepository = new WishlistRepository();
         public ActionResult Index()
         {
-            List<SessionFilm> filmlist = new List<SessionFilm>();
-//Get filmsFromSession            
+//Get filmsFromSession
+            List<SessionFilm> filmlist = new List<SessionFilm>();            
             IList<WishlistItemFilm> wishlistItemsFilmList;
             if (Session["filmlist"] != null)
             {
@@ -32,7 +32,7 @@ namespace IHffA7.Controllers
             IList<WishlistItemRestaurant> wishlistItemsRestaurantList;
             if (Session["restaurantlist"] != null)
             {
-                Session["restaurantlist"] = restaurantlist;
+                restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
                 wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(restaurantlist);
             }
             else
@@ -50,7 +50,7 @@ namespace IHffA7.Controllers
             IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(wislistId);
             IList<WishlistItemRestaurant> wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(wislistId);
             WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
-            //put this in the session to make this one editable.
+            //put this in the session to make this one editable.Wordt nog niet gecheched of deze al in de wishlist bestaat!
             foreach(WishlistItemFilm film in wishlistItemsFilmList)
             {
                 AddAFilmToSesWishlist(film.WishlistItem.NumberOfPersons, film.Activiteit.Id, film.Activiteit.StartTime, film.Activiteit.EndTime);
@@ -90,14 +90,14 @@ namespace IHffA7.Controllers
                 {
                     if (film ==i)
                     {
-                        filmlist.Remove(i);
+                        filmlist.RemoveAt(1);
                         filmlist = (List<SessionFilm>)Session["filmlist"];
                         break;
                     }
                 }
             }
             else
-            {
+            { // untested what it actually does
                 ModelState.AddModelError("invalidItem", "invalid item");
             }
             return RedirectToAction("Index");
@@ -143,11 +143,37 @@ namespace IHffA7.Controllers
             Session["restaurantlist"] = restaurantlist;
         }
 
-        public ActionResult SaveWishlist()
+        public ActionResult RemoveRestaurantFromSesWishlist(int numberOfpersones, DateTime startTime, int locationId, int restaurantId)
+        {
+            {
+                SessionRestaurant restaurant = new SessionRestaurant(numberOfpersones, startTime, locationId, restaurantId);
+                List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
+                if (Session["filmlist"] != null)
+                {
+                    restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
+                    foreach (var i in restaurantlist)
+                    {
+                        if (restaurant == i)
+                        {
+                            restaurantlist.Remove(i);
+                            restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
+                            break;
+                        }
+                    }
+                }
+                else
+                { // untested what it actually does
+                    ModelState.AddModelError("invalidItem", "invalid item");
+                }
+                return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult SaveWishlist(string email)
         {
             //save the wish list and get de wishlist id code, maak hier de code van
             // get saved wishlist kan dan niet meer, omdat de id er niet uit te halen is...
-            //CodeGenerator.CreateCode("2");
+            string code = CodeGenerator.Encrypt(1.ToString(), email);
             return View();
         }
 
