@@ -211,6 +211,7 @@
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\repositories\ActivitiesManagerRepository.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
     <Compile Include="Models\repositories\IDinnerRepository.cs" />
