@@ -28,6 +28,7 @@ namespace IHffA7.Models.repositories
                 r.StreetNumber = restLocation.streetNumber;
                 r.Town = restLocation.town;
                 r.ZipCode = restLocation.zipCode;
+                restaurantItems.Add(r);
             }
             /*(
                 from r in ctx.Restaurant

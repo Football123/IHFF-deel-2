@@ -395,18 +395,6 @@
           <NavigationProperty Name="Films" Relationship="Self.FK_Filmscreenings_Films" FromRole="Filmscreenings" ToRole="Films" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Filmscreenings_Rooms" FromRole="Filmscreenings" ToRole="Rooms" />
         </EntityType>
-        <EntityType Name="Locations">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="zipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="town" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurants_Locations" FromRole="Locations" ToRole="Restaurants" />
-          <NavigationProperty Name="Rooms" Relationship="Self.FK_Rooms_Locations" FromRole="Locations" ToRole="Rooms" />
-        </EntityType>
         <EntityType Name="Reservations">
           <Key>
             <PropertyRef Name="id" />
@@ -431,8 +419,8 @@
           <Property Name="dinnerEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="restaurantLogo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="locationId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Locations" Relationship="Self.FK_Restaurants_Locations" FromRole="Restaurants" ToRole="Locations" />
           <NavigationProperty Name="Activities" Relationship="Self.RestaurantVisits" FromRole="Restaurants" ToRole="Activities" />
+          <NavigationProperty Name="Locations" Relationship="WhatsUp1617S_martinstinsModel.FK_Restaurants_Locations" FromRole="Restaurants" ToRole="Locations" />
         </EntityType>
         <EntityType Name="Rooms">
           <Key>
@@ -443,8 +431,8 @@
           <Property Name="locationId" Type="Int32" Nullable="false" />
           <Property Name="capacity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Filmscreenings" Relationship="Self.FK_Filmscreenings_Rooms" FromRole="Rooms" ToRole="Filmscreenings" />
-          <NavigationProperty Name="Locations" Relationship="Self.FK_Rooms_Locations" FromRole="Rooms" ToRole="Locations" />
           <NavigationProperty Name="Specialscreenings" Relationship="Self.FK_Specialscreenings_Rooms" FromRole="Rooms" ToRole="Specialscreenings" />
+          <NavigationProperty Name="Locations" Relationship="WhatsUp1617S_martinstinsModel.FK_Rooms_Locations" FromRole="Rooms" ToRole="Locations" />
         </EntityType>
         <EntityType Name="Specials">
           <Key>
@@ -552,30 +540,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Restaurants_Locations">
-          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
-          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Locations">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Restaurants">
-              <PropertyRef Name="locationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Rooms_Locations">
-          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
-          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Locations">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Rooms">
-              <PropertyRef Name="locationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Reservations_Wishlists">
           <End Role="Wishlists" Type="Self.Wishlists" Multiplicity="1" />
           <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
@@ -632,7 +596,6 @@
           <EntitySet Name="Activities" EntityType="Self.Activities" />
           <EntitySet Name="Films" EntityType="Self.Films" />
           <EntitySet Name="Filmscreenings" EntityType="Self.Filmscreenings" />
-          <EntitySet Name="Locations" EntityType="Self.Locations" />
           <EntitySet Name="Reservations" EntityType="Self.Reservations" />
           <EntitySet Name="Restaurants" EntityType="Self.Restaurants" />
           <EntitySet Name="Rooms" EntityType="Self.Rooms" />
@@ -660,14 +623,6 @@
             <End Role="Rooms" EntitySet="Rooms" />
             <End Role="Filmscreenings" EntitySet="Filmscreenings" />
           </AssociationSet>
-          <AssociationSet Name="FK_Restaurants_Locations" Association="Self.FK_Restaurants_Locations">
-            <End Role="Locations" EntitySet="Locations" />
-            <End Role="Restaurants" EntitySet="Restaurants" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rooms_Locations" Association="Self.FK_Rooms_Locations">
-            <End Role="Locations" EntitySet="Locations" />
-            <End Role="Rooms" EntitySet="Rooms" />
-          </AssociationSet>
           <AssociationSet Name="FK_Reservations_Wishlists" Association="Self.FK_Reservations_Wishlists">
             <End Role="Wishlists" EntitySet="Wishlists" />
             <End Role="Reservations" EntitySet="Reservations" />
@@ -688,7 +643,53 @@
             <End Role="Activities" EntitySet="Activities" />
             <End Role="Restaurants" EntitySet="Restaurants" />
           </AssociationSet>
+          <EntitySet Name="Locations" EntityType="WhatsUp1617S_martinstinsModel.Locations" />
+          <AssociationSet Name="FK_Restaurants_Locations" Association="WhatsUp1617S_martinstinsModel.FK_Restaurants_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Restaurants" EntitySet="Restaurants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rooms_Locations" Association="WhatsUp1617S_martinstinsModel.FK_Rooms_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Rooms" EntitySet="Rooms" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zipCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="town" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="streetNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Restaurants" Relationship="WhatsUp1617S_martinstinsModel.FK_Restaurants_Locations" FromRole="Locations" ToRole="Restaurants" />
+          <NavigationProperty Name="Rooms" Relationship="WhatsUp1617S_martinstinsModel.FK_Rooms_Locations" FromRole="Locations" ToRole="Rooms" />
+        </EntityType>
+        <Association Name="FK_Restaurants_Locations">
+          <End Type="WhatsUp1617S_martinstinsModel.Locations" Role="Locations" Multiplicity="1" />
+          <End Type="WhatsUp1617S_martinstinsModel.Restaurants" Role="Restaurants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Restaurants">
+              <PropertyRef Name="locationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rooms_Locations">
+          <End Type="WhatsUp1617S_martinstinsModel.Locations" Role="Locations" Multiplicity="1" />
+          <End Type="WhatsUp1617S_martinstinsModel.Rooms" Role="Rooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="locationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -727,17 +728,6 @@
                 <ScalarProperty Name="filmId" ColumnName="filmId" />
                 <ScalarProperty Name="availableSeats" ColumnName="availableSeats" />
                 <ScalarProperty Name="roomId" ColumnName="roomId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Locations">
-              <MappingFragment StoreEntitySet="Locations">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="street" ColumnName="street" />
-                <ScalarProperty Name="zipCode" ColumnName="zipCode" />
-                <ScalarProperty Name="town" ColumnName="town" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -826,6 +816,18 @@
               <ScalarProperty Name="id" ColumnName="restaurantId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Locations">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="streetNumber" ColumnName="streetNumber" />
+                <ScalarProperty Name="town" ColumnName="town" />
+                <ScalarProperty Name="zipCode" ColumnName="zipCode" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
