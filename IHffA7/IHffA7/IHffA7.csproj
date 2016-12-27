@@ -52,6 +52,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -168,6 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivitiesManagerController.cs" />
     <Compile Include="Controllers\DinnerController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -177,29 +180,67 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Activities.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\activityType.cs" />
     <Compile Include="Models\CodeGenerator.cs" />
-    <Compile Include="Models\dbModels\Activities.cs" />
-    <Compile Include="Models\dbModels\Films.cs" />
-    <Compile Include="Models\dbModels\FilmScreenings.cs" />
-    <Compile Include="Models\dbModels\Locations.cs" />
-    <Compile Include="Models\dbModels\Reservations.cs" />
-    <Compile Include="Models\dbModels\Restaurants.cs" />
-    <Compile Include="Models\dbModels\Testtabel.cs" />
-    <Compile Include="Models\dbModels\Wishlists.cs" />
-    <Compile Include="Models\dbModels\WishlistItems.cs" />
-    <Compile Include="Models\IhffA7Context.cs" />
+    <Compile Include="Models\dbModels.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbModels.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbModels.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbModels.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbModels.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Films.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Filmscreenings.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Locations.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\repositories\ActivitiesManagerRepository.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
     <Compile Include="Models\repositories\IDinnerRepository.cs" />
     <Compile Include="Models\repositories\WishlistRepository.cs" />
+    <Compile Include="Models\Reservations.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RestaurantOverviewModel.cs" />
+    <Compile Include="Models\Restaurants.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Rooms.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SessionFilm.cs" />
-    <Compile Include="Models\SessionRestaurant.cs" />
+    <Compile Include="Models\Specials.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Specialscreenings.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WishlistItemFilm.cs" />
-    <Compile Include="Models\WishlistItemRestaurant.cs" />
-    <Compile Include="Models\WishlistViewModel.cs" />
+    <Compile Include="Models\Wishlist.cs" />
+    <Compile Include="Models\WishlistItems.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Wishlists.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -210,9 +251,26 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\dbModels.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbModels.edmx</DependentUpon>
+      <LastGenOutput>dbModels.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\dbModels.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbModels.edmx</DependentUpon>
+      <LastGenOutput>dbModels.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ClassDiagram1.cd" />
+    <EntityDeploy Include="Models\dbModels.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dbModels.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\dbModels.edmx.diagram">
+      <DependentUpon>dbModels.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -225,7 +283,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -266,10 +326,12 @@
     <Content Include="Views\WishList\Test.cshtml" />
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Dinner\Restaurants.cshtml" />
+    <Content Include="Views\WishList\GetSavedWishlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
+    <Folder Include="Views\ActivitiesManager\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -278,6 +340,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

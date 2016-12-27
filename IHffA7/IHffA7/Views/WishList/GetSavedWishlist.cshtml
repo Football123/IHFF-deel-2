@@ -1,0 +1,20 @@
+﻿@model IHffA7.Models.Wishlist
+@{
+    ViewBag.Title = "GetSavedWishlist";
+}
+
+<h2>films</h2>
+@if (Model.Films != null || Model.Films.Count() != 0)
+{
+@foreach (var film in Model.Films)
+{
+    @film.Title<br/>
+    @film.TotalPrice;<br />
+    @film.AvailableSeats;<br />
+    @film.LocationName;<br />
+    @film.RoomName;<br />
+    @film.StartTime; <br />
+    @film.EndTime;<br />
+    <br />
+}
+}

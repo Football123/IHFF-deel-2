@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>FILMS</h2>
+<h2>WISHLIST</h2>
 <table>
     <tr>
         <th>Item</th>
@@ -13,6 +13,7 @@
     </tr>
     @if (Model.Films != null)
     {
+        <tr> <td>FILMS</td> </tr>
         foreach (var c in Model.Films)
         {
             <tr>
@@ -36,16 +37,26 @@
                     @c.TotalPrice
                 </td>
                 <td>
+                    @Html.ActionLink("Remove", "RemoveFilmFromSesWishlist", "WishList", new
+          {
+              numberOfpersones = c.WishlistItem.NumberOfPersons,
+              activityId = c.Activiteit.Id,
+              start = c.Activiteit.StartTime,
+              end = c.Activiteit.EndTime
+          }, null);
+                </td>
+                <td>
                     ▼--------------F-I-L-M--------------▼
                 </td>
             </tr>
+            <tr></tr>
         }
     }
     <tr>
         <td>------------------------------------</td>
     </tr>
     @if (Model.Restaurants != null)
-    {
+    {<tr> <td>RESTAURANTS</td> </tr>
         foreach (var d in Model.Restaurants)
         {
             <tr>
@@ -70,6 +81,7 @@
                     ▲----R-E-S-T-A-U-R-A-N-T---▲
                 </td>
             </tr>
+            <tr></tr>
         }
     }
 </table>

@@ -1,0 +1,855 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="WhatsUp1617S_martinstinsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="startTime" Type="datetime" Nullable="false" />
+          <Property Name="endTime" Type="datetime" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="highlight" Type="bit" Nullable="false" />
+          <Property Name="TypeActivity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="director" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descriptionNL" Type="varchar" MaxLength="1100" />
+          <Property Name="descriptionEN" Type="varchar" MaxLength="1100" />
+          <Property Name="year" Type="datetime" Nullable="false" />
+          <Property Name="filmLogo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Filmscreenings">
+          <Key>
+            <PropertyRef Name="activityId" />
+            <PropertyRef Name="filmId" />
+          </Key>
+          <Property Name="activityId" Type="int" Nullable="false" />
+          <Property Name="filmId" Type="int" Nullable="false" />
+          <Property Name="availableSeats" Type="int" Nullable="false" />
+          <Property Name="roomId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="street" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="zipCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="town" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="streetNumber" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wishlistId" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="paymentMethod" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descriptionNL" Type="varchar" MaxLength="1100" />
+          <Property Name="descriptionEN" Type="varchar" MaxLength="1100" />
+          <Property Name="lunchStart" Type="datetime" Nullable="false" />
+          <Property Name="lunchEnd" Type="datetime" Nullable="false" />
+          <Property Name="dinnerStart" Type="datetime" Nullable="false" />
+          <Property Name="dinnerEnd" Type="datetime" Nullable="false" />
+          <Property Name="restaurantLogo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="locationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RestaurantVisits">
+          <Key>
+            <PropertyRef Name="activityId" />
+            <PropertyRef Name="restaurantId" />
+          </Key>
+          <Property Name="activityId" Type="int" Nullable="false" />
+          <Property Name="restaurantId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="locationId" Type="int" Nullable="false" />
+          <Property Name="capacity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specials">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="speaker" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descriptionNL" Type="varchar" MaxLength="1100" />
+          <Property Name="descriptionEN" Type="varchar" MaxLength="1100" />
+          <Property Name="specialsLogo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specialscreenings">
+          <Key>
+            <PropertyRef Name="activityId" />
+            <PropertyRef Name="specialId" />
+          </Key>
+          <Property Name="activityId" Type="int" Nullable="false" />
+          <Property Name="specialId" Type="int" Nullable="false" />
+          <Property Name="availableSeats" Type="int" Nullable="false" />
+          <Property Name="roomId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WishlistItems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="wishlistId" Type="int" Nullable="false" />
+          <Property Name="activityId" Type="int" Nullable="false" />
+          <Property Name="numberOfPersons" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wishlists">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="totalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="paid" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Filmscreenings_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Filmscreenings" Type="Self.Filmscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Filmscreenings">
+              <PropertyRef Name="activityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Filmscreenings_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="1" />
+          <End Role="Filmscreenings" Type="Self.Filmscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Filmscreenings">
+              <PropertyRef Name="filmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Filmscreenings_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="Filmscreenings" Type="Self.Filmscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Filmscreenings">
+              <PropertyRef Name="roomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservations_Wishlists">
+          <End Role="Wishlists" Type="Self.Wishlists" Multiplicity="1" />
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wishlists">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="wishlistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurants_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Restaurants">
+              <PropertyRef Name="locationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantVisits_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="RestaurantVisits" Type="Self.RestaurantVisits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RestaurantVisits">
+              <PropertyRef Name="activityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RestaurantVisits_Restaurants">
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="1" />
+          <End Role="RestaurantVisits" Type="Self.RestaurantVisits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurants">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="RestaurantVisits">
+              <PropertyRef Name="restaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rooms_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="locationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specialscreenings_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Specialscreenings" Type="Self.Specialscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Specialscreenings">
+              <PropertyRef Name="activityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specialscreenings_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="Specialscreenings" Type="Self.Specialscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Specialscreenings">
+              <PropertyRef Name="roomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specialscreenings_Specials">
+          <End Role="Specials" Type="Self.Specials" Multiplicity="1" />
+          <End Role="Specialscreenings" Type="Self.Specialscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specials">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Specialscreenings">
+              <PropertyRef Name="specialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishlistItems_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="WishlistItems" Type="Self.WishlistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WishlistItems">
+              <PropertyRef Name="activityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishlistItems_Wishlists">
+          <End Role="Wishlists" Type="Self.Wishlists" Multiplicity="1" />
+          <End Role="WishlistItems" Type="Self.WishlistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wishlists">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WishlistItems">
+              <PropertyRef Name="wishlistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WhatsUp1617S_martinstinsModelStoreContainer">
+          <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Films" EntityType="Self.Films" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filmscreenings" EntityType="Self.Filmscreenings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurants" EntityType="Self.Restaurants" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantVisits" EntityType="Self.RestaurantVisits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specials" EntityType="Self.Specials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Specialscreenings" EntityType="Self.Specialscreenings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WishlistItems" EntityType="Self.WishlistItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wishlists" EntityType="Self.Wishlists" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Filmscreenings_Activities" Association="Self.FK_Filmscreenings_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Filmscreenings" EntitySet="Filmscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Filmscreenings_Films" Association="Self.FK_Filmscreenings_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Filmscreenings" EntitySet="Filmscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Filmscreenings_Rooms" Association="Self.FK_Filmscreenings_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Filmscreenings" EntitySet="Filmscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservations_Wishlists" Association="Self.FK_Reservations_Wishlists">
+            <End Role="Wishlists" EntitySet="Wishlists" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurants_Locations" Association="Self.FK_Restaurants_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Restaurants" EntitySet="Restaurants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantVisits_Activities" Association="Self.FK_RestaurantVisits_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="RestaurantVisits" EntitySet="RestaurantVisits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RestaurantVisits_Restaurants" Association="Self.FK_RestaurantVisits_Restaurants">
+            <End Role="Restaurants" EntitySet="Restaurants" />
+            <End Role="RestaurantVisits" EntitySet="RestaurantVisits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rooms_Locations" Association="Self.FK_Rooms_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Rooms" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specialscreenings_Activities" Association="Self.FK_Specialscreenings_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Specialscreenings" EntitySet="Specialscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specialscreenings_Rooms" Association="Self.FK_Specialscreenings_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Specialscreenings" EntitySet="Specialscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specialscreenings_Specials" Association="Self.FK_Specialscreenings_Specials">
+            <End Role="Specials" EntitySet="Specials" />
+            <End Role="Specialscreenings" EntitySet="Specialscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishlistItems_Activities" Association="Self.FK_WishlistItems_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="WishlistItems" EntitySet="WishlistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishlistItems_Wishlists" Association="Self.FK_WishlistItems_Wishlists">
+            <End Role="Wishlists" EntitySet="Wishlists" />
+            <End Role="WishlistItems" EntitySet="WishlistItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WhatsUp1617S_martinstinsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Activities">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="startTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="endTime" Type="DateTime" Precision="3" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="highlight" Type="Boolean" Nullable="false" />
+          <Property Name="TypeActivity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Filmscreenings" Relationship="Self.FK_Filmscreenings_Activities" FromRole="Activities" ToRole="Filmscreenings" />
+          <NavigationProperty Name="Specialscreenings" Relationship="Self.FK_Specialscreenings_Activities" FromRole="Activities" ToRole="Specialscreenings" />
+          <NavigationProperty Name="WishlistItems" Relationship="Self.FK_WishlistItems_Activities" FromRole="Activities" ToRole="WishlistItems" />
+          <NavigationProperty Name="Restaurants" Relationship="Self.RestaurantVisits" FromRole="Activities" ToRole="Restaurants" />
+        </EntityType>
+        <EntityType Name="Films">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="director" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descriptionNL" Type="String" MaxLength="1100" FixedLength="false" Unicode="false" />
+          <Property Name="descriptionEN" Type="String" MaxLength="1100" FixedLength="false" Unicode="false" />
+          <Property Name="year" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="filmLogo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Filmscreenings" Relationship="Self.FK_Filmscreenings_Films" FromRole="Films" ToRole="Filmscreenings" />
+        </EntityType>
+        <EntityType Name="Filmscreenings">
+          <Key>
+            <PropertyRef Name="activityId" />
+            <PropertyRef Name="filmId" />
+          </Key>
+          <Property Name="activityId" Type="Int32" Nullable="false" />
+          <Property Name="filmId" Type="Int32" Nullable="false" />
+          <Property Name="availableSeats" Type="Int32" Nullable="false" />
+          <Property Name="roomId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="Self.FK_Filmscreenings_Activities" FromRole="Filmscreenings" ToRole="Activities" />
+          <NavigationProperty Name="Films" Relationship="Self.FK_Filmscreenings_Films" FromRole="Filmscreenings" ToRole="Films" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Filmscreenings_Rooms" FromRole="Filmscreenings" ToRole="Rooms" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="zipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="town" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="streetNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurants_Locations" FromRole="Locations" ToRole="Restaurants" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Rooms_Locations" FromRole="Locations" ToRole="Rooms" />
+        </EntityType>
+        <EntityType Name="Reservations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wishlistId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="paymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Wishlists" Relationship="Self.FK_Reservations_Wishlists" FromRole="Reservations" ToRole="Wishlists" />
+        </EntityType>
+        <EntityType Name="Restaurants">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descriptionNL" Type="String" MaxLength="1100" FixedLength="false" Unicode="false" />
+          <Property Name="descriptionEN" Type="String" MaxLength="1100" FixedLength="false" Unicode="false" />
+          <Property Name="lunchStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="lunchEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dinnerStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dinnerEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="restaurantLogo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="locationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_Restaurants_Locations" FromRole="Restaurants" ToRole="Locations" />
+          <NavigationProperty Name="Activities" Relationship="Self.RestaurantVisits" FromRole="Restaurants" ToRole="Activities" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="locationId" Type="Int32" Nullable="false" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Filmscreenings" Relationship="Self.FK_Filmscreenings_Rooms" FromRole="Rooms" ToRole="Filmscreenings" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_Rooms_Locations" FromRole="Rooms" ToRole="Locations" />
+          <NavigationProperty Name="Specialscreenings" Relationship="Self.FK_Specialscreenings_Rooms" FromRole="Rooms" ToRole="Specialscreenings" />
+        </EntityType>
+        <EntityType Name="Specials">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="speaker" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descriptionNL" Type="String" MaxLength="1100" FixedLength="false" Unicode="false" />
+          <Property Name="descriptionEN" Type="String" MaxLength="1100" FixedLength="false" Unicode="false" />
+          <Property Name="specialsLogo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Specialscreenings" Relationship="Self.FK_Specialscreenings_Specials" FromRole="Specials" ToRole="Specialscreenings" />
+        </EntityType>
+        <EntityType Name="Specialscreenings">
+          <Key>
+            <PropertyRef Name="activityId" />
+            <PropertyRef Name="specialId" />
+          </Key>
+          <Property Name="activityId" Type="Int32" Nullable="false" />
+          <Property Name="specialId" Type="Int32" Nullable="false" />
+          <Property Name="availableSeats" Type="Int32" Nullable="false" />
+          <Property Name="roomId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="Self.FK_Specialscreenings_Activities" FromRole="Specialscreenings" ToRole="Activities" />
+          <NavigationProperty Name="Rooms" Relationship="Self.FK_Specialscreenings_Rooms" FromRole="Specialscreenings" ToRole="Rooms" />
+          <NavigationProperty Name="Specials" Relationship="Self.FK_Specialscreenings_Specials" FromRole="Specialscreenings" ToRole="Specials" />
+        </EntityType>
+        <EntityType Name="WishlistItems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="wishlistId" Type="Int32" Nullable="false" />
+          <Property Name="activityId" Type="Int32" Nullable="false" />
+          <Property Name="numberOfPersons" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Activities" Relationship="Self.FK_WishlistItems_Activities" FromRole="WishlistItems" ToRole="Activities" />
+          <NavigationProperty Name="Wishlists" Relationship="Self.FK_WishlistItems_Wishlists" FromRole="WishlistItems" ToRole="Wishlists" />
+        </EntityType>
+        <EntityType Name="Wishlists">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="totalPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="paid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Wishlists" FromRole="Wishlists" ToRole="Reservations" />
+          <NavigationProperty Name="WishlistItems" Relationship="Self.FK_WishlistItems_Wishlists" FromRole="Wishlists" ToRole="WishlistItems" />
+        </EntityType>
+        <Association Name="FK_Filmscreenings_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Filmscreenings" Type="Self.Filmscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Filmscreenings">
+              <PropertyRef Name="activityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specialscreenings_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="Specialscreenings" Type="Self.Specialscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Specialscreenings">
+              <PropertyRef Name="activityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishlistItems_Activities">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+          <End Role="WishlistItems" Type="Self.WishlistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Activities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WishlistItems">
+              <PropertyRef Name="activityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Filmscreenings_Films">
+          <End Role="Films" Type="Self.Films" Multiplicity="1" />
+          <End Role="Filmscreenings" Type="Self.Filmscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Films">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Filmscreenings">
+              <PropertyRef Name="filmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Filmscreenings_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="Filmscreenings" Type="Self.Filmscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Filmscreenings">
+              <PropertyRef Name="roomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restaurants_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Restaurants">
+              <PropertyRef Name="locationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rooms_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="locationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservations_Wishlists">
+          <End Role="Wishlists" Type="Self.Wishlists" Multiplicity="1" />
+          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wishlists">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="wishlistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specialscreenings_Rooms">
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
+          <End Role="Specialscreenings" Type="Self.Specialscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rooms">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Specialscreenings">
+              <PropertyRef Name="roomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Specialscreenings_Specials">
+          <End Role="Specials" Type="Self.Specials" Multiplicity="1" />
+          <End Role="Specialscreenings" Type="Self.Specialscreenings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specials">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Specialscreenings">
+              <PropertyRef Name="specialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishlistItems_Wishlists">
+          <End Role="Wishlists" Type="Self.Wishlists" Multiplicity="1" />
+          <End Role="WishlistItems" Type="Self.WishlistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wishlists">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WishlistItems">
+              <PropertyRef Name="wishlistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RestaurantVisits">
+          <End Role="Activities" Type="Self.Activities" Multiplicity="*" />
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="WhatsUp1617S_martinstinsGenerated" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Activities" EntityType="Self.Activities" />
+          <EntitySet Name="Films" EntityType="Self.Films" />
+          <EntitySet Name="Filmscreenings" EntityType="Self.Filmscreenings" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservations" />
+          <EntitySet Name="Restaurants" EntityType="Self.Restaurants" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" />
+          <EntitySet Name="Specials" EntityType="Self.Specials" />
+          <EntitySet Name="Specialscreenings" EntityType="Self.Specialscreenings" />
+          <EntitySet Name="WishlistItems" EntityType="Self.WishlistItems" />
+          <EntitySet Name="Wishlists" EntityType="Self.Wishlists" />
+          <AssociationSet Name="FK_Filmscreenings_Activities" Association="Self.FK_Filmscreenings_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Filmscreenings" EntitySet="Filmscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specialscreenings_Activities" Association="Self.FK_Specialscreenings_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Specialscreenings" EntitySet="Specialscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishlistItems_Activities" Association="Self.FK_WishlistItems_Activities">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="WishlistItems" EntitySet="WishlistItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Filmscreenings_Films" Association="Self.FK_Filmscreenings_Films">
+            <End Role="Films" EntitySet="Films" />
+            <End Role="Filmscreenings" EntitySet="Filmscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Filmscreenings_Rooms" Association="Self.FK_Filmscreenings_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Filmscreenings" EntitySet="Filmscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restaurants_Locations" Association="Self.FK_Restaurants_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Restaurants" EntitySet="Restaurants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rooms_Locations" Association="Self.FK_Rooms_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Rooms" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservations_Wishlists" Association="Self.FK_Reservations_Wishlists">
+            <End Role="Wishlists" EntitySet="Wishlists" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specialscreenings_Rooms" Association="Self.FK_Specialscreenings_Rooms">
+            <End Role="Rooms" EntitySet="Rooms" />
+            <End Role="Specialscreenings" EntitySet="Specialscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Specialscreenings_Specials" Association="Self.FK_Specialscreenings_Specials">
+            <End Role="Specials" EntitySet="Specials" />
+            <End Role="Specialscreenings" EntitySet="Specialscreenings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishlistItems_Wishlists" Association="Self.FK_WishlistItems_Wishlists">
+            <End Role="Wishlists" EntitySet="Wishlists" />
+            <End Role="WishlistItems" EntitySet="WishlistItems" />
+          </AssociationSet>
+          <AssociationSet Name="RestaurantVisits" Association="Self.RestaurantVisits">
+            <End Role="Activities" EntitySet="Activities" />
+            <End Role="Restaurants" EntitySet="Restaurants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WhatsUp1617S_martinstinsModelStoreContainer" CdmEntityContainer="WhatsUp1617S_martinstinsGenerated">
+          <EntitySetMapping Name="Activities">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Activities">
+              <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="highlight" ColumnName="highlight" />
+                <ScalarProperty Name="TypeActivity" ColumnName="TypeActivity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Films">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Films">
+              <MappingFragment StoreEntitySet="Films">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="director" ColumnName="director" />
+                <ScalarProperty Name="descriptionNL" ColumnName="descriptionNL" />
+                <ScalarProperty Name="descriptionEN" ColumnName="descriptionEN" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="filmLogo" ColumnName="filmLogo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Filmscreenings">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Filmscreenings">
+              <MappingFragment StoreEntitySet="Filmscreenings">
+                <ScalarProperty Name="activityId" ColumnName="activityId" />
+                <ScalarProperty Name="filmId" ColumnName="filmId" />
+                <ScalarProperty Name="availableSeats" ColumnName="availableSeats" />
+                <ScalarProperty Name="roomId" ColumnName="roomId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Locations">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="zipCode" ColumnName="zipCode" />
+                <ScalarProperty Name="town" ColumnName="town" />
+                <ScalarProperty Name="streetNumber" ColumnName="streetNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Reservations">
+              <MappingFragment StoreEntitySet="Reservations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="wishlistId" ColumnName="wishlistId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="paymentMethod" ColumnName="paymentMethod" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurants">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Restaurants">
+              <MappingFragment StoreEntitySet="Restaurants">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="descriptionNL" ColumnName="descriptionNL" />
+                <ScalarProperty Name="descriptionEN" ColumnName="descriptionEN" />
+                <ScalarProperty Name="lunchStart" ColumnName="lunchStart" />
+                <ScalarProperty Name="lunchEnd" ColumnName="lunchEnd" />
+                <ScalarProperty Name="dinnerStart" ColumnName="dinnerStart" />
+                <ScalarProperty Name="dinnerEnd" ColumnName="dinnerEnd" />
+                <ScalarProperty Name="restaurantLogo" ColumnName="restaurantLogo" />
+                <ScalarProperty Name="locationId" ColumnName="locationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Rooms">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="locationId" ColumnName="locationId" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specials">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Specials">
+              <MappingFragment StoreEntitySet="Specials">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="speaker" ColumnName="speaker" />
+                <ScalarProperty Name="descriptionNL" ColumnName="descriptionNL" />
+                <ScalarProperty Name="descriptionEN" ColumnName="descriptionEN" />
+                <ScalarProperty Name="specialsLogo" ColumnName="specialsLogo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specialscreenings">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Specialscreenings">
+              <MappingFragment StoreEntitySet="Specialscreenings">
+                <ScalarProperty Name="activityId" ColumnName="activityId" />
+                <ScalarProperty Name="specialId" ColumnName="specialId" />
+                <ScalarProperty Name="availableSeats" ColumnName="availableSeats" />
+                <ScalarProperty Name="roomId" ColumnName="roomId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WishlistItems">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.WishlistItems">
+              <MappingFragment StoreEntitySet="WishlistItems">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="wishlistId" ColumnName="wishlistId" />
+                <ScalarProperty Name="activityId" ColumnName="activityId" />
+                <ScalarProperty Name="numberOfPersons" ColumnName="numberOfPersons" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wishlists">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Wishlists">
+              <MappingFragment StoreEntitySet="Wishlists">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+                <ScalarProperty Name="paid" ColumnName="paid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RestaurantVisits" TypeName="WhatsUp1617S_martinstinsModel.RestaurantVisits" StoreEntitySet="RestaurantVisits">
+            <EndProperty Name="Activities">
+              <ScalarProperty Name="id" ColumnName="activityId" />
+            </EndProperty>
+            <EndProperty Name="Restaurants">
+              <ScalarProperty Name="id" ColumnName="restaurantId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

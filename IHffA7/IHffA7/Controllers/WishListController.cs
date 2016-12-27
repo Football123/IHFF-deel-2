@@ -3,123 +3,106 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using IHffA7.Models.dbModels;
 using IHffA7.Models;
 using IHffA7.Models.repositories;
+using System.Security.Cryptography;
 
 namespace IHffA7.Controllers
 {
     public class WishListController : Controller
     {
-        private WishlistRepository wishListRepository = new WishlistRepository();
-        public ActionResult Index()
+        private WishlistRepository wishListRepo;
+
+        public WishListController()
         {
-            List<SessionFilm> filmlist = new List<SessionFilm>();
-            IList<WishlistItemFilm> wishlistItemsFilmList;
-            if (Session["filmlist"] != null) //als bestaat, laad de items
-            {
-                filmlist = (List<SessionFilm>)Session["filmlist"];
-                wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(filmlist);
-            }
-            else // als niet bestaal maakt null, view model support geen nullables 
-            {
-                wishlistItemsFilmList = null;
-            }
-
-            List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
-            IList<WishlistItemRestaurant> wishlistItemsRestaurantList;
-            if (Session["restaurantlist"] != null)
-            {
-                Session["restaurantlist"] = restaurantlist;
-                wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(restaurantlist);
-            }
-            else
-            {
-                wishlistItemsRestaurantList = null;
-            }
-
-            WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
-            //return View(wishlistItemsFilmList); // oude alleen films vie ging deze heen
-            return View(model);
+                wishListRepo = new WishlistRepository();
         }
 
-        public ActionResult GetSavedWishlist(int wislistId)
-        { //GetWishlistFromDB(int wislistID) zou de goede naam kunnen zijn
-            IList<WishlistItemFilm> wishlistItemsFilmList = wishListRepository.GetAllWishlistFilms(wislistId);
-            IList<WishlistItemRestaurant> wishlistItemsRestaurantList = wishListRepository.GetAllWishlistRestaurants(wislistId);
-            WishlistViewModel model = new WishlistViewModel(wishlistItemsFilmList, wishlistItemsRestaurantList);
-            /*foreach(WishlistItemFilm film in wishlistItemsFilmList)
-            {
-                //AddFilmToSesWishlist()
-            }*/
-            //to do de opgeslagen eenheden in de session list opslaan.
-            return View("Index", model);
+        public ActionResult Index()
+        {
+            return RedirectToAction("GetSavedWishlist");
+        }
+
+        public ActionResult GetSavedWishlist()
+        {
+            int wislistId = 1;
+            Wishlist wishlist = new Wishlist(wishListRepo.GetAllFilmActivies(wislistId));
+            return View(wishlist);
         }
 
         //alle films staan al in de database
         public ActionResult AddFilmToSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
         {
-            SessionFilm film = new SessionFilm(numberOfpersones, activityId, start, end);
+            AddAFilmToSesWishlist(numberOfpersones, activityId, start, end);
+            return RedirectToAction("Index", "WishList");
+        }
+//methode
+        public ActionResult RemoveFilmFromSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
+        {
+            SessionFilm film = new SessionFilm(numberOfpersones, activityId);
             List<SessionFilm> filmlist = new List<SessionFilm>();
-            if (Session["filmlist"] == null)
+            if (Session["filmlist"] != null)
+            {
+                filmlist = (List<SessionFilm>)Session["filmlist"];
+                filmlist.ToList();
+                foreach (var i in filmlist)
+                {
+                    if (film ==i)
+                    {
+                        filmlist.RemoveAt(1);
+                        filmlist = (List<SessionFilm>)Session["filmlist"];
+                        break;
+                    }
+                }
+            }
+            else
+            { // untested what it actually does
+                ModelState.AddModelError("invalidItem", "invalid item");
+            }
+            return RedirectToAction("Index");
+        }
+
+//AddAFilmToSesWishlist
+        public void AddAFilmToSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
+        {
+            SessionFilm film = new SessionFilm(numberOfpersones, activityId);
+            List<SessionFilm> filmlist = new List<SessionFilm>();
+            if (Session["filmlist"] == null) //als niet bestaat, maak aan
             {
                 Session["filmlist"] = filmlist;
             }
-            else
+            else // anderes ophalen
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
             }
-            filmlist.Add(film);
-            filmlist = (List<SessionFilm>)Session["filmlist"];
-            return RedirectToAction("Index", "WishList");
+            // check of hij niet bestaal in de lijst
+
+            Session["filmlist"] = filmlist; // wijzigingen opslaan
         }
 
-        public ActionResult AddRestaurantSesWishlist(int numberOfpersones, DateTime startTime, int locationId, int restaurantId)
+ //methode
+        public IList<WishlistItemFilm> GetFilmsFromSession()
         {
-            SessionRestaurant restaurant = new SessionRestaurant(numberOfpersones, startTime, locationId, restaurantId);
-            List<SessionRestaurant> restaurantlist = new List<SessionRestaurant>();
-            if (Session["restaurantlist"] == null)
+            List<SessionFilm> filmlist = new List<SessionFilm>();
+            IList<WishlistItemFilm> wishlistItemsFilmList;
+            if (Session["filmlist"] != null)
             {
-                Session["restaurantlist"] = restaurantlist;
+                filmlist = (List<SessionFilm>)Session["filmlist"];
+                wishlistItemsFilmList = null; // wishListRepository.GetAllWishlistFilms(filmlist);
             }
-            else
+            else // als niet bestaat maakt null, view model support geen nullables 
             {
-                restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
+                wishlistItemsFilmList = null;
             }
-            restaurantlist.Add(restaurant);
-            restaurantlist = (List<SessionRestaurant>)Session["restaurantlist"];
-            return RedirectToAction("Index", "WishList");
+            return wishlistItemsFilmList;
         }
 
-        public ActionResult SaveWishlist()
+        public ActionResult SaveWishlist(string email)
         {
             //save the wish list and get de wishlist id code, maak hier de code van
-            // get saveed wishlist kan dan niet meer, omdat de id er niet uit te halen is...
-            CodeGenerator.CreateCode("2");
+            // get saved wishlist kan dan niet meer, omdat de id er niet uit te halen is...
+            string code = CodeGenerator.Encrypt(1.ToString(), email);
             return View();
-        }
-
-
-        /// <summary>
-        /// TO DO specials in de sessie opslaan
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Test()
-        {
-            SessionFilm film = new SessionFilm(101, 1, new DateTime(2016, 5, 4), new DateTime(2016, 5, 4));
-            SessionFilm film2 = new SessionFilm(101, 1, new DateTime(2016, 5, 4), new DateTime(2016, 5, 4));
-            List<SessionFilm> filmlist = new List<SessionFilm>();
-            filmlist.Add(film);
-            filmlist.Add(film2);
-
-            //save list in session
-            Session["filmlist"] = filmlist;
-
-            List<SessionFilm> movies = new List<SessionFilm>();
-            //retrieve it from session
-            movies = (List<SessionFilm>)Session["filmlist"];
-            return View(movies);
-            //return RedirectToAction("Index", "Contact");
         }
     }
 }

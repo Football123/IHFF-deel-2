@@ -3,36 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IHffA7.Models.dbModels;
 using IHffA7.Models.repositories;
 
 namespace IHffA7.Models
 {
     public class WishlistItemFilm
     {
-        //public IList<WishlistItemFilm> WishlistFilmList { get; set; }
-        public WishlistItems WishlistItem { get; set; }
-        public Activities Activiteit { get; set; }
-        public Locations Location { get; set; }
+         public IList<WishlistItemFilm> WishlistFilmList { get; set; }
+        public string Title { get; set; }
         public decimal TotalPrice { get; set; }
-        public FilmScreenings Filmvoorstelling { get; set; }
-        public Films Film { get; set; }
+        public int AvailableSeats { get; set; }
+        public string LocationName { get; set; }
+        public string RoomName { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
+        public WishlistItemFilm()
+        {
+            WishlistFilmList = new List<WishlistItemFilm>();
+        }
+        public WishlistItemFilm(WishlistItems wishitem, Activities activiteit, Filmscreenings screening, Films film, Locations location, Rooms room, decimal totalprice)
+        {
+            Title = film.title;
+            TotalPrice = totalprice;
+            AvailableSeats = screening.availableSeats;
+            LocationName = location.name;
+            RoomName = room.name;
+            StartTime = activiteit.startTime;
+            EndTime = activiteit.endTime;
+        }
 
-        /*public void AddToWishlistFilmList(WishlistItemFilm film)
+        public void Add(WishlistItemFilm film)
         {
             WishlistFilmList.Add(film);
-        }*/
-        public WishlistItemFilm(WishlistItems wishlistItem, Activities activiteit, Locations location,
-             decimal totalPrice, FilmScreenings filmvoorstelling, Films film)
-        {
-            this.WishlistItem = wishlistItem;
-            this.Activiteit = activiteit;
-            this.Location = location;
-            this.TotalPrice = totalPrice;
-            this.Filmvoorstelling = filmvoorstelling;
-            this.Film = film;
-
         }
     }
 }
