@@ -222,9 +222,9 @@ Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
 
-# SQL Server files
-*.mdf
-*.ldf
+# SQL Server files OUTCOMMENT BY MARTIN because we might gonna use a test db............................
+#*.mdf
+#*.ldf
 
 # Business Intelligence projects
 *.rdl.data

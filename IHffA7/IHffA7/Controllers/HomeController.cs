@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using IHffA7.Models.dbModels;
 using IHffA7.Models;
 using IHffA7.Models.repositories;
 
@@ -22,7 +21,7 @@ namespace IHffA7.Controllers
             ViewBag.Message = "Your application description page.";
             
 
-            return View(wishListRepository.GetFilm(1));
+            return View();
         }
 
         public ActionResult Contact()

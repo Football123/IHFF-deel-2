@@ -7,17 +7,17 @@ namespace IHffA7.Models.repositories
 {
     public class DinnerRepository : IDinnerRepository
     {
-        private IhffA7Context ctx = new IhffA7Context();
+        //private IhffA7Context ctx = new IhffA7Context();
 
         public IEnumerable<RestaurantOverviewModel> GetAllRestaurants()
         {
-            IEnumerable<RestaurantOverviewModel> restaurantItems =
-            (
+            IEnumerable<RestaurantOverviewModel> restaurantItems = null
+            /*(
                 from r in ctx.Restaurant
                 join a in ctx.Activity
                 on r.Id equals a.Id
                 join l in ctx.Location
-                on a.LocationId equals l.Id
+                on a.Id equals l.Id
                 select new RestaurantOverviewModel
                 {
                     Id = r.Id,
@@ -33,7 +33,7 @@ namespace IHffA7.Models.repositories
                     DinnerEnd = r.DinnerEnd,
                     RestaurantLogo = r.RestaurantLogo
                 }
-            );
+            )*/;
 
             return restaurantItems;
         }
