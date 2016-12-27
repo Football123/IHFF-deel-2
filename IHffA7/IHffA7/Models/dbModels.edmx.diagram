@@ -4,31 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0db7edfe2a2f4d078ef04a007c899a6c" Name="Diagram1">
-        <EntityTypeShape EntityType="dbModels.Activities" Width="1.5" PointX="6.875" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Films" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Filmscreenings" Width="1.5" PointX="2.75" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Locations" Width="1.5" PointX="4.25" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Reservations" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Restaurants" Width="1.5" PointX="12.5" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Rooms" Width="1.5" PointX="4.25" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Specials" Width="1.5" PointX="9" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Specialscreenings" Width="1.5" PointX="6.875" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.WishlistItems" Width="1.5" PointX="4.75" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="dbModels.Wishlists" Width="1.5" PointX="2.625" PointY="0.5" IsExpanded="true" />
-        <AssociationConnector Association="dbModels.FK_Filmscreenings_Activities" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_Specialscreenings_Activities" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_WishlistItems_Activities" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_Filmscreenings_Films" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_Filmscreenings_Rooms" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_Rooms_Locations" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_Reservations_Wishlists" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_Specialscreenings_Rooms" ManuallyRouted="false" >
-        </AssociationConnector>
-        <AssociationConnector Association="dbModels.FK_Specialscreenings_Specials" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_WishlistItems_Wishlists" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.RestaurantVisits" ManuallyRouted="false" />
-        <AssociationConnector Association="dbModels.FK_Restaurants_Locations" />
+      <Diagram DiagramId="e2fc78b1bd044f8f8b6229f788e4e2aa" Name="Diagram1">
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Activities" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Films" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Filmscreenings" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Locations" Width="1.5" PointX="1.5" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Reservations" Width="1.5" PointX="3" PointY="21" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Restaurants" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Rooms" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Specials" Width="1.5" PointX="0.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Specialscreenings" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.WishlistItems" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Wishlists" Width="1.5" PointX="0.75" PointY="21" IsExpanded="true" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Filmscreenings_Activities" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Specialscreenings_Activities" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_WishlistItems_Activities" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Filmscreenings_Films" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Filmscreenings_Rooms" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Restaurants_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Rooms_Locations" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Reservations_Wishlists" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Specialscreenings_Rooms" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Specialscreenings_Specials" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_WishlistItems_Wishlists" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatsUp1617S_martinstinsModel.RestaurantVisits" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -10,7 +10,7 @@ namespace IHffA7.Models.repositories
     class WishlistRepository
     {
         //IhffA7Context ctx = new IhffA7Context(); //echt online db
-        ihffTestConnectionGenerated ctx = new ihffTestConnectionGenerated(); //test offline db
+        WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated(); //test offline db
 
         private IQueryable<WishlistItems> GetWishlistItems(int wishlistId)
         {
@@ -58,8 +58,6 @@ namespace IHffA7.Models.repositories
             var filmActivities = GetWishlistItems(wishlistId)
                 .Select(w => (w.Activities))
                 .Where(a => (a.Filmscreenings.Count()==1));
-            var film = new Films();
-            film.title = "hahah";
             return filmActivities;
         }
 

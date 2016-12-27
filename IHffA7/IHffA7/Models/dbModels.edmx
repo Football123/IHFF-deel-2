@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="dbModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WhatsUp1617S_martinstinsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Activities">
           <Key>
             <PropertyRef Name="id" />
@@ -284,7 +284,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="dbModelsStoreContainer">
+        <EntityContainer Name="WhatsUp1617S_martinstinsModelStoreContainer">
           <EntitySet Name="Activities" EntityType="Self.Activities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Films" EntityType="Self.Films" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Filmscreenings" EntityType="Self.Filmscreenings" Schema="dbo" store:Type="Tables" />
@@ -350,10 +350,11 @@
             <End Role="WishlistItems" EntitySet="WishlistItems" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="dbModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="WhatsUp1617S_martinstinsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Activities">
           <Key>
             <PropertyRef Name="id" />
@@ -405,8 +406,8 @@
           <Property Name="zipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="town" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="streetNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurants_Locations" FromRole="Locations" ToRole="Restaurants" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Rooms_Locations" FromRole="Locations" ToRole="Rooms" />
-          <NavigationProperty Name="Restaurants" Relationship="dbModels.FK_Restaurants_Locations" FromRole="Locations" ToRole="Restaurants" />
         </EntityType>
         <EntityType Name="Reservations">
           <Key>
@@ -432,8 +433,8 @@
           <Property Name="dinnerEnd" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="restaurantLogo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="locationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Locations" Relationship="Self.FK_Restaurants_Locations" FromRole="Restaurants" ToRole="Locations" />
           <NavigationProperty Name="Activities" Relationship="Self.RestaurantVisits" FromRole="Restaurants" ToRole="Activities" />
-          <NavigationProperty Name="Locations" Relationship="dbModels.FK_Restaurants_Locations" FromRole="Restaurants" ToRole="Locations" />
         </EntityType>
         <EntityType Name="Rooms">
           <Key>
@@ -553,6 +554,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Restaurants_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Restaurants">
+              <PropertyRef Name="locationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Rooms_Locations">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
@@ -617,7 +630,7 @@
           <End Role="Activities" Type="Self.Activities" Multiplicity="*" />
           <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="ihffTestConnectionGenerated" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WhatsUp1617S_martinstinsGenerated" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Activities" EntityType="Self.Activities" />
           <EntitySet Name="Films" EntityType="Self.Films" />
           <EntitySet Name="Filmscreenings" EntityType="Self.Filmscreenings" />
@@ -649,6 +662,10 @@
             <End Role="Rooms" EntitySet="Rooms" />
             <End Role="Filmscreenings" EntitySet="Filmscreenings" />
           </AssociationSet>
+          <AssociationSet Name="FK_Restaurants_Locations" Association="Self.FK_Restaurants_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Restaurants" EntitySet="Restaurants" />
+          </AssociationSet>
           <AssociationSet Name="FK_Rooms_Locations" Association="Self.FK_Rooms_Locations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="Rooms" EntitySet="Rooms" />
@@ -673,31 +690,15 @@
             <End Role="Activities" EntitySet="Activities" />
             <End Role="Restaurants" EntitySet="Restaurants" />
           </AssociationSet>
-          <AssociationSet Name="FK_Restaurants_Locations" Association="dbModels.FK_Restaurants_Locations">
-            <End Role="Locations" EntitySet="Locations" />
-            <End Role="Restaurants" EntitySet="Restaurants" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Restaurants_Locations">
-          <End Type="dbModels.Locations" Role="Locations" Multiplicity="1" />
-          <End Type="dbModels.Restaurants" Role="Restaurants" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Locations">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Restaurants">
-              <PropertyRef Name="locationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="dbModelsStoreContainer" CdmEntityContainer="ihffTestConnectionGenerated">
+        <EntityContainerMapping StorageEntityContainer="WhatsUp1617S_martinstinsModelStoreContainer" CdmEntityContainer="WhatsUp1617S_martinstinsGenerated">
           <EntitySetMapping Name="Activities">
-            <EntityTypeMapping TypeName="dbModels.Activities">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Activities">
               <MappingFragment StoreEntitySet="Activities">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="startTime" ColumnName="startTime" />
@@ -709,7 +710,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Films">
-            <EntityTypeMapping TypeName="dbModels.Films">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Films">
               <MappingFragment StoreEntitySet="Films">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
@@ -722,7 +723,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Filmscreenings">
-            <EntityTypeMapping TypeName="dbModels.Filmscreenings">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Filmscreenings">
               <MappingFragment StoreEntitySet="Filmscreenings">
                 <ScalarProperty Name="activityId" ColumnName="activityId" />
                 <ScalarProperty Name="filmId" ColumnName="filmId" />
@@ -732,7 +733,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Locations">
-            <EntityTypeMapping TypeName="dbModels.Locations">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Locations">
               <MappingFragment StoreEntitySet="Locations">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -744,7 +745,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reservations">
-            <EntityTypeMapping TypeName="dbModels.Reservations">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Reservations">
               <MappingFragment StoreEntitySet="Reservations">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="wishlistId" ColumnName="wishlistId" />
@@ -755,7 +756,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Restaurants">
-            <EntityTypeMapping TypeName="dbModels.Restaurants">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Restaurants">
               <MappingFragment StoreEntitySet="Restaurants">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="descriptionNL" ColumnName="descriptionNL" />
@@ -770,7 +771,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rooms">
-            <EntityTypeMapping TypeName="dbModels.Rooms">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Rooms">
               <MappingFragment StoreEntitySet="Rooms">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -780,7 +781,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Specials">
-            <EntityTypeMapping TypeName="dbModels.Specials">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Specials">
               <MappingFragment StoreEntitySet="Specials">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="title" ColumnName="title" />
@@ -792,7 +793,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Specialscreenings">
-            <EntityTypeMapping TypeName="dbModels.Specialscreenings">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Specialscreenings">
               <MappingFragment StoreEntitySet="Specialscreenings">
                 <ScalarProperty Name="activityId" ColumnName="activityId" />
                 <ScalarProperty Name="specialId" ColumnName="specialId" />
@@ -802,7 +803,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="WishlistItems">
-            <EntityTypeMapping TypeName="dbModels.WishlistItems">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.WishlistItems">
               <MappingFragment StoreEntitySet="WishlistItems">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="wishlistId" ColumnName="wishlistId" />
@@ -812,7 +813,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Wishlists">
-            <EntityTypeMapping TypeName="dbModels.Wishlists">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Wishlists">
               <MappingFragment StoreEntitySet="Wishlists">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
@@ -820,7 +821,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="RestaurantVisits" TypeName="dbModels.RestaurantVisits" StoreEntitySet="RestaurantVisits">
+          <AssociationSetMapping Name="RestaurantVisits" TypeName="WhatsUp1617S_martinstinsModel.RestaurantVisits" StoreEntitySet="RestaurantVisits">
             <EndProperty Name="Activities">
               <ScalarProperty Name="id" ColumnName="activityId" />
             </EndProperty>

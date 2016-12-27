@@ -13,10 +13,10 @@ namespace IHffA7.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ihffTestConnectionGenerated : DbContext
+    public partial class WhatsUp1617S_martinstinsGenerated : DbContext
     {
-        public ihffTestConnectionGenerated()
-            : base("name=ihffTestConnectionGenerated")
+        public WhatsUp1617S_martinstinsGenerated()
+            : base("name=WhatsUp1617S_martinstinsGenerated")
         {
         }
     

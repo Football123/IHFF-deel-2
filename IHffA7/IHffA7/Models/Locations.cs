@@ -17,8 +17,8 @@ namespace IHffA7.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Locations()
         {
-            this.Rooms = new HashSet<Rooms>();
             this.Restaurants = new HashSet<Restaurants>();
+            this.Rooms = new HashSet<Rooms>();
         }
     
         public int id { get; set; }
@@ -29,8 +29,8 @@ namespace IHffA7.Models
         public string streetNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rooms> Rooms { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restaurants> Restaurants { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rooms> Rooms { get; set; }
     }
 }
