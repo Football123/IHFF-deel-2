@@ -8,10 +8,28 @@ namespace IHffA7.Models.repositories
     public class DinnerRepository : IDinnerRepository
     {
         //private IhffA7Context ctx = new IhffA7Context();
-
+        private WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
         public IEnumerable<RestaurantOverviewModel> GetAllRestaurants()
         {
-            IEnumerable<RestaurantOverviewModel> restaurantItems = null
+            IList<RestaurantOverviewModel> restaurantItems = new List<RestaurantOverviewModel>() ;
+            foreach( var res in ctx.Restaurants)
+            {
+                RestaurantOverviewModel r = new RestaurantOverviewModel();
+                r.DescriptionNL = res.descriptionNL;
+                r.DinnerEnd = r.DinnerEnd;
+                r.DinnerStart = res.dinnerStart;
+                r.Id = res.id;
+                r.LunchStart = res.lunchStart;
+                r.LunchEnd = res.lunchEnd;
+                r.Name = res.Locations.name;
+                r.RestaurantLogo = res.restaurantLogo;
+                r.Street = res.Locations.street;
+                //r.StreetNumber = res.Locations.streetNumber;
+                r.StreetNumber = 1;
+                var restLocation = res.Locations;
+                r.Town = restLocation.town;
+                r.ZipCode = restLocation.zipCode;
+            }
             /*(
                 from r in ctx.Restaurant
                 join a in ctx.Activity

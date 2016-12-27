@@ -6,7 +6,7 @@
 <h2>films</h2>
 @if (Model.Films != null || Model.Films.Count() != 0)
 {
-@foreach (var film in Model.Films)
+foreach (var film in Model.Films)
 {
     @film.Title<br/>
     @film.TotalPrice;<br />
