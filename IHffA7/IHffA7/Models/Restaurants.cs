@@ -30,8 +30,8 @@ namespace IHffA7.Models
         public string restaurantLogo { get; set; }
         public int locationId { get; set; }
     
-        public virtual Locations Locations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Activities> Activities { get; set; }
+        public virtual Locations Locations { get; set; }
     }
 }

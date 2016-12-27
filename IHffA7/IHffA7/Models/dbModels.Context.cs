@@ -28,7 +28,6 @@ namespace IHffA7.Models
         public virtual DbSet<Activities> Activities { get; set; }
         public virtual DbSet<Films> Films { get; set; }
         public virtual DbSet<Filmscreenings> Filmscreenings { get; set; }
-        public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Reservations> Reservations { get; set; }
         public virtual DbSet<Restaurants> Restaurants { get; set; }
         public virtual DbSet<Rooms> Rooms { get; set; }
@@ -36,5 +35,6 @@ namespace IHffA7.Models
         public virtual DbSet<Specialscreenings> Specialscreenings { get; set; }
         public virtual DbSet<WishlistItems> WishlistItems { get; set; }
         public virtual DbSet<Wishlists> Wishlists { get; set; }
+        public virtual DbSet<Locations> Locations { get; set; }
     }
 }

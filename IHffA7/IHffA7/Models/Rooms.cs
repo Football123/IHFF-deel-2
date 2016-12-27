@@ -28,8 +28,8 @@ namespace IHffA7.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Filmscreenings> Filmscreenings { get; set; }
-        public virtual Locations Locations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Specialscreenings> Specialscreenings { get; set; }
+        public virtual Locations Locations { get; set; }
     }
 }

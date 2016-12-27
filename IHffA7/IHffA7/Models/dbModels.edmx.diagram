@@ -26,13 +26,13 @@
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_WishlistItems_Wishlists" ManuallyRouted="false" />
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.RestaurantVisits" ManuallyRouted="true" >
           <ConnectorPoint PointX="8.5" PointY="3.0521571585917027" />
-          <ConnectorPoint PointX="8.5" PointY="4.2499999999999991" />
-          <ConnectorPoint PointX="9.125" PointY="4.2499999999999991" />
+          <ConnectorPoint PointX="8.5" PointY="4.2499999999999982" />
+          <ConnectorPoint PointX="9.125" PointY="4.2499999999999982" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Locations" Width="1.5" PointX="6.5" PointY="8.625" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Locations" Width="1.5" PointX="6" PointY="8.875" />
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Restaurants_Locations" />
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Rooms_Locations" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
