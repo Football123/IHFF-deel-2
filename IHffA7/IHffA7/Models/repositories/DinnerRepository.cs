@@ -23,10 +23,9 @@ namespace IHffA7.Models.repositories
                 r.LunchEnd = res.lunchEnd;
                 r.Name = res.Locations.name;
                 r.RestaurantLogo = res.restaurantLogo;
-                r.Street = res.Locations.street;
-                //r.StreetNumber = res.Locations.streetNumber;
-                r.StreetNumber = 1;
                 var restLocation = res.Locations;
+                r.Street = restLocation.street;
+                r.StreetNumber = restLocation.streetNumber;
                 r.Town = restLocation.town;
                 r.ZipCode = restLocation.zipCode;
             }

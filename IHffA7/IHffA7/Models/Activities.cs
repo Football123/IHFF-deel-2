@@ -28,7 +28,7 @@ namespace IHffA7.Models
         public Nullable<System.DateTime> endTime { get; set; }
         public decimal price { get; set; }
         public bool highlight { get; set; }
-        public int TypeActivity { get; set; }
+        public int typeActivity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Filmscreenings> Filmscreenings { get; set; }

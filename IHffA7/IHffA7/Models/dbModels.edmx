@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WhatsUp1617S_martinstinsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WhatsUp1617S_martinstinsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Activities">
           <Key>
             <PropertyRef Name="id" />
@@ -14,7 +14,7 @@
           <Property Name="endTime" Type="datetime" />
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="highlight" Type="bit" Nullable="false" />
-          <Property Name="TypeActivity" Type="int" Nullable="false" />
+          <Property Name="typeActivity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Films">
           <Key>
@@ -47,7 +47,7 @@
           <Property Name="street" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="zipCode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="town" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="streetNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="streetNumber" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Reservations">
           <Key>
@@ -350,8 +350,7 @@
             <End Role="WishlistItems" EntitySet="WishlistItems" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WhatsUp1617S_martinstinsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -364,11 +363,11 @@
           <Property Name="endTime" Type="DateTime" Precision="3" />
           <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="highlight" Type="Boolean" Nullable="false" />
-          <Property Name="TypeActivity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Filmscreenings" Relationship="Self.FK_Filmscreenings_Activities" FromRole="Activities" ToRole="Filmscreenings" />
           <NavigationProperty Name="Specialscreenings" Relationship="Self.FK_Specialscreenings_Activities" FromRole="Activities" ToRole="Specialscreenings" />
           <NavigationProperty Name="WishlistItems" Relationship="Self.FK_WishlistItems_Activities" FromRole="Activities" ToRole="WishlistItems" />
           <NavigationProperty Name="Restaurants" Relationship="Self.RestaurantVisits" FromRole="Activities" ToRole="Restaurants" />
+          <Property Name="typeActivity" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Films">
           <Key>
@@ -405,7 +404,6 @@
           <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="zipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="town" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="streetNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Restaurants" Relationship="Self.FK_Restaurants_Locations" FromRole="Locations" ToRole="Restaurants" />
           <NavigationProperty Name="Rooms" Relationship="Self.FK_Rooms_Locations" FromRole="Locations" ToRole="Rooms" />
         </EntityType>
@@ -700,12 +698,12 @@
           <EntitySetMapping Name="Activities">
             <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Activities">
               <MappingFragment StoreEntitySet="Activities">
+                <ScalarProperty Name="typeActivity" ColumnName="typeActivity" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="startTime" ColumnName="startTime" />
                 <ScalarProperty Name="endTime" ColumnName="endTime" />
                 <ScalarProperty Name="price" ColumnName="price" />
                 <ScalarProperty Name="highlight" ColumnName="highlight" />
-                <ScalarProperty Name="TypeActivity" ColumnName="TypeActivity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -740,7 +738,6 @@
                 <ScalarProperty Name="street" ColumnName="street" />
                 <ScalarProperty Name="zipCode" ColumnName="zipCode" />
                 <ScalarProperty Name="town" ColumnName="town" />
-                <ScalarProperty Name="streetNumber" ColumnName="streetNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

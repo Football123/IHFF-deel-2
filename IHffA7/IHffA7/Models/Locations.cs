@@ -26,7 +26,6 @@ namespace IHffA7.Models
         public string street { get; set; }
         public string zipCode { get; set; }
         public string town { get; set; }
-        public string streetNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restaurants> Restaurants { get; set; }
