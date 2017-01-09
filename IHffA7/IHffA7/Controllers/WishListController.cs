@@ -20,40 +20,53 @@ namespace IHffA7.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("GetSavedWishlist");
+            IEnumerable<WishlistItemFilm> films = GetFilmsFromSession();
+            Wishlist wishlist = new Wishlist(films);
+            ViewBag.TotalStudents = "hoi";
+            return View("GetSavedWishlist", wishlist);
         }
 
-        public ActionResult GetSavedWishlist()
+        public ActionResult GetSavedWishlist(int wislistId)
         {
-            int wislistId = 1;
-            Wishlist wishlist = new Wishlist(wishListRepo.GetAllFilmActivies(wislistId));
-            return View(wishlist);
+            //int wislistId = 1;
+            Wishlist wishlist = new Wishlist(wishListRepo.getFilmactivities(wislistId));
+            foreach(var item in wishlist.Films)
+            {
+                AddAFilmToSesWishlist(item.NumberOfPerons, item.ActivityId);
+            }
+            return RedirectToAction("Index");
+            //return View(wishlist);
         }
 
         //alle films staan al in de database
-        public ActionResult AddFilmToSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
+        public ActionResult AddItemToSesWishlist(int numberOfpersones, int activityId, DateTime? startTime)
         {
-            AddAFilmToSesWishlist(numberOfpersones, activityId, start, end);
+            AddAFilmToSesWishlist(numberOfpersones, activityId);
             return RedirectToAction("Index", "WishList");
         }
-//methode
-        public ActionResult RemoveFilmFromSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
+        //methode
+        public ActionResult RemoveFilmFromSesWishlist( int activityId)
         {
-            SessionFilm film = new SessionFilm(numberOfpersones, activityId);
             List<SessionFilm> filmlist = new List<SessionFilm>();
             if (Session["filmlist"] != null)
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
+                //var filmpkje= filmlist.Select(f => (f.ActivityId==activityId)).SingleOrDefault();
+                //filmlist.RemoveAt(1);
+                filmlist.RemoveAll(x => (x.ActivityId == activityId));
+                Session["filmlist"] = filmlist;
+
+                /*
                 filmlist.ToList();
                 foreach (var i in filmlist)
                 {
                     if (film ==i)
                     {
-                        filmlist.RemoveAt(1);
+                        filmlist.Remove(i);
                         filmlist = (List<SessionFilm>)Session["filmlist"];
                         break;
                     }
-                }
+                }*/
             }
             else
             { // untested what it actually does
@@ -63,10 +76,11 @@ namespace IHffA7.Controllers
         }
 
 //AddAFilmToSesWishlist
-        public void AddAFilmToSesWishlist(int numberOfpersones, int activityId, DateTime start, DateTime end)
+        public void AddAFilmToSesWishlist(int numberOfpersones, int activityId)
         {
-            SessionFilm film = new SessionFilm(numberOfpersones, activityId);
+            SessionFilm film = new SessionFilm(numberOfpersones, activityId, null);
             List<SessionFilm> filmlist = new List<SessionFilm>();
+            bool inList = false;
             if (Session["filmlist"] == null) //als niet bestaat, maak aan
             {
                 Session["filmlist"] = filmlist;
@@ -74,6 +88,20 @@ namespace IHffA7.Controllers
             else // anderes ophalen
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
+                //check op dubbelen
+                foreach(SessionFilm item in filmlist)
+                {
+                    if (item.ActivityId== activityId)
+                    {
+                        item.NumberOfpersones = +numberOfpersones;
+                        inList = true;
+                        break;
+                    }
+                }
+            }
+            if (!inList)
+            {
+                filmlist.Add(film);
             }
             // check of hij niet bestaal in de lijst
 
@@ -81,14 +109,14 @@ namespace IHffA7.Controllers
         }
 
  //methode
-        public IList<WishlistItemFilm> GetFilmsFromSession()
+        public IEnumerable<WishlistItemFilm> GetFilmsFromSession()
         {
             List<SessionFilm> filmlist = new List<SessionFilm>();
-            IList<WishlistItemFilm> wishlistItemsFilmList;
+            IEnumerable<WishlistItemFilm> wishlistItemsFilmList;
             if (Session["filmlist"] != null)
             {
                 filmlist = (List<SessionFilm>)Session["filmlist"];
-                wishlistItemsFilmList = null; // wishListRepository.GetAllWishlistFilms(filmlist);
+                wishlistItemsFilmList = wishListRepo.getFilmactivities(filmlist); // wishListRepository.GetAllWishlistFilms(filmlist);
             }
             else // als niet bestaat maakt null, view model support geen nullables 
             {
@@ -97,12 +125,23 @@ namespace IHffA7.Controllers
             return wishlistItemsFilmList;
         }
 
-        public ActionResult SaveWishlist(string email)
+        public ActionResult SaveWishlist()
         {
-            //save the wish list and get de wishlist id code, maak hier de code van
-            // get saved wishlist kan dan niet meer, omdat de id er niet uit te halen is...
-            string code = CodeGenerator.Encrypt(1.ToString(), email);
-            return View();
+
+            List<SessionFilm> filmlist = new List<SessionFilm>();;
+            if (Session["filmlist"] != null)
+            {
+                filmlist = (List<SessionFilm>)Session["filmlist"];
+                try {
+                    wishListRepo.SaveFilmactivities(filmlist);
+                    ViewBag.TotalStudents = "succesvol opgeslagen";
+                }
+                catch
+                {
+                    ViewBag.TotalStudents = "Iets ging mis!";
+                }
+            }
+            return RedirectToAction("Index");
         }
     }
 }

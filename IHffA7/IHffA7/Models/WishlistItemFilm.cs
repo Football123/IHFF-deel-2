@@ -17,6 +17,8 @@ namespace IHffA7.Models
         public string RoomName { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime? EndTime { get; set; }
+        public int ActivityId { get; set; }
+        public int NumberOfPerons { get; set; }
 
         public WishlistItemFilm()
         {
@@ -31,6 +33,22 @@ namespace IHffA7.Models
             RoomName = room.name;
             StartTime = activiteit.startTime;
             EndTime = activiteit.endTime;
+            ActivityId = activiteit.id;
+            NumberOfPerons = wishitem.numberOfPersons;
+        }
+
+        public WishlistItemFilm(string title, decimal totalpricee, int availableSeats, string locationname, string roomname, DateTime startTime, DateTime? endTime, 
+            int activityId, int numberOfPersons, decimal totalprice, string roomName)
+        {
+            Title = title;
+            TotalPrice = totalprice;
+            AvailableSeats = availableSeats;
+            LocationName = locationname;
+            RoomName = roomName;
+            StartTime = startTime;
+            EndTime = endTime;
+            ActivityId = activityId;
+            NumberOfPerons = numberOfPersons;
         }
 
         public void Add(WishlistItemFilm film)

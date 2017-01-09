@@ -4,7 +4,8 @@
 }
 
 <h2>films</h2>
-@if (Model.Films != null || Model.Films.Count() != 0)
+<h2>@ViewBag.SuccesSave</h2>
+@if (Model.Films != null)
 {
 foreach (var film in Model.Films)
 {
@@ -15,6 +16,32 @@ foreach (var film in Model.Films)
     @film.RoomName;<br />
     @film.StartTime; <br />
     @film.EndTime;<br />
+    @film.NumberOfPerons;<br />
+
+    @Html.ActionLink("Remover", "RemoveFilmFromSesWishlist", "WishList", new
+{
+    activityId = film.ActivityId,
+}, null)
     <br />
+    }
 }
-}
+@Html.ActionLink("Add acty 1 to list to wishlists", "AddItemToSesWishlist", new
+{
+    numberOfpersones = 2,
+    activityId = 1,
+}, null)
+
+@Html.ActionLink("Add acty 2 to list to wishlists", "AddItemToSesWishlist", "WishList", new
+{
+    numberOfpersones = 2,
+    activityId = 2,
+}, null)
+<br/><br/>
+
+@Html.ActionLink("Get saved wishlist", "GetSavedWishlist", "WishList", new
+{
+    wislistId = 1
+}, new { @class = "btn btn-default" })
+
+@Html.ActionLink("saved wishlist", "SaveWishlist", "WishList",
+    new { @class = "btn btn-default" })

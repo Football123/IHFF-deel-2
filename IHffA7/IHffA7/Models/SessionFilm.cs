@@ -12,12 +12,13 @@ namespace IHffA7.Models
     {
         public int NumberOfpersones;
         public int ActivityId;
-        public DateTime Start;
+        public DateTime? StartTime { get; set; }
 
-        public SessionFilm(int numberOfpersones, int activityId)
+        public SessionFilm(int numberOfpersones, int activityId, DateTime? startTime)
         {
             this.NumberOfpersones = numberOfpersones;
             this.ActivityId = activityId;
+            StartTime = startTime;
         }
     }
 }

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<IHffA7.Models.Activities>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Titel</th>
+        <th>
+            @Html.DisplayNameFor(model => model.startTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.endTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.highlight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.typeActivity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @if (item.typeActivity == 1)
+        {
+        <td>
+            @if (item.Filmscreenings.Single().Films.title != null)
+            {
+                @Html.DisplayFor(modelItem => item.Filmscreenings.Single().Films.title);
+            }
+
+        </td>
+        }
+        @if (item.typeActivity == 2)
+        {
+            <td>
+                @if (item.Specialscreenings.Single().Specials.title != null)
+                {
+                    @Html.DisplayFor(modelItem => item.Specialscreenings.Single().Specials.title);
+                }
+
+            </td>
+        }
+        @if (item.typeActivity == 3)
+        {
+            <td>
+                @if (item.Restaurants.Single().Locations.name != null)
+                {
+                    @Html.DisplayFor(modelItem => item.Restaurants.Single().Locations.name);
+                }
+
+            </td>
+        }
+        <td>
+            @Html.DisplayFor(modelItem => item.startTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.endTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.highlight)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.typeActivity)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
