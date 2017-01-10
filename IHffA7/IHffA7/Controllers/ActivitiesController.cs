@@ -56,19 +56,57 @@ namespace IHffA7.Controllers
             ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
             return View();
         }
-
-        public ActionResult Create2()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFilm(Films film)
         {
-            IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
+            if (ModelState.IsValid)
             {
-                Value = c.Films.id.ToString(),
-                Text = c.Films.title.ToString()
-            });
-            ViewBag.FilmId = items;
+                //test to so what is in it
+                activitiesRepo.SaveFilm(film);
+                return RedirectToAction("Index");
+            }
+            //viewbaag moet weer opniew worden gemaakt
             ViewBag.activityId = new SelectList(db.Activities, "id", "id");
             ViewBag.filmId = new SelectList(db.Films, "id", "title");
             ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
+
+            return RedirectToAction("Index");
+        }
+        public ActionResult CreateRestaurant()
+        {
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name");
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRestaurant(Restaurants restaurant)
+        {
+            if (ModelState.IsValid)
+            {
+                //test to so what is in it
+                activitiesRepo.SaveRestaurant(restaurant);
+                return RedirectToAction("Index");
+            }
+            //viewbaag moet weer opniew worden gemaakt
+            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
+            ViewBag.filmId = new SelectList(db.Films, "id", "title");
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult CreateFilmscreening()
+        {
+            FillFilmscreeninsDropdowns();
+            return View();
+        }
+
+        private void FillFilmscreeninsDropdowns()
+        {
+            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
+            ViewBag.filmId = new SelectList(db.Films, "id", "title");
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
         }
         //not nin use, but nice xample of and selectlit
         public ActionResult Create3()
@@ -83,7 +121,7 @@ namespace IHffA7.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create2( Filmscreenings screenings)
+        public ActionResult CreateFilmscreening( Filmscreenings screenings)
         {
             if (ModelState.IsValid)
             {
@@ -93,10 +131,8 @@ namespace IHffA7.Controllers
                 activitiesRepo.SaveFilmScreening(screenings);
                 return RedirectToAction("Index");
             }
-            //viewbaag moet weer opniew worden gemaakt
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
+            //viewbag moet weer opniew worden gevuld
+            FillFilmscreeninsDropdowns();
 
             return View(screenings);
         }
@@ -119,7 +155,7 @@ namespace IHffA7.Controllers
         }
 
         // GET: Activities/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditOldAutoGen(int? id)
         {
             if (id == null)
             {
@@ -132,21 +168,50 @@ namespace IHffA7.Controllers
             }
             return View(activities);
         }
+        public ActionResult EditFilmScreening(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Activities activities = db.Activities.Find(id);
+            if (activities == null)
+            {
+                return HttpNotFound();
+            }
+            //viewbaag moet weer opniew worden gemaakt
+            FillFilmscreeninsDropdowns();
+            return View("CreateFilmscreening", activities.Filmscreenings.Single());
+        }
 
         // POST: Activities/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,startTime,endTime,price,highlight,typeActivity")] Activities activities)
+        public ActionResult EditFilmScreening(Filmscreenings screenings)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(activities).State = EntityState.Modified;
-                db.SaveChanges();
+                screenings.Activities.typeActivity = 1;
+                screenings.Activities.id = screenings.activityId;
+                activitiesRepo.ModifyActivity(screenings);
                 return RedirectToAction("Index");
             }
-            return View(activities);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSpecial(Specialscreenings screening)
+        {
+            if (ModelState.IsValid)
+            {
+                screening.Activities.typeActivity = 1;
+                screening.Activities.id = screening.activityId;
+                activitiesRepo.ModifyActivity(screening);
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Activities/Delete/5

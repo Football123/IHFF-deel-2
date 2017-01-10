@@ -18,5 +18,31 @@ namespace IHffA7.Models.repositories
             ctx.Filmscreenings.Add(filmscreening);
             ctx.SaveChanges();
         }
+        public void SaveFilm(Films film)
+        {
+            //test
+            ctx.Films.Add(film);
+            ctx.SaveChanges();
+        }
+
+        public void SaveRestaurant(Restaurants restaurant)
+        {
+            ctx.Restaurants.Add(restaurant);
+            ctx.SaveChanges();
+        }
+
+        public void ModifyActivity(Filmscreenings film)
+        {
+            ctx.Entry(film.Activities).State = EntityState.Modified;
+            ctx.Entry(film).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
+
+        public void ModifyActivity(Specialscreenings Special)
+        {
+            ctx.Entry(Special.Activities).State = EntityState.Modified;
+            ctx.Entry(Special).State = EntityState.Modified;
+            ctx.SaveChanges();
+        }
     }
 }
