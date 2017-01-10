@@ -84,6 +84,7 @@ namespace IHffA7.Controllers
             if (Session["filmlist"] == null) //als niet bestaat, maak aan
             {
                 Session["filmlist"] = filmlist;
+                
             }
             else // anderes ophalen
             {
