@@ -25,7 +25,7 @@ namespace IHffA7.Models.repositories
             {
 
                 var activiteit = wishitem.Activities;
-                if (activiteit.TypeActivity == 1)
+                if (activiteit.typeActivity == 1)
                 {
                     var screening = activiteit.Filmscreenings.Single();
                     var film = screening.Films;
@@ -34,7 +34,7 @@ namespace IHffA7.Models.repositories
                     // beter om de lijstjes van de view model te vullen!
                     wishlistItemFilm.Add(new WishlistItemFilm(wishitem, activiteit, screening, film, location, room, wishitem.numberOfPersons * activiteit.price));
                 }
-                if (activiteit.TypeActivity == 2)
+                if (activiteit.typeActivity == 2)
                 {
                     var screening = activiteit.Specialscreenings.Single();
                     var special = screening.Specials;
@@ -42,7 +42,7 @@ namespace IHffA7.Models.repositories
                     var location = room.Locations;
                     //add to specials list
                 }
-                if (activiteit.TypeActivity == 3)
+                if (activiteit.typeActivity == 3)
                 {
                     var restaurant = activiteit.Restaurants.Single();
                     var location = restaurant.Locations;
