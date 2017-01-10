@@ -170,7 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ActivitiesManagerController.cs" />
+    <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\DinnerController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -183,8 +183,9 @@
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActivitiesOverViewModel.cs" />
+    <Compile Include="Models\ActivitiesViewModel.cs" />
     <Compile Include="Models\activityType.cs" />
-    <Compile Include="Models\CodeGenerator.cs" />
     <Compile Include="Models\dbModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -211,7 +212,7 @@
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\repositories\ActivitiesManagerRepository.cs" />
+    <Compile Include="Models\repositories\ActivitiesRepository.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
     <Compile Include="Models\repositories\IDinnerRepository.cs" />
@@ -327,11 +328,15 @@
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Dinner\Restaurants.cshtml" />
     <Content Include="Views\WishList\GetSavedWishlist.cshtml" />
+    <Content Include="Views\Activities\Create.cshtml" />
+    <Content Include="Views\Activities\Delete.cshtml" />
+    <Content Include="Views\Activities\Details.cshtml" />
+    <Content Include="Views\Activities\Edit.cshtml" />
+    <Content Include="Views\Activities\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\ActivitiesManager\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
