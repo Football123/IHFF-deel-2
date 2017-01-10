@@ -12,7 +12,7 @@ namespace IHffA7.Models.repositories
     class WishlistRepository
     {
 
-        //IhffA7Context ctx = new IhffA7Context(); //echt online db
+        //IhffA7Context ctx = new IhffA7Context(); //echt online dbd
         WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
 
         private IQueryable<WishlistItems> GetWishlistItems(int wishlistId, int typeActivity)
