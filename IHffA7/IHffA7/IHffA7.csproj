@@ -206,6 +206,7 @@
     <Compile Include="Models\Filmscreenings.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FilmsTodayModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Locations.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
@@ -214,7 +215,9 @@
     <Compile Include="Models\repositories\ActivitiesManagerRepository.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
+    <Compile Include="Models\repositories\HomeRepository.cs" />
     <Compile Include="Models\repositories\IDinnerRepository.cs" />
+    <Compile Include="Models\repositories\IHomeRepository.cs" />
     <Compile Include="Models\repositories\WishlistRepository.cs" />
     <Compile Include="Models\Reservations.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
