@@ -10,8 +10,17 @@ namespace IHffA7.Controllers
 {
     public class HomeController : Controller
     {
-        WishlistRepository wishListRepository = new WishlistRepository();
+        HomeRepository homeRepository = new HomeRepository();
+
         public ActionResult Index()
+        {
+            IEnumerable<FilmsTodayModel> filmTodayItems = homeRepository.GetTodaysMovies();
+
+            return View(filmTodayItems);
+        }
+
+        [HttpPost]
+        public ActionResult Index(FilmsTodayModel ftm)
         {
             return View();
         }

@@ -96,35 +96,29 @@ nav ul li {
     margin-right: 2%;
 }
 /**********************DINNER/RESTAURANTS**********************/
-.restaurantFullBlock {
-    width: 100%;
-    min-height: 200px;
-    #border: red 1px solid;
-}
-
 .restaurantLeftBlock {
     float: left;
-    width: 49%;
+    width: 50%;
     min-height: 200px;
-    #border: blue 1px solid;
+    border: blue 1px solid;
     position: relative;
+    margin-bottom: 1em;
 }
 
-
 .restaurantRightBlock {
-    #background-image: url("~/Content/Images/restaurants/u1614.jpg");
-    #background-color: red;
+    /*background-image: url("~/Content/Images/restaurants/u1614.jpg");
+    background-color: red;*/
     float: right;
-    width: 49%;
-    #border: green 1px solid;
+    width: 50%;
+    border: green 1px solid;
     min-height: 200px;
     position: relative;
+    margin-bottom: 2.6em;
 }
 
 .restaurantMiddleBlock {
     background-color: white;
     min-height: 50%;
     margin: 15% 12.5%;
-    #border: black 1px solid;
     position: relative;
 }
