@@ -7,150 +7,123 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IHffA7.Models;
-using IHffA7.Models.repositories;
 
 namespace IHffA7.Controllers
 {
-    public class ActivitiesController : Controller
+    public class FilmscreeningsController : Controller
     {
-        private ActivitiesRepository ActivitiesRepo;
         private WhatsUp1617S_martinstinsGenerated db = new WhatsUp1617S_martinstinsGenerated();
 
-        // GET: Activities
+        // GET: Filmscreenings
         public ActionResult Index()
         {
-            return View(db.Activities.ToList());
+            var filmscreenings = db.Filmscreenings.Include(f => f.Activities).Include(f => f.Films).Include(f => f.Rooms);
+            return View(filmscreenings.ToList());
         }
 
-        // GET: Activities/Details/5
+        // GET: Filmscreenings/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activities activities = db.Activities.Find(id);
-            if (activities == null)
+            Filmscreenings filmscreenings = db.Filmscreenings.Find(id);
+            if (filmscreenings == null)
             {
                 return HttpNotFound();
             }
-            return View(activities);
+            return View(filmscreenings);
         }
 
-        // GET: Activities/Create
+        // GET: Filmscreenings/Create
         public ActionResult Create()
         {
-            return View();
-        }
-
-        public ActionResult Create2()
-        {
-            IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
-            {
-                Value = c.Films.id.ToString(),
-                Text = c.Films.title.ToString()
-            });
-            ViewBag.FilmId = items;
             ViewBag.activityId = new SelectList(db.Activities, "id", "id");
             ViewBag.filmId = new SelectList(db.Films, "id", "title");
             ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
             return View();
         }
-        public ActionResult Create3()
-        {
-            IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
-            {
-                Value = c.Films.id.ToString(),
-                Text = c.Films.title.ToString()
-            });
-            ViewBag.FilmId = items;
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create2(Activities activities, Filmscreenings screenings)
-        {
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("Index");
-            }
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
 
-            return View(screenings);
-        }
-
-        // POST: Activities/Create
+        // POST: Filmscreenings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,startTime,endTime,price,highlight,typeActivity")] Activities activities)
+        public ActionResult Create([Bind(Include = "activityId,filmId,availableSeats,roomId")] Filmscreenings filmscreenings)
         {
             if (ModelState.IsValid)
             {
-                db.Activities.Add(activities);
+                db.Filmscreenings.Add(filmscreenings);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(activities);
+            ViewBag.activityId = new SelectList(db.Activities, "id", "id", filmscreenings.activityId);
+            ViewBag.filmId = new SelectList(db.Films, "id", "title", filmscreenings.filmId);
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name", filmscreenings.roomId);
+            return View(filmscreenings);
         }
 
-        // GET: Activities/Edit/5
+        // GET: Filmscreenings/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activities activities = db.Activities.Find(id);
-            if (activities == null)
+            Filmscreenings filmscreenings = db.Filmscreenings.Find(id);
+            if (filmscreenings == null)
             {
                 return HttpNotFound();
             }
-            return View(activities);
+            ViewBag.activityId = new SelectList(db.Activities, "id", "id", filmscreenings.activityId);
+            ViewBag.filmId = new SelectList(db.Films, "id", "title", filmscreenings.filmId);
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name", filmscreenings.roomId);
+            return View(filmscreenings);
         }
 
-        // POST: Activities/Edit/5
+        // POST: Filmscreenings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,startTime,endTime,price,highlight,typeActivity")] Activities activities)
+        public ActionResult Edit([Bind(Include = "activityId,filmId,availableSeats,roomId")] Filmscreenings filmscreenings)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(activities).State = EntityState.Modified;
+                db.Entry(filmscreenings).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(activities);
+            ViewBag.activityId = new SelectList(db.Activities, "id", "id", filmscreenings.activityId);
+            ViewBag.filmId = new SelectList(db.Films, "id", "title", filmscreenings.filmId);
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name", filmscreenings.roomId);
+            return View(filmscreenings);
         }
 
-        // GET: Activities/Delete/5
+        // GET: Filmscreenings/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activities activities = db.Activities.Find(id);
-            if (activities == null)
+            Filmscreenings filmscreenings = db.Filmscreenings.Find(id);
+            if (filmscreenings == null)
             {
                 return HttpNotFound();
             }
-            return View(activities);
+            return View(filmscreenings);
         }
 
-        // POST: Activities/Delete/5
+        // POST: Filmscreenings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Activities activities = db.Activities.Find(id);
-            db.Activities.Remove(activities);
+            Filmscreenings filmscreenings = db.Filmscreenings.Find(id);
+            db.Filmscreenings.Remove(filmscreenings);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

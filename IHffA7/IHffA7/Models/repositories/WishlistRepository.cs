@@ -49,7 +49,6 @@ namespace IHffA7.Models.repositories
                 var film = screening.Films;
                 var room = screening.Rooms;
                 var location = room.Locations;
-                var TET = film.Filmscreenings.Single().Activities.price;
 
                 /*var id = wishitem.Activities.id;
                 var startTime = wishitem.Activities.startTime;
@@ -77,7 +76,6 @@ namespace IHffA7.Models.repositories
                     .Include(f => f.Filmscreenings.Select(ff => ff.Films))
                     .Include(r => r.Filmscreenings.Select(rr => rr.Rooms))
                     .Include(l => l.Filmscreenings.Select(ll => ll.Rooms.Locations));
-
                 var activities = eagerloadActivities.Single();
                 var screening = activities.Filmscreenings.Single();
                 var film = screening.Films;
@@ -106,9 +104,9 @@ namespace IHffA7.Models.repositories
                 }
 
                 wislist.WishlistItems.Add(wishslistitem);
-                ctx.SaveChanges();
             }
-            
+            ctx.SaveChanges();
+
         }
 
     }

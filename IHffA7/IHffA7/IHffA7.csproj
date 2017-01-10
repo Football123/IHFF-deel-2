@@ -173,6 +173,7 @@
     <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\DinnerController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
+    <Compile Include="Controllers\FilmscreeningsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Models\repositories\FilmRepository.cs" />
     <Compile Include="Models\repositories\IDinnerRepository.cs" />
     <Compile Include="Models\repositories\WishlistRepository.cs" />
+    <Compile Include="Models\repositories\WishlistSessionRepository.cs" />
     <Compile Include="Models\Reservations.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
@@ -333,6 +335,13 @@
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Activities\Edit.cshtml" />
     <Content Include="Views\Activities\Index.cshtml" />
+    <Content Include="Views\Activities\Create2.cshtml" />
+    <Content Include="Views\Activities\Create3.cshtml" />
+    <Content Include="Views\Filmscreenings\Create.cshtml" />
+    <Content Include="Views\Filmscreenings\Delete.cshtml" />
+    <Content Include="Views\Filmscreenings\Details.cshtml" />
+    <Content Include="Views\Filmscreenings\Edit.cshtml" />
+    <Content Include="Views\Filmscreenings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
