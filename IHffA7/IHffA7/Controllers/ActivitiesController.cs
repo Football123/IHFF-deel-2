@@ -45,15 +45,6 @@ namespace IHffA7.Controllers
 
         public ActionResult CreateFilm()
         {
-            IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
-            {
-                Value = c.Films.id.ToString(),
-                Text = c.Films.title.ToString()
-            });
-            ViewBag.FilmId = items;
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
             return View();
         }
         [HttpPost]
@@ -66,12 +57,8 @@ namespace IHffA7.Controllers
                 activitiesRepo.SaveFilm(film);
                 return RedirectToAction("Index");
             }
-            //viewbaag moet weer opniew worden gemaakt
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
 
-            return RedirectToAction("Index");
+            return View(film);
         }
         public ActionResult CreateRestaurant()
         {
@@ -89,11 +76,9 @@ namespace IHffA7.Controllers
                 return RedirectToAction("Index");
             }
             //viewbaag moet weer opniew worden gemaakt
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name"); ;
 
-            return RedirectToAction("Index");
+            return View(restaurant);
         }
 
         public ActionResult CreateFilmscreening()
@@ -108,7 +93,7 @@ namespace IHffA7.Controllers
             ViewBag.filmId = new SelectList(db.Films, "id", "title");
             ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
         }
-        //not nin use, but nice xample of and selectlit
+        //not in use, but nice xample of and selectlit
         public ActionResult Create3()
         {
             IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
