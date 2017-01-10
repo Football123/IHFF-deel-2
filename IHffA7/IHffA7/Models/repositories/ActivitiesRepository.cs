@@ -11,10 +11,11 @@ namespace IHffA7.Models.repositories
     {
         WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated(); //test offline db
 
-        public void saveFilm(Films film)
+        public void SaveFilmScreening(Filmscreenings filmscreening)
         {
             //test
-            ctx.Films.Add(film);
+            ctx.Activities.Add(filmscreening.Activities);
+            ctx.Filmscreenings.Add(filmscreening);
             ctx.SaveChanges();
         }
     }
