@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace IHffA7.Models.repositories
 {
-    class ActivitiesManagerRepository
+    class WishlistSessionRepository
     {
-        WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated(); //test offline db
     }
 }

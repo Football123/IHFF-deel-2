@@ -8,11 +8,13 @@ namespace IHffA7.Models.repositories
 {
     class FilmRepository
     {
-        /*private IhffA7Context ctx = new IhffA7Context();
+        private WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
         public Films GetFilm(int filmId)
         {
-            return ctx.Film.SingleOrDefault(c => (c.Id == filmId));
-            ///hoiddd
-        }*/
+            var i = 
+                ctx.Films.SingleOrDefault (c => (c.id == filmId));
+            return i;
+            
+        }
     }
 }

@@ -170,9 +170,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ActivitiesManagerController.cs" />
+    <Compile Include="Controllers\ActivitiesController.cs" />
     <Compile Include="Controllers\DinnerController.cs" />
     <Compile Include="Controllers\FilmController.cs" />
+    <Compile Include="Controllers\FilmscreeningsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WishListController.cs" />
@@ -183,8 +184,9 @@
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActivitiesOverViewModel.cs" />
+    <Compile Include="Models\ActivitiesViewModel.cs" />
     <Compile Include="Models\activityType.cs" />
-    <Compile Include="Models\CodeGenerator.cs" />
     <Compile Include="Models\dbModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -212,13 +214,14 @@
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\repositories\ActivitiesManagerRepository.cs" />
+    <Compile Include="Models\repositories\ActivitiesRepository.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
     <Compile Include="Models\repositories\HomeRepository.cs" />
     <Compile Include="Models\repositories\IDinnerRepository.cs" />
     <Compile Include="Models\repositories\IHomeRepository.cs" />
     <Compile Include="Models\repositories\WishlistRepository.cs" />
+    <Compile Include="Models\repositories\WishlistSessionRepository.cs" />
     <Compile Include="Models\Reservations.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
@@ -330,11 +333,23 @@
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Dinner\Restaurants.cshtml" />
     <Content Include="Views\WishList\GetSavedWishlist.cshtml" />
+    <Content Include="Views\Activities\Create.cshtml" />
+    <Content Include="Views\Activities\Delete.cshtml" />
+    <Content Include="Views\Activities\Details.cshtml" />
+    <Content Include="Views\Activities\Edit.cshtml" />
+    <Content Include="Views\Activities\Index.cshtml" />
+    <Content Include="Views\Activities\Create2.cshtml" />
+    <Content Include="Views\Activities\Create3.cshtml" />
+    <Content Include="Views\Filmscreenings\Create.cshtml" />
+    <Content Include="Views\Filmscreenings\Delete.cshtml" />
+    <Content Include="Views\Filmscreenings\Details.cshtml" />
+    <Content Include="Views\Filmscreenings\Edit.cshtml" />
+    <Content Include="Views\Filmscreenings\Index.cshtml" />
+    <Content Include="Views\Activities\CreateFilm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\" />
-    <Folder Include="Views\ActivitiesManager\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
