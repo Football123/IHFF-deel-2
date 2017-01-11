@@ -7,9 +7,11 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New Filmscreening", "CreateFilmscreening", null, new { @class = "btn btn-default" })<br/>
+    @Html.ActionLink("Create New Filmscreening", "CreateFilmscreening", null, new { @class = "btn btn-default" })<br/><br/>
     @Html.ActionLink("Create New Film", "CreateFilm",null, new { @class = "btn btn-default" })
     @Html.ActionLink("Create New Restaurant", "CreateRestaurant", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Create New Special", "CreateSpecial", null, new { @class = "btn btn-default" })
+
 
 
 </p>
@@ -81,11 +83,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.typeActivity)
         </td>
+        @if (item.typeActivity == 1)
+        {
         <td>
-            @Html.ActionLink("Edit", "EditFilmScreening", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Edit", "EditFilmScreening", new { id = item.id }) |
+            @Html.ActionLink("Delete", "DeleteFilmScreening", new { id = item.id })
         </td>
+        }
     </tr>
 }
 

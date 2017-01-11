@@ -347,6 +347,8 @@
     <Content Include="Views\Filmscreenings\Index.cshtml" />
     <Content Include="Views\Activities\CreateFilm.cshtml" />
     <Content Include="Views\Activities\CreateRestaurant.cshtml" />
+    <Content Include="Views\Activities\DeleteFilmScreening.cshtml" />
+    <Content Include="Views\Activities\CreateSpecial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
