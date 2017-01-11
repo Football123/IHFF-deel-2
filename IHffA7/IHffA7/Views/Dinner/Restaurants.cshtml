@@ -32,7 +32,7 @@
                     <h3>Voeg boeking toe aan wishlist</h3>
                     <strong>Datum en tijd:</strong>
                         <br />
-                    @Html.HiddenFor(m => item.Id, new { @name = item.Id })
+                    @Html.Hidden("Id", item.Id)
                     @Html.DropDownList("Datum", new List<SelectListItem>
                     {
                        new SelectListItem { Text = "Maandag 9 januari", Value = "1/9/2017" },

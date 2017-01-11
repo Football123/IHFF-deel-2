@@ -23,7 +23,7 @@ namespace IHffA7.Controllers
         }
 
         [HttpPost]
-        public ActionResult Restaurants(RestaurantOverviewModel rom)
+        public ActionResult Restaurants(RestaurantOverviewModel rom) //Dropdownlist items: Datum, Tijd, AantalPersonen -- Restaurant: Id
         {
             return RedirectToAction("Restaurants");
         }
