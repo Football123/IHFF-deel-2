@@ -351,6 +351,8 @@
     <Content Include="Views\Activities\CreateSpecial.cshtml" />
     <Content Include="Views\Activities\CreateSpecialsscreening.cshtml" />
     <Content Include="Views\Activities\HiddenforactivityId.cshtml" />
+    <Content Include="Views\Activities\CreateRoom.cshtml" />
+    <Content Include="Views\Activities\CreateLocation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,8 +9,10 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    if ("IsEditing" != null)
+    <!-- test, als dit het doet, is model voor create als edit goed!, probeer anderd met bind te voorkomen dat het niet binnenkomt in de create post-->
+    if (ViewBag.IsEditing == true )
     {
+        <h4>Editing</h4>
         @Html.HiddenFor(model => model.activityId);
     }
     <div class="form-horizontal">

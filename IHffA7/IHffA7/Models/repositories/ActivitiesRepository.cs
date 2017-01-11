@@ -28,20 +28,40 @@ namespace IHffA7.Models.repositories
         public void SaveSpecialsScreening(Specialscreenings specailscreening)
         {
             //test
-            ctx.Specials.Add(specailscreening.Specials);
+            ctx.Activities.Add(specailscreening.Activities);
             ctx.Specialscreenings.Add(specailscreening);
             ctx.SaveChanges();
         }
         public void SaveFilm(Films film)
         {
-            //test
             ctx.Films.Add(film);
+            ctx.SaveChanges();
+        }
+
+        public void SaveRoom(Rooms room)
+        {
+            ctx.Rooms.Add(room);
+            ctx.SaveChanges();
+        }
+
+        public void SaveLocation(Locations location)
+        {
+            ctx.Locations.Add(location);
             ctx.SaveChanges();
         }
 
         public void SaveRestaurant(Restaurants restaurant)
         {
             ctx.Restaurants.Add(restaurant);
+            for (DateTime start =restaurant.lunchStart; start<= restaurant.lunchEnd; start = start.AddMinutes(30))
+            {
+                Activities activity = new Activities();
+                activity.typeActivity = 3;
+                activity.highlight = false;
+                activity.price = 10;
+                activity.startTime = start;
+                restaurant.Activities.Add(activity);
+            }
             ctx.SaveChanges();
         }
 
@@ -54,7 +74,7 @@ namespace IHffA7.Models.repositories
         public void ModifyActivity(Filmscreenings film)
         {
             ctx.Entry(film.Activities).State = EntityState.Modified;
-           // ctx.Entry(film).State = EntityState.Modified;
+            ctx.Entry(film).State = EntityState.Modified;
             ctx.SaveChanges();
         }
         //not yet used

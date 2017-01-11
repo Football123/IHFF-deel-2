@@ -45,10 +45,19 @@ namespace IHffA7.Controllers
 
         public ActionResult CreateSpecial()
         {
-            
+            return View();
+        }
+
+        public ActionResult CreateRoom()
+        {
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name");
             return View();
         }
         public ActionResult CreateFilm()
+        {
+            return View();
+        }
+        public ActionResult CreateLocation()
         {
             return View();
         }
@@ -91,21 +100,19 @@ namespace IHffA7.Controllers
                 }
             }
             //viewbaag moet weer opniew worden gemaakt
-            ViewBag.locationId = new SelectList(db.Locations, "id", "name"); ;
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name"); 
 
             return View(restaurant);
         }
 
         public ActionResult CreateFilmscreening()
         {
-            ViewBag.IsEditing = null;
             FillFilmscreeninsDropdownsWithSecection(null,null);
             return View();
         }
 
         public ActionResult CreateSpecialsscreening()
         {
-            ViewBag.IsEditing = null;
             FillSpecialsscreeninsDropdownsWithSecection(null,null);
             return View();
         }
@@ -198,6 +205,44 @@ namespace IHffA7.Controllers
             return View(special);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateLocation(Locations location)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    activitiesRepo.SaveLocation(location);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View(location);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRoom(Rooms rooms)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    activitiesRepo.SaveRoom(rooms);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View(rooms);
+        }
+
         // POST: Activities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -247,7 +292,7 @@ namespace IHffA7.Controllers
                 Filmscreenings filmscreening = activitiesRepo.GetFilmscreening(id);
                 FillFilmscreeninsDropdownsWithSecection(filmscreening.roomId, filmscreening.filmId);
                 //FillFilmscreeninsDropdowns();
-                ViewBag.IsEditing = "true";
+                ViewBag.IsEditing = true;
                 return View("CreateFilmscreening", filmscreening);
             }
             catch
@@ -277,6 +322,7 @@ namespace IHffA7.Controllers
                 }
                 
             }
+            ViewBag.IsEditing = true;
             FillFilmscreeninsDropdownsWithSecection(screenings.roomId, screenings.filmId);
             return View(screenings);
         }
