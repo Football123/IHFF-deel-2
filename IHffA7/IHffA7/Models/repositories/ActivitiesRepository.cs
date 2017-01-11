@@ -104,7 +104,8 @@ namespace IHffA7.Models.repositories
 
         public void ModifyActivity(Filmscreenings film)
         {
-            ctx.Entry(film.Activities).State = EntityState.Modified;
+            //film heeft een virtual Activity, deze is ook gewijzig en slaat ook deze automatisch ook op
+            //ctx.Entry(film.Activities).State = EntityState.Modified;
             ctx.Entry(film).State = EntityState.Modified;
             ctx.SaveChanges();
         }
