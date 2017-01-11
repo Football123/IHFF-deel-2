@@ -184,7 +184,7 @@
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ActivitiesOverViewModel.cs" />
+    <Compile Include="Models\RestaurantsFormModel.cs" />
     <Compile Include="Models\ActivitiesViewModel.cs" />
     <Compile Include="Models\activityType.cs" />
     <Compile Include="Models\dbModels.Context.cs">
@@ -346,13 +346,14 @@
     <Content Include="Views\Filmscreenings\Edit.cshtml" />
     <Content Include="Views\Filmscreenings\Index.cshtml" />
     <Content Include="Views\Activities\CreateFilm.cshtml" />
-    <Content Include="Views\Activities\CreateRestaurant.cshtml" />
+    <Content Include="Views\Activities\CreateRestaurant2Old.cshtml" />
     <Content Include="Views\Activities\DeleteFilmScreening.cshtml" />
     <Content Include="Views\Activities\CreateSpecial.cshtml" />
     <Content Include="Views\Activities\CreateSpecialsscreening.cshtml" />
-    <Content Include="Views\Activities\HiddenforactivityId.cshtml" />
     <Content Include="Views\Activities\CreateRoom.cshtml" />
     <Content Include="Views\Activities\CreateLocation.cshtml" />
+    <Content Include="Views\Activities\ActivitiesVPartView.cshtml" />
+    <Content Include="Views\Activities\CreateRestaurant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿@model IHffA7.Models.Restaurants
+﻿@model IHffA7.Models.RestaurantsFormModel
 
 @{
     ViewBag.Title = "CreateRestaurant";
@@ -6,10 +6,10 @@
 
 <h2>CreateRestaurant</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Restaurants</h4>
         <hr />

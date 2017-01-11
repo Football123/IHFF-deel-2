@@ -19,16 +19,13 @@ namespace IHffA7.Models.repositories
         }
         public void SaveFilmScreening(Filmscreenings filmscreening)
         {
-            //test
-            ctx.Activities.Add(filmscreening.Activities);
             ctx.Filmscreenings.Add(filmscreening);
             ctx.SaveChanges();
         }
 
         public void SaveSpecialsScreening(Specialscreenings specailscreening)
         {
-            //test
-            ctx.Activities.Add(specailscreening.Activities);
+            //activities toevoegen hoeft niet omdat het er al in zit (specailscreening.Activities)
             ctx.Specialscreenings.Add(specailscreening);
             ctx.SaveChanges();
         }
@@ -50,10 +47,25 @@ namespace IHffA7.Models.repositories
             ctx.SaveChanges();
         }
 
+        /*public void SaveRestaurant(Activities restaurantActivitty)
+        {
+            Restaurants restaurant = restaurantActivitty.Restaurants.Single();
+            for (DateTime start =restaurant.lunchStart; start<= restaurant.lunchEnd; start = start.AddMinutes(30))
+            {
+                Activities activity = new Activities();
+                activity.typeActivity = 3;
+                activity.highlight = restaurantActivitty.highlight;
+                activity.price = restaurantActivitty.price;
+                activity.startTime = start;
+                restaurant.Activities.Add(activity);
+            }
+            ctx.Restaurants.Add(restaurant);
+            ctx.SaveChanges();
+        }*/
+
         public void SaveRestaurant(Restaurants restaurant)
         {
-            ctx.Restaurants.Add(restaurant);
-            for (DateTime start =restaurant.lunchStart; start<= restaurant.lunchEnd; start = start.AddMinutes(30))
+            for (DateTime start = restaurant.lunchStart; start <= restaurant.lunchEnd; start = start.AddMinutes(30))
             {
                 Activities activity = new Activities();
                 activity.typeActivity = 3;
@@ -62,6 +74,7 @@ namespace IHffA7.Models.repositories
                 activity.startTime = start;
                 restaurant.Activities.Add(activity);
             }
+            ctx.Restaurants.Add(restaurant);
             ctx.SaveChanges();
         }
 
