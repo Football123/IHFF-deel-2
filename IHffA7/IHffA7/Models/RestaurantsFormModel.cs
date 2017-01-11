@@ -9,18 +9,18 @@ namespace IHffA7.Models
 {
     public class RestaurantsFormModel
     {
-        public Restaurants Restaurant { get; set; }
+        public string descriptionNL { get; set; }
+        public string descriptionEN { get; set; }
+        public DateTime lunchStart { get; set; }
+        public DateTime lunchEnd { get; set; }
+        public DateTime dinnerStart { get; set; }
+        public DateTime dinnerEnd { get; set; }
+        public string restaurantLogo { get; set; }
+        public int locationId { get; set; }
         public bool Highlight { get; set; }
         public decimal Price { get; set; }
         public RestaurantsFormModel()
         {
-                
-        }
-        public RestaurantsFormModel(Restaurants restaurant, bool highlight, decimal price)
-        {
-            this.Restaurant = restaurant;
-            this.Highlight = highlight;
-            this.Price = price;
         }
     }
 

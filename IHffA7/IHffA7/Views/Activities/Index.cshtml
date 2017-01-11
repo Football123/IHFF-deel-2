@@ -62,11 +62,10 @@
         }
         @if (item.typeActivity == 3)
         {
-            continue;
             <td>
                 @if (item.Restaurants.Single().Locations.name != null)
                 {
-                    @Html.DisplayFor(modelItem => item.Restaurants.Single().Locations.name);
+                    @Html.DisplayFor(modelItem => item.Restaurants.First().Locations.name);
                 }
 
             </td>

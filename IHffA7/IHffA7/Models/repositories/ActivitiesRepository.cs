@@ -63,15 +63,33 @@ namespace IHffA7.Models.repositories
             ctx.SaveChanges();
         }*/
 
-        public void SaveRestaurant(Restaurants restaurant)
+        public void SaveRestaurant(RestaurantsFormModel restaurantFrom)
         {
+            Restaurants restaurant = new Restaurants();
+            restaurant.descriptionEN = restaurantFrom.descriptionEN;
+            restaurant.descriptionNL = restaurantFrom.descriptionNL;
+            restaurant.dinnerEnd = restaurantFrom.dinnerEnd;
+            restaurant.dinnerStart = restaurantFrom.dinnerStart;
+            restaurant.locationId = restaurantFrom.locationId;
+            restaurant.lunchEnd = restaurantFrom.lunchEnd;
+            restaurant.lunchStart = restaurantFrom.lunchStart;
+            restaurant.restaurantLogo = restaurantFrom.restaurantLogo;
             for (DateTime start = restaurant.lunchStart; start <= restaurant.lunchEnd; start = start.AddMinutes(30))
             {
                 Activities activity = new Activities();
                 activity.typeActivity = 3;
-                activity.highlight = false;
-                activity.price = 10;
+                activity.highlight = restaurantFrom.Highlight;
+                activity.price = restaurantFrom.Price;
                 activity.startTime = start;
+                restaurant.Activities.Add(activity);
+            }
+            for (DateTime startDinner = restaurant.dinnerEnd; startDinner <= restaurant.dinnerEnd; startDinner = startDinner.AddMinutes(30))
+            {
+                Activities activity = new Activities();
+                activity.typeActivity = 3;
+                activity.highlight = restaurantFrom.Highlight;
+                activity.price = restaurantFrom.Price;
+                activity.startTime = startDinner;
                 restaurant.Activities.Add(activity);
             }
             ctx.Restaurants.Add(restaurant);

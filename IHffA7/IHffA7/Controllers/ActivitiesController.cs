@@ -107,7 +107,7 @@ namespace IHffA7.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateRestaurant(Restaurants restaurant)
+        public ActionResult CreateRestaurant(RestaurantsFormModel restaurant)
         {
             if (ModelState.IsValid)
             {
