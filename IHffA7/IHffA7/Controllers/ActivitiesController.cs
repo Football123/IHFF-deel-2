@@ -99,27 +99,26 @@ namespace IHffA7.Controllers
         public ActionResult CreateFilmscreening()
         {
             ViewBag.IsEditing = null;
-            FillFilmscreeninsDropdowns();
+            FillFilmscreeninsDropdownsWithSecection(null,null);
             return View();
         }
 
         public ActionResult CreateSpecialsscreening()
         {
             ViewBag.IsEditing = null;
-            FillFilmscreeninsDropdowns();
+            FillSpecialsscreeninsDropdownsWithSecection(null,null);
             return View();
         }
 
-        private void FillFilmscreeninsDropdowns()
-        {
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
-        }
-
-        private void FillFilmscreeninsDropdownsWithSecection(int roomId, int filmId)
+        private void FillFilmscreeninsDropdownsWithSecection(int? roomId, int? filmId)
         {
             ViewBag.filmId = new SelectList(db.Films, "id", "title", filmId);
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name", roomId);
+        }
+
+        private void FillSpecialsscreeninsDropdownsWithSecection(int? roomId, int? specialsId)
+        {
+            ViewBag.specialId = new SelectList(db.Specials, "id", "title", specialsId);
             ViewBag.roomId = new SelectList(db.Rooms, "id", "name", roomId);
         }
         //not in use, but nice xample of and selectlit
@@ -137,6 +136,8 @@ namespace IHffA7.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateFilmscreening(Filmscreenings screenings)
         {
+            screenings.Activities.typeActivity = 1;
+            screenings.activityId = screenings.Activities.id;
             if (ModelState.IsValid)
             {
                 screenings.Activities.typeActivity = 1;
@@ -151,8 +152,31 @@ namespace IHffA7.Controllers
                 }
             }
             //viewbag moet weer opniew worden gevuld
-            FillFilmscreeninsDropdowns();
+            FillFilmscreeninsDropdownsWithSecection(screenings.roomId,screenings.filmId);
             return View(screenings);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSpecialsscreening(Specialscreenings screening)
+        {
+            if (ModelState.IsValid)
+            {
+                screening.Activities.typeActivity = 2;
+                screening.activityId = screening.Activities.id;
+                try
+                {
+                    activitiesRepo.SaveSpecialsScreening(screening);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            //viewbag moet weer opniew worden gevuld
+            FillSpecialsscreeninsDropdownsWithSecection(screening.roomId, screening.specialId);
+            return View(screening);
         }
 
         [HttpPost]

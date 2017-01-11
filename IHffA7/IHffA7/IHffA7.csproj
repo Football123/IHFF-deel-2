@@ -349,6 +349,8 @@
     <Content Include="Views\Activities\CreateRestaurant.cshtml" />
     <Content Include="Views\Activities\DeleteFilmScreening.cshtml" />
     <Content Include="Views\Activities\CreateSpecial.cshtml" />
+    <Content Include="Views\Activities\CreateSpecialsscreening.cshtml" />
+    <Content Include="Views\Activities\HiddenforactivityId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

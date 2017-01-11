@@ -24,6 +24,14 @@ namespace IHffA7.Models.repositories
             ctx.Filmscreenings.Add(filmscreening);
             ctx.SaveChanges();
         }
+
+        public void SaveSpecialsScreening(Specialscreenings specailscreening)
+        {
+            //test
+            ctx.Specials.Add(specailscreening.Specials);
+            ctx.Specialscreenings.Add(specailscreening);
+            ctx.SaveChanges();
+        }
         public void SaveFilm(Films film)
         {
             //test
