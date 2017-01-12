@@ -24,7 +24,7 @@ namespace IHffA7.Controllers
         {
             int filmId = homeRepository.ConvertToFilmId(ftm);
              
-            return RedirectToAction("Film", "Detail", filmId);
+            return RedirectToAction("detailpage", "Film", new { filmId = filmId });
         }
 
         public ActionResult About()

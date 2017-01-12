@@ -10,6 +10,17 @@ namespace IHffA7.Models.repositories
         //private IhffA7Context ctx = new IhffA7Context();
         private WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
 
+        public int ConvertToActivityId(RestaurantOverviewModel rom)
+        {
+            //rom.Id
+            //rom.Datum
+
+            var restaurant = ctx.Restaurants.Find(rom.Id);
+            var activityId = restaurant.Activities.First(a => a.startTime == rom.Datum).id;
+
+            return activityId;
+        }
+
         public IEnumerable<RestaurantOverviewModel> GetAllRestaurants()
         {
             IEnumerable<RestaurantOverviewModel> restaurantItems =

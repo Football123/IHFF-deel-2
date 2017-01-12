@@ -27,7 +27,10 @@ namespace IHffA7.Controllers
             DateTime datumTijd = datum + tijd;
             rom.Datum = datumTijd;
 
-            return RedirectToAction("AddItemToSesWishlist", "WishList", rom);
+            int activityId = dinnerRepository.ConvertToActivityId(rom);
+            
+            return RedirectToAction("AddItemToSesWishlist", "WishList",
+                new { activityId = activityId, numberOfpersones = rom.AantalPersonen });
         }
     }
 }

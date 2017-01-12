@@ -106,9 +106,9 @@ nav ul li {
     float: left;
     width: 50%;
     min-height: 200px;
-    border: blue 1px solid;
+    /*border: blue 1px solid;*/
     position: relative;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
 }
 
 .restaurantRightBlock {
@@ -116,10 +116,10 @@ nav ul li {
     background-color: red;*/
     float: right;
     width: 50%;
-    border: green 1px solid;
+    /*border: green 1px solid;*/
     min-height: 200px;
     position: relative;
-    margin-bottom: 2.6em;
+    margin-bottom: 3.6em;
 }
 
 .restaurantMiddleBlock {
