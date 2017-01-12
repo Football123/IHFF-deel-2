@@ -22,7 +22,9 @@ namespace IHffA7.Controllers
         [HttpPost]
         public ActionResult Index(FilmsTodayModel ftm)
         {
-            return View();
+            int filmId = homeRepository.ConvertToFilmId(ftm);
+             
+            return RedirectToAction("Film", "Detail", filmId);
         }
 
         public ActionResult About()

@@ -9,5 +9,6 @@ namespace IHffA7.Models.repositories
     interface IHomeRepository
     {
         IEnumerable<FilmsTodayModel> GetTodaysMovies();
+        int ConvertToFilmId(FilmsTodayModel ftm);
     }
 }

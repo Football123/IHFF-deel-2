@@ -12,7 +12,7 @@
 {
     foreach (var item in Model)
     {
-            <hr />
+        <hr />
             <div class="restaurantLeftBlock">
                 <img src="~/Content/Images/@item.RestaurantLogo" width="300" height="100" />
                 <br />
@@ -40,46 +40,42 @@
                        new SelectListItem { Text = "Woensdag 11 januari", Value = "1/11/2017" },
                        new SelectListItem { Text = "Donderdag 12 januari", Value = "1/12/2017" },
                        new SelectListItem { Text = "Vrijdag 13 januari", Value = "1/13/2017" }
-                    }, "--Selecteer datum--" )
+                    }, "--Selecteer datum--")
 
                     @Html.DropDownList("Tijd", new List<SelectListItem>
                     {
                        new SelectListItem { Text = "----Lunch----", Disabled = true },
-                       new SelectListItem { Text = "12:00", Value = "12:00:00 PM" },
-                       new SelectListItem { Text = "12:30", Value = "12:30:00 PM" },
-                       new SelectListItem { Text = "13:00", Value = "1:00:00 PM" },
-                       new SelectListItem { Text = "13:30", Value = "1:30:00 PM" },
-                       new SelectListItem { Text = "14:00", Value = "2:00:00 PM" },
-                       new SelectListItem { Text = "14:30", Value = "2:30:00 PM" },
+                       new SelectListItem { Text = "12:00", Value = "12:00:00" },
+                       new SelectListItem { Text = "12:30", Value = "12:30:00" },
+                       new SelectListItem { Text = "13:00", Value = "13:00:00" },
+                       new SelectListItem { Text = "13:30", Value = "13:30:00" },
+                       new SelectListItem { Text = "14:00", Value = "14:00:00" },
+                       new SelectListItem { Text = "14:30", Value = "14:30:00" },
                        new SelectListItem { Text = "----Dinner----", Disabled = true },
-                       new SelectListItem { Text = "18:00", Value = "6:00:00 PM" },
-                       new SelectListItem { Text = "18:30", Value = "6:30:00 PM" },
-                       new SelectListItem { Text = "19:00", Value = "7:00:00 PM" },
-                       new SelectListItem { Text = "19:30", Value = "7:30:00 PM" },
-                       new SelectListItem { Text = "20:00", Value = "8:00:00 PM" },
-                       new SelectListItem { Text = "20:30", Value = "8:30:00 PM" },
-                       new SelectListItem { Text = "21:00", Value = "9:00:00 PM" },
-                       new SelectListItem { Text = "21:30", Value = "9:30:00 PM" }
+                       new SelectListItem { Text = "18:00", Value = "18:00:00" },
+                       new SelectListItem { Text = "18:30", Value = "18:30:00" },
+                       new SelectListItem { Text = "19:00", Value = "19:00:00" },
+                       new SelectListItem { Text = "19:30", Value = "19:30:00" },
+                       new SelectListItem { Text = "20:00", Value = "20:00:00" },
+                       new SelectListItem { Text = "20:30", Value = "20:30:00" },
+                       new SelectListItem { Text = "21:00", Value = "21:00:00" },
+                       new SelectListItem { Text = "21:30", Value = "21:30:00" }
                     }, "--Selecteer tijd--")
                         <br />
                     <strong>Aantal personen:</strong>
                         <br />
-                    @Html.DropDownList("AantalPersonen", new List<SelectListItem>
-                    {
-                        new SelectListItem { Text = "1", Value = "1" },
-                        new SelectListItem { Text = "2", Value = "2" },
-                        new SelectListItem { Text = "3", Value = "3" },
-                        new SelectListItem { Text = "4", Value = "4" },
-                        new SelectListItem { Text = "5", Value = "5" },
-                        new SelectListItem { Text = "6", Value = "6" },
-                        new SelectListItem { Text = "7", Value = "7" },
-                        new SelectListItem { Text = "8", Value = "8" },
-                        new SelectListItem { Text = "9", Value = "9" },
-                        new SelectListItem { Text = "10", Value = "10" }
-                    }, "--Selecteer aantal personen--")
+                    @{ 
+                        //Items voor in de 'AantalPersonen-dropdownlist':
+                        List<SelectListItem> sli = new List<SelectListItem>();
+                        for (int i = 1; i < 11; i++)
+                        {
+                            sli.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+                        }
+                    }
+
+                    @Html.DropDownList("AantalPersonen", sli, "--Selecteer aantal personen--")
                         <br />
                     <input id="btnToevoegWishlist" type="submit" value="Voeg toe aan wishlist" />
-                    <input id="btnReserveren" type="submit" value="Reserveren" onclick="location.href='@Url.Action("#", "#", new { id = item.Id }, null)'" />
                 </div>
             </div>
     }

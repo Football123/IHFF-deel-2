@@ -1,5 +1,6 @@
 ﻿using IHffA7.Models;
 using IHffA7.Models.repositories;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -10,11 +11,6 @@ namespace IHffA7.Controllers
         private DinnerRepository dinnerRepository = new DinnerRepository();
 
         // GET: Dinner
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Restaurants()
         {
             IEnumerable<RestaurantOverviewModel> allRestaurants = dinnerRepository.GetAllRestaurants();
@@ -25,12 +21,13 @@ namespace IHffA7.Controllers
         [HttpPost]
         public ActionResult Restaurants(RestaurantOverviewModel rom) //Dropdownlist items: Datum, Tijd, AantalPersonen -- Restaurant: Id
         {
-            return RedirectToAction("Restaurants");
-        }
+            DateTime datum = rom.Datum;
+            TimeSpan tijd = rom.Tijd;
 
-        public ActionResult AddToWishlist(int eventId, int typeId, int aantPersonen, string date, string time)
-        {
-            return View();
+            DateTime datumTijd = datum + tijd;
+            rom.Datum = datumTijd;
+
+            return RedirectToAction("AddItemToSesWishlist", "WishList", rom);
         }
     }
 }

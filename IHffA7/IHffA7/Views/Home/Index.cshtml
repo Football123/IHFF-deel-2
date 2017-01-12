@@ -2,7 +2,7 @@
 @model IEnumerable<FilmsTodayModel>
 
 @{ 
-    ViewBag.NoItems = "Geen films vandaag!";
+    ViewBag.NoItems = "Er draaien geen films vandaag! Voor een overzicht van alle films van deze week klik op 'Film' in het hoofdmenu.";
 }
 
 <img src="~/Content/Images/home/u0.png" />
@@ -11,16 +11,26 @@
 {
     @ViewBag.NoItems
 }
-@foreach (var today in Model)
+else
 {
-    <div>
-        <h2>@today.title</h2>
-        <img src="~/Content/Images/@today.filmLogo" />
-            <br />
-        @today.beginTime - @today.endTime
-            <br />
-        @today.locationName - Zaal: @today.roomName
-            <hr />
-        Vrije plaatsen: @today.availableSeats - &#8364 @today.price
-    </div>
+    using (Html.BeginForm())
+    {
+        foreach (var today in Model)
+        {
+            <div class="todayItem">
+                @Html.Hidden("ActivityId", today.activityId)
+                <h2>@today.title</h2>
+                <img src="~/Content/Images/@today.filmLogo" width="216" height="320" />
+                    <br />
+                @today.beginTime - @today.endTime
+                    <br />
+                @today.locationName - Zaal: @today.roomName
+                    <hr />
+                Vrije plaatsen: @today.availableSeats - &#8364 @today.price
+                    <br />
+                <input id="btnToevoegWishlist" type="submit" value="Voeg toe aan wishlist" />
+            </div>
+        }
+    }
 }
+

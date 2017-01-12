@@ -31,9 +31,9 @@ namespace IHffA7.Models.repositories
                     DinnerStart = r.dinnerStart,
                     DinnerEnd = r.dinnerEnd,
                     RestaurantLogo = r.restaurantLogo,
-                    Datum = null,
-                    Tijd = null,
-                    AantalPersonen = null
+                    Datum = default(DateTime),
+                    Tijd = default(TimeSpan),
+                    AantalPersonen = 0
                 }
             );
 

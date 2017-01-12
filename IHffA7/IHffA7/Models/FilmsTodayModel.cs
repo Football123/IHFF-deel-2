@@ -11,8 +11,9 @@ namespace IHffA7.Models
         public string filmLogo { get; set; }
         public string title { get; set; }
         // Activities:
+        public int activityId { get; set; }
         public DateTime beginTime { get; set; }
-        public DateTime?  endTime { get; set; }
+        public DateTime? endTime { get; set; }
         public decimal price { get; set; }
         // Location:
         public string locationName { get; set; }

@@ -21,6 +21,12 @@ textarea {
     max-width: 280px;
 }
 /****************************HOME******************************/
+.todayItem {
+    width: 25%;
+    min-height: 400px;
+    float: left;
+}
+
 #footer {
     background-color: #333;
     min-height: 150px;

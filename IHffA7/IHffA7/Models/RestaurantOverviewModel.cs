@@ -22,8 +22,11 @@ namespace IHffA7.Models
         public DateTime DinnerEnd { get; set; }
         public string RestaurantLogo { get; set; }
 
-        public string Datum { get; set; }
-        public string Tijd { get; set; }
-        public int? AantalPersonen { get; set; }
+        [Required(ErrorMessage = "Kies een datum")]
+            public DateTime Datum { get; set; }
+        [Required(ErrorMessage = "Kies een tijd")]
+            public TimeSpan Tijd { get; set; }
+        [Required(ErrorMessage = "Kies het aantal personen")]
+            public int AantalPersonen { get; set; }
     }
 }
