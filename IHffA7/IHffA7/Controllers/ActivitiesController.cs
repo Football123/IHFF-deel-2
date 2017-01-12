@@ -19,7 +19,7 @@ namespace IHffA7.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            return View(db.Activities.ToList());
+            return View(activitiesRepo.GetActivities());
         }
 
         // GET: Activities/Details/5
@@ -43,34 +43,114 @@ namespace IHffA7.Controllers
             return View();
         }
 
-        public ActionResult CreateFilm()
+        public ActionResult CreateSpecial()
         {
-            IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
-            {
-                Value = c.Films.id.ToString(),
-                Text = c.Films.title.ToString()
-            });
-            ViewBag.FilmId = items;
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
             return View();
         }
 
-        public ActionResult Create2()
+        public ActionResult CreateRoom()
         {
-            IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
-            {
-                Value = c.Films.id.ToString(),
-                Text = c.Films.title.ToString()
-            });
-            ViewBag.FilmId = items;
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name");
             return View();
         }
-        //not nin use, but nice xample of and selectlit
+        public ActionResult CreateFilm()
+        {
+            return View();
+        }
+        public ActionResult CreateLocation()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateFilm(Films film)
+        {
+            if (ModelState.IsValid)
+            {
+                try {
+                    activitiesRepo.SaveFilm(film);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+
+            return View(film);
+        }
+        public ActionResult CreateRestaurant()
+        {
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name");
+            return View();
+        }
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRestaurant(Restaurants restaurant)
+        {
+            if (ModelState.IsValid)
+            {
+                try {
+                    activitiesRepo.SaveRestaurant(restaurant);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            //viewbaag moet weer opniew worden gemaakt
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name"); 
+
+            return View(restaurant);
+        }*/
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRestaurant(RestaurantsFormModel restaurant)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    activitiesRepo.SaveRestaurant(restaurant);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            //viewbaag moet weer opniew worden gemaakt
+            ViewBag.locationId = new SelectList(db.Locations, "id", "name");
+
+            return View(restaurant);
+        }
+
+        public ActionResult CreateFilmscreening()
+        {
+            FillFilmscreeninsDropdownsWithSecection(null,null);
+            return View();
+        }
+
+        public ActionResult CreateSpecialsscreening()
+        {
+            FillSpecialsscreeninsDropdownsWithSecection(null,null);
+            return View();
+        }
+
+        private void FillFilmscreeninsDropdownsWithSecection(int? roomId, int? filmId)
+        {
+            ViewBag.filmId = new SelectList(db.Films, "id", "title", filmId);
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name", roomId);
+        }
+
+        private void FillSpecialsscreeninsDropdownsWithSecection(int? roomId, int? specialsId)
+        {
+            ViewBag.specialId = new SelectList(db.Specials, "id", "title", specialsId);
+            ViewBag.roomId = new SelectList(db.Rooms, "id", "name", roomId);
+        }
+        //not in use, but nice xample of and selectlit
         public ActionResult Create3()
         {
             IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
@@ -83,22 +163,106 @@ namespace IHffA7.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create2( Filmscreenings screenings)
+        public ActionResult CreateFilmscreening(Filmscreenings screenings)
         {
+            screenings.Activities.typeActivity = 1;
+            screenings.activityId = screenings.Activities.id;
             if (ModelState.IsValid)
             {
                 screenings.Activities.typeActivity = 1;
                 screenings.activityId = screenings.Activities.id;
-                //test to so what is in it
-                activitiesRepo.SaveFilmScreening(screenings);
-                return RedirectToAction("Index");
+                try {
+                    activitiesRepo.SaveFilmScreening(screenings);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
             }
-            //viewbaag moet weer opniew worden gemaakt
-            ViewBag.activityId = new SelectList(db.Activities, "id", "id");
-            ViewBag.filmId = new SelectList(db.Films, "id", "title");
-            ViewBag.roomId = new SelectList(db.Rooms, "id", "name");
-
+            //viewbag moet weer opniew worden gevuld
+            FillFilmscreeninsDropdownsWithSecection(screenings.roomId,screenings.filmId);
             return View(screenings);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSpecialsscreening(Specialscreenings screening)
+        {
+            if (ModelState.IsValid)
+            {
+                screening.Activities.typeActivity = 2;
+                screening.activityId = screening.Activities.id;
+                try
+                {
+                    activitiesRepo.SaveSpecialsScreening(screening);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            //viewbag moet weer opniew worden gevuld
+            FillSpecialsscreeninsDropdownsWithSecection(screening.roomId, screening.specialId);
+            return View(screening);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateSpecial(Specials special)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    activitiesRepo.SaveSpecial(special);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View(special);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateLocation(Locations location)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    activitiesRepo.SaveLocation(location);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View(location);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRoom(Rooms rooms)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    activitiesRepo.SaveRoom(rooms);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            return View(rooms);
         }
 
         // POST: Activities/Create
@@ -110,16 +274,22 @@ namespace IHffA7.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Activities.Add(activities);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try {
+                    db.Activities.Add(activities);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
             }
 
             return View(activities);
         }
 
         // GET: Activities/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult EditOldAutoGen(int? id)
         {
             if (id == null)
             {
@@ -131,6 +301,26 @@ namespace IHffA7.Controllers
                 return HttpNotFound();
             }
             return View(activities);
+        }
+        public ActionResult EditFilmScreening(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            try
+            {
+
+                Filmscreenings filmscreening = activitiesRepo.GetFilmscreening(id);
+                FillFilmscreeninsDropdownsWithSecection(filmscreening.roomId, filmscreening.filmId);
+                //FillFilmscreeninsDropdowns();
+                ViewBag.IsEditing = true;
+                return View("CreateFilmscreening", filmscreening);
+            }
+            catch
+            {
+                return  HttpNotFound();
+            }
         }
 
         // POST: Activities/Edit/5
@@ -138,41 +328,71 @@ namespace IHffA7.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,startTime,endTime,price,highlight,typeActivity")] Activities activities)
+        public ActionResult EditFilmScreening(Filmscreenings screenings)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(activities).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                screenings.Activities.typeActivity = 1;
+                screenings.Activities.id = screenings.activityId;
+                try {
+                    activitiesRepo.ModifyActivity(screenings);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+                
             }
-            return View(activities);
+            ViewBag.IsEditing = true;
+            FillFilmscreeninsDropdownsWithSecection(screenings.roomId, screenings.filmId);
+            return View(screenings);
         }
+        /*[HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSpecial(Specialscreenings screening)
+        {
+            if (ModelState.IsValid)
+            {
+                screening.Activities.typeActivity = 1;
+                screening.Activities.id = screening.activityId;
+                try {
+                    activitiesRepo.ModifyActivity(screening);
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return HttpNotFound();
+                }
+            }
+            return RedirectToAction("Index");
+        }*/
 
         // GET: Activities/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteFilmScreening(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Activities activities = db.Activities.Find(id);
-            if (activities == null)
-            {
-                return HttpNotFound();
-            }
-            return View(activities);
+            return View(activitiesRepo.GetFilmscreening(id));
         }
 
         // POST: Activities/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteFilmScreening")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Activities activities = db.Activities.Find(id);
-            db.Activities.Remove(activities);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                var filmscreening = activitiesRepo.GetFilmscreening(id);
+                activitiesRepo.DeleteFilmScreening(filmscreening);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return HttpNotFound();
+            }
         }
 
         protected override void Dispose(bool disposing)

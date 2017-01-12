@@ -22,6 +22,12 @@ namespace IHffA7.Controllers
             return View(allRestaurants);
         }
 
+        [HttpPost]
+        public ActionResult Restaurants(RestaurantOverviewModel rom) //Dropdownlist items: Datum, Tijd, AantalPersonen -- Restaurant: Id
+        {
+            return RedirectToAction("Restaurants");
+        }
+
         public ActionResult AddToWishlist(int eventId, int typeId, int aantPersonen, string date, string time)
         {
             return View();

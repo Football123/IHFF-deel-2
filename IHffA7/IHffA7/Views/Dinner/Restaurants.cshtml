@@ -6,18 +6,17 @@
 }
 <p>
     <h2>@ViewBag.Title</h2>
-    All restaurants associated with the festival:
+    Alle restaurants die samenwerken met het festival:
 </p>
 @using (Html.BeginForm())
 {
     foreach (var item in Model)
     {
-        <hr />
-        <div class="restaurantFullBlock">
+            <hr />
             <div class="restaurantLeftBlock">
-                <img src="~/Content/Images/@item.RestaurantLogo" alt="Restaurant Dijkers" />
+                <img src="~/Content/Images/@item.RestaurantLogo" width="300" height="100" />
                 <br />
-                <h3>@item.Name</h3>
+                <h3>@item.Id @item.Name</h3>
                 @item.DescriptionNL
                 <hr />
                 <strong>Adres:</strong> @item.Street @item.StreetNumber, @item.ZipCode @item.Town
@@ -32,53 +31,57 @@
                 <div class="restaurantMiddleBlock">
                     <h3>Voeg boeking toe aan wishlist</h3>
                     <strong>Datum en tijd:</strong>
-                    <br />
-                    <select id="ddlDatum" name="ddlDatum">
-                        <option value="Maandag 5 Juli">Maandag 5 Juli</option>
-                        <option value="Dinsdag 6 Juli">Dinsdag 6 Juli</option>
-                        <option value="Woensdag 7 Juli">Woensdag 7 Juli</option>
-                        <option value="Donderdag 8 Juli">Donderdag 8 Juli</option>
-                        <option value="Vrijdag 9 Juli">Vrijdag 9 Juli</option>
-                    </select>
-                    <select id="ddlTijd" name="ddlTijd">
-                        <option disabled>----Lunch----</option>
-                        <option value="12:00">12:00</option>
-                        <option value="12:30">12:30</option>
-                        <option value="13:00">13:00</option>
-                        <option value="13:30">13:30</option>
-                        <option value="14:00">14:00</option>
-                        <option value="14:30">14:30</option>
-                        <option disabled>----Diner----</option>
-                        <option value="18:00">18:00</option>
-                        <option value="18:30">18:30</option>
-                        <option value="19:00">19:00</option>
-                        <option value="19:30">19:30</option>
-                        <option value="20:00">20:00</option>
-                        <option value="20:30">20:30</option>
-                        <option value="20:00">21:00</option>
-                        <option value="20:30">21:30</option>
-                    </select>
-                    <br />
+                        <br />
+                    @Html.Hidden("Id", item.Id)
+                    @Html.DropDownList("Datum", new List<SelectListItem>
+                    {
+                       new SelectListItem { Text = "Maandag 9 januari", Value = "1/9/2017" },
+                       new SelectListItem { Text = "Dinsdag 10 januari", Value = "1/10/2017" },
+                       new SelectListItem { Text = "Woensdag 11 januari", Value = "1/11/2017" },
+                       new SelectListItem { Text = "Donderdag 12 januari", Value = "1/12/2017" },
+                       new SelectListItem { Text = "Vrijdag 13 januari", Value = "1/13/2017" }
+                    }, "--Selecteer datum--" )
+
+                    @Html.DropDownList("Tijd", new List<SelectListItem>
+                    {
+                       new SelectListItem { Text = "----Lunch----", Disabled = true },
+                       new SelectListItem { Text = "12:00", Value = "12:00:00 PM" },
+                       new SelectListItem { Text = "12:30", Value = "12:30:00 PM" },
+                       new SelectListItem { Text = "13:00", Value = "1:00:00 PM" },
+                       new SelectListItem { Text = "13:30", Value = "1:30:00 PM" },
+                       new SelectListItem { Text = "14:00", Value = "2:00:00 PM" },
+                       new SelectListItem { Text = "14:30", Value = "2:30:00 PM" },
+                       new SelectListItem { Text = "----Dinner----", Disabled = true },
+                       new SelectListItem { Text = "18:00", Value = "6:00:00 PM" },
+                       new SelectListItem { Text = "18:30", Value = "6:30:00 PM" },
+                       new SelectListItem { Text = "19:00", Value = "7:00:00 PM" },
+                       new SelectListItem { Text = "19:30", Value = "7:30:00 PM" },
+                       new SelectListItem { Text = "20:00", Value = "8:00:00 PM" },
+                       new SelectListItem { Text = "20:30", Value = "8:30:00 PM" },
+                       new SelectListItem { Text = "21:00", Value = "9:00:00 PM" },
+                       new SelectListItem { Text = "21:30", Value = "9:30:00 PM" }
+                    }, "--Selecteer tijd--")
+                        <br />
                     <strong>Aantal personen:</strong>
-                    <br />
-                    <select id="ddlPersonen" name="ddlPersonen">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                    <br />
-                    <input id="btnToevoegWishlist" type="submit" value="Voeg toe aan wishlist" onclick="location.href='@Url.Action("Index", "Wishlist", new { id = item.Id }, null)'" />
+                        <br />
+                    @Html.DropDownList("AantalPersonen", new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "1", Value = "1" },
+                        new SelectListItem { Text = "2", Value = "2" },
+                        new SelectListItem { Text = "3", Value = "3" },
+                        new SelectListItem { Text = "4", Value = "4" },
+                        new SelectListItem { Text = "5", Value = "5" },
+                        new SelectListItem { Text = "6", Value = "6" },
+                        new SelectListItem { Text = "7", Value = "7" },
+                        new SelectListItem { Text = "8", Value = "8" },
+                        new SelectListItem { Text = "9", Value = "9" },
+                        new SelectListItem { Text = "10", Value = "10" }
+                    }, "--Selecteer aantal personen--")
+                        <br />
+                    <input id="btnToevoegWishlist" type="submit" value="Voeg toe aan wishlist" />
                     <input id="btnReserveren" type="submit" value="Reserveren" onclick="location.href='@Url.Action("#", "#", new { id = item.Id }, null)'" />
                 </div>
             </div>
-        </div>
     }
 }
 

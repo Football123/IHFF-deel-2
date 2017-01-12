@@ -7,8 +7,15 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
-    @Html.ActionLink("Create New Filmscreening", "Create2")
+    @Html.ActionLink("Create New Filmscreening", "CreateFilmscreening", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Create New Specialsscreening", "CreateSpecialsscreening", null, new { @class = "btn btn-default" })
+    <br/><br/>
+    @Html.ActionLink("Create New Film", "CreateFilm",null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Create New Restaurant", "CreateRestaurant", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Create New Special", "CreateSpecial", null, new { @class = "btn btn-default" })
+    <br /><br />
+    @Html.ActionLink("Create New Room", "CreateRoom", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Create New Location", "CreateLocation", null, new { @class = "btn btn-default" })
 </p>
 <table class="table">
     <tr>
@@ -58,7 +65,7 @@
             <td>
                 @if (item.Restaurants.Single().Locations.name != null)
                 {
-                    @Html.DisplayFor(modelItem => item.Restaurants.Single().Locations.name);
+                    @Html.DisplayFor(modelItem => item.Restaurants.First().Locations.name);
                 }
 
             </td>
@@ -78,11 +85,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.typeActivity)
         </td>
+        @if (item.typeActivity == 1)
+        {
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            @Html.ActionLink("Edit", "EditFilmScreening", new { id = item.id }) |
+            @Html.ActionLink("Delete", "DeleteFilmScreening", new { id = item.id })
         </td>
+        }
     </tr>
 }
 

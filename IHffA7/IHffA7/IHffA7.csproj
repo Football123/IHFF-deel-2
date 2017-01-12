@@ -184,7 +184,7 @@
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ActivitiesOverViewModel.cs" />
+    <Compile Include="Models\RestaurantsFormModel.cs" />
     <Compile Include="Models\ActivitiesViewModel.cs" />
     <Compile Include="Models\activityType.cs" />
     <Compile Include="Models\dbModels.Context.cs">
@@ -208,6 +208,7 @@
     <Compile Include="Models\Filmscreenings.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FilmsTodayModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Locations.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
@@ -216,7 +217,9 @@
     <Compile Include="Models\repositories\ActivitiesRepository.cs" />
     <Compile Include="Models\repositories\DinnerRepository.cs" />
     <Compile Include="Models\repositories\FilmRepository.cs" />
+    <Compile Include="Models\repositories\HomeRepository.cs" />
     <Compile Include="Models\repositories\IDinnerRepository.cs" />
+    <Compile Include="Models\repositories\IHomeRepository.cs" />
     <Compile Include="Models\repositories\WishlistRepository.cs" />
     <Compile Include="Models\repositories\WishlistSessionRepository.cs" />
     <Compile Include="Models\Reservations.cs">
@@ -335,7 +338,7 @@
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Activities\Edit.cshtml" />
     <Content Include="Views\Activities\Index.cshtml" />
-    <Content Include="Views\Activities\Create2.cshtml" />
+    <Content Include="Views\Activities\CreateFilmscreening.cshtml" />
     <Content Include="Views\Activities\Create3.cshtml" />
     <Content Include="Views\Filmscreenings\Create.cshtml" />
     <Content Include="Views\Filmscreenings\Delete.cshtml" />
@@ -343,7 +346,14 @@
     <Content Include="Views\Filmscreenings\Edit.cshtml" />
     <Content Include="Views\Filmscreenings\Index.cshtml" />
     <Content Include="Views\Activities\CreateFilm.cshtml" />
-    <Content Include="Views\Film\detailpage.cshtml" />
+    <Content Include="Views\Activities\CreateRestaurant2Old.cshtml" />
+    <Content Include="Views\Activities\DeleteFilmScreening.cshtml" />
+    <Content Include="Views\Activities\CreateSpecial.cshtml" />
+    <Content Include="Views\Activities\CreateSpecialsscreening.cshtml" />
+    <Content Include="Views\Activities\CreateRoom.cshtml" />
+    <Content Include="Views\Activities\CreateLocation.cshtml" />
+    <Content Include="Views\Activities\ActivitiesVPartView.cshtml" />
+    <Content Include="Views\Activities\CreateRestaurant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
