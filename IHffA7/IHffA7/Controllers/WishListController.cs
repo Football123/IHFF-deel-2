@@ -106,22 +106,6 @@ namespace IHffA7.Controllers
             Session["filmlist"] = filmlist; // wijzigingen opslaan
         }
 
- //methode
-        public IEnumerable<WishlistItemFilm> GetFilmsFromSession()
-        {
-            List<SessionFilm> filmlist = new List<SessionFilm>();
-            IEnumerable<WishlistItemFilm> wishlistItemsFilmList;
-            if (Session["filmlist"] != null)
-            {
-                filmlist = (List<SessionFilm>)Session["filmlist"];
-                wishlistItemsFilmList = wishListRepo.getFilmactivities(filmlist); // wishListRepository.GetAllWishlistFilms(filmlist);
-            }
-            else // als niet bestaat maakt null, view model support geen nullables 
-            {
-                wishlistItemsFilmList = null;
-            }
-            return wishlistItemsFilmList;
-        }
 
         public void AddActivityToSesWishlist(int numberOfpersones, int activityId)
         {
@@ -135,15 +119,11 @@ namespace IHffA7.Controllers
             else // anderes ophalen
             {
                 wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
-                //check op dubbelen
-                foreach (WishlistSession item in wishlistSessionList)
+                //check op dubbelen, zo ja tel personen op
+                if (wishlistSessionList.Select(s => (s.ActivityId == activityId)).Count() ==1)
                 {
-                    if (item.ActivityId == activityId)
-                    {
-                        item.NumberOfpersones = +numberOfpersones;
-                        inList = true;
-                        break;
-                    }
+                    wishlistSessionList.Single(s => (s.ActivityId == activityId)).NumberOfpersones += numberOfpersones;
+                    inList = true;
                 }
             }
             if (!inList)
@@ -173,7 +153,7 @@ namespace IHffA7.Controllers
             if (Session["wishlistSessionList"] != null)
             {
                 wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
-                activitiesList = wishListRepo.getActivities(wishlistSessionList);
+                activitiesList = wishListRepo.GetActivities(wishlistSessionList);
                 return activitiesList;
             }
             return null;

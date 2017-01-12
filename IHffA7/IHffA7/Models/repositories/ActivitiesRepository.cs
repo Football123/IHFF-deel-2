@@ -74,23 +74,30 @@ namespace IHffA7.Models.repositories
             restaurant.lunchEnd = restaurantFrom.lunchEnd;
             restaurant.lunchStart = restaurantFrom.lunchStart;
             restaurant.restaurantLogo = restaurantFrom.restaurantLogo;
-            for (DateTime start = restaurant.lunchStart; start <= restaurant.lunchEnd; start = start.AddMinutes(30))
+
+            DateTime dag1FilmFestival = new DateTime(2017, 1, 9);
+            DateTime laatsteDagFilmFestival = dag1FilmFestival.AddDays(5);
+            //voor elke mogelijkheid een activity maken
+            for (DateTime dag = dag1FilmFestival; dag <= laatsteDagFilmFestival; dag = dag.AddDays(1))
             {
-                Activities activity = new Activities();
-                activity.typeActivity = 3;
-                activity.highlight = restaurantFrom.Highlight;
-                activity.price = restaurantFrom.Price;
-                activity.startTime = start;
-                restaurant.Activities.Add(activity);
-            }
-            for (DateTime startDinner = restaurant.dinnerEnd; startDinner <= restaurant.dinnerEnd; startDinner = startDinner.AddMinutes(30))
-            {
-                Activities activity = new Activities();
-                activity.typeActivity = 3;
-                activity.highlight = restaurantFrom.Highlight;
-                activity.price = restaurantFrom.Price;
-                activity.startTime = startDinner;
-                restaurant.Activities.Add(activity);
+                for (DateTime start = restaurant.lunchStart; start <= restaurant.lunchEnd; start = start.AddMinutes(30))
+                {
+                    Activities activity = new Activities();
+                    activity.typeActivity = 3;
+                    activity.highlight = restaurantFrom.Highlight;
+                    activity.price = restaurantFrom.Price;
+                    activity.startTime = dag.AddHours(start.Hour).AddMinutes(start.Minute);
+                    restaurant.Activities.Add(activity);
+                }
+                for (DateTime startDinner = restaurant.dinnerEnd; startDinner <= restaurant.dinnerEnd; startDinner = startDinner.AddMinutes(30))
+                {
+                    Activities activity = new Activities();
+                    activity.typeActivity = 3;
+                    activity.highlight = restaurantFrom.Highlight;
+                    activity.price = restaurantFrom.Price;
+                    activity.startTime = dag.AddHours(startDinner.Hour).AddMinutes(startDinner.Minute);
+                    restaurant.Activities.Add(activity);
+                }
             }
             ctx.Restaurants.Add(restaurant);
             ctx.SaveChanges();
