@@ -348,25 +348,6 @@ namespace IHffA7.Controllers
             FillFilmscreeninsDropdownsWithSecection(screenings.roomId, screenings.filmId);
             return View(screenings);
         }
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditSpecial(Specialscreenings screening)
-        {
-            if (ModelState.IsValid)
-            {
-                screening.Activities.typeActivity = 1;
-                screening.Activities.id = screening.activityId;
-                try {
-                    activitiesRepo.ModifyActivity(screening);
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
-                    return HttpNotFound();
-                }
-            }
-            return RedirectToAction("Index");
-        }*/
 
         // GET: Activities/Delete/5
         public ActionResult DeleteFilmScreening(int? id)
