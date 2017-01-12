@@ -8,10 +8,10 @@
     <h2>@ViewBag.Title</h2>
     Alle restaurants die samenwerken met het festival:
 </p>
-@using (Html.BeginForm())
-{
-    foreach (var item in Model)
+    @foreach (var item in Model)
     {
+        using (Html.BeginForm())
+        {
         <hr />
             <div class="restaurantLeftBlock">
                 <img src="~/Content/Images/@item.RestaurantLogo" width="300" height="100" />
