@@ -1,0 +1,72 @@
+﻿@model IHffA7.Models.Films
+
+@{
+    ViewBag.Title = "detailpage";
+}
+
+<h2>detailpage</h2>
+
+<div>
+    <h4>Films</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.director)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.director)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descriptionNL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descriptionNL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descriptionEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descriptionEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.filmLogo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.filmLogo)
+        </dd>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Filmscreenings.Single().Activities.id, "STARTTIME", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("activityod", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Filmscreenings.Single().Activities.id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Toevoegen aan Wishlist", "Index", "Wishlist",  null, new { @class = "btn btn-default" })
+</p>

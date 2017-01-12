@@ -11,25 +11,64 @@ using System.Collections;
 namespace IHffA7.Controllers
 {
     public class FilmController : Controller
-    {//hoi
+    {
         private FilmRepository filmRepository= new FilmRepository();
-     
-
-        //private IhffA7Context db = new IhffA7Context();
-        // GET: Film
         public ActionResult Index()
         {
+            //Hier komen alle films    
+            IEnumerable<Films> film = filmRepository.GetFilms();
+            return View(film);
+        }
+        //verwijder en bren alles naar repo
+        private WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
+        public ActionResult detailpage(int filmId)
+        {
             //Hier komen alle films
-            //var films = (from film in db.Film select film);
-            //ViewBag.Film = films.ToList();
-            Films film = filmRepository.GetFilm(1);
+            Films film = filmRepository.GetFilm(filmId);
+            ViewBag.activityod = new SelectList(ctx.Activities, "id", "startTime");
             return View(film);
         }
 
-        public ActionResult Detail(int filmId)
+        //[HttpPost]
+        //public ActionResult detailpage(int filmId)
+        //{
+
+        //    return View;                      
+        //}
+
+        public ActionResult GetFilmMaandag()
         {
-            /*var detail = (from film in db.Film select film);
-            ViewBag.Details = detail.ToList();*/
+            //Hier komen alle films
+            IEnumerable<Films> film = filmRepository.GetFilmMonday();
+            return View("Index", film);
+        }
+        public ActionResult GetFilmDinsdag()
+        {
+            //Hier komen alle films
+            IEnumerable<Films> film = filmRepository.GetFilmTuesday();
+            return View("Index", film);
+        }
+        public ActionResult GetFilmWoensdag()
+        {
+            //Hier komen alle films
+
+            IEnumerable<Films> film = filmRepository.GetFilmWednesday();
+            return View("Index", film);
+        }
+        public ActionResult GetFilmDonderdag()
+        {
+            //Hier komen alle films
+            IEnumerable<Films> film = filmRepository.GetFilmThursday();
+            return View("Index", film);
+        }
+        public ActionResult GetFilmVrijdag()
+        {
+            //Hier komen alle films
+            IEnumerable<Films> film = filmRepository.GetFilmFriday();
+            return View("Index", film);
+        }
+        public ActionResult Detail(int filmId)
+        {       
             Films film = null; ; //filmRepository.GetFilm(filmId);
             return View(film);
         }

@@ -10,7 +10,7 @@
         <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Filmscreenings" Width="1.5" PointX="2.5" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Reservations" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Restaurants" Width="1.5" PointX="9.125" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Rooms" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Rooms" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Specials" Width="1.5" PointX="6.875" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Specialscreenings" Width="1.5" PointX="4.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.WishlistItems" Width="1.5" PointX="4.875" PointY="0.5" IsExpanded="true" />
@@ -33,7 +33,7 @@
           <ConnectorPoint PointX="8.046875" PointY="4.359375" />
           <ConnectorPoint PointX="9.125" PointY="4.359375" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Locations" Width="1.5" PointX="6" PointY="8.875" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Locations" Width="1.5" PointX="6.125" PointY="7.875" />
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Restaurants_Locations" />
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Rooms_Locations" />
         </Diagram>

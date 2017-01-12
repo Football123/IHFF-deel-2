@@ -1,8 +1,8 @@
-﻿@model IHffA7.Models.WishlistViewModel
+﻿@model IEnumerable<IHffA7.Models.WishlistViewModel>
 @{
     ViewBag.Title = "Index";
 }
-
+<p>@ViewBag.SuccesMessage</p>
 <h2>WISHLIST</h2>
 <table>
     <tr>
@@ -11,82 +11,159 @@
         <th>Prijs per kaart</th>
         <th>Prijs Totaal</th>
     </tr>
-    @if (Model.Films != null)
+    @if (Model != null)
     {
-        <tr> <td>FILMS</td> </tr>
-        foreach (var c in Model.Films)
+        foreach (var c in Model)
         {
-            <tr>
-                <td>
-                    @c.Film.Title
-                    <br />
-                    @c.Activiteit.StartTime
-                    <br />
-                    @c.Activiteit.EndTime
-                    <br />
-                    @c.Location.Name
+            if (c.Activity.typeActivity == 1)
+            {
+                <tr>
+                    <td>
+                        @c.Activity.Filmscreenings.Single().Films.title
+                        <br />
+                        @c.Activity.startTime
+                        <br />
+                        @c.Activity.Filmscreenings.Single().Rooms.name
+                        <br />
+                        @c.Activity.Filmscreenings.Single().Rooms.Locations.name
 
-                </td>
-                <td>
-                    @c.WishlistItem.NumberOfPersons
-                </td>
-                <td>
-                    @c.Activiteit.Price
-                </td>
-                <td>
-                    @c.TotalPrice
-                </td>
-                <td>
-                    @Html.ActionLink("Remove", "RemoveFilmFromSesWishlist", "WishList", new
-          {
-              numberOfpersones = c.WishlistItem.NumberOfPersons,
-              activityId = c.Activiteit.Id,
-              start = c.Activiteit.StartTime,
-              end = c.Activiteit.EndTime
-          }, null);
-                </td>
-                <td>
-                    ▼--------------F-I-L-M--------------▼
-                </td>
-            </tr>
-            <tr></tr>
+                    </td>
+                    <td>
+                        @c.NumberOfPersons
+                    </td>
+                    <td>
+                        @c.Activity.price
+                    </td>
+                    <td>
+                       @c.totalprice
+                    </td>
+                    <td>
+                        @Html.ActionLink("Verwijder", "RemoveActivityFromSesWishlist", "WishList", new
+                   {
+                       activityId = c.Activity.id
+                   }, new { @class = "btn btn-default" })
+                        
+                    </td>
+                </tr>
+                <tr></tr>
+            }
+            if (c.Activity.typeActivity == 2)
+            {
+                <tr>
+                    <td>
+                        @c.Activity.Specialscreenings.Single().Specials.title
+                        <br />
+                        @c.Activity.startTime
+                        <br />
+                        @c.Activity.Specialscreenings.Single().Rooms.name
+                        <br />
+                        @c.Activity.Specialscreenings.Single().Rooms.Locations.name
+
+                    </td>
+                    <td>
+                        @c.NumberOfPersons
+                    </td>
+                    <td>
+                        @c.Activity.price
+                    </td>
+                    <td>
+                        @c.totalprice
+                    </td>
+                    <td>
+                        @Html.ActionLink("Verwijder", "RemoveActivityFromSesWishlist", "WishList", new
+                   {
+                       activityId = c.Activity.id
+                   }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+                <tr></tr>
+            }
+            if (c.Activity.typeActivity == 3)
+            {
+                <tr>
+                    <td>
+                        @c.Activity.Restaurants.Single().Locations.name
+                        <br />
+                        @c.Activity.startTime
+                        <br />
+
+                    </td>
+                    <td>
+                        @c.NumberOfPersons
+                    </td>
+                    <td>
+                        @c.Activity.price
+                    </td>
+                    <td>
+                        @c.totalprice
+                    </td>
+                    <td>
+                        @Html.ActionLink("Verwijder", "RemoveActivityFromSesWishlist", "WishList", new
+                   {
+                       activityId = c.Activity.id
+                   }, new { @class = "btn btn-default" })
+
+                    </td>
+                </tr>
+                <tr></tr>
+            }
         }
     }
-    <tr>
-        <td>------------------------------------</td>
-    </tr>
-    @if (Model.Restaurants != null)
-    {<tr> <td>RESTAURANTS</td> </tr>
-        foreach (var d in Model.Restaurants)
-        {
-            <tr>
-                <td>
-                    @d.Location.Name
-                    <br />
-                    @d.Activiteit.StartTime
-                    <br />
-                    @d.Location.Name
+    
+        <tr>
+            }
+            <td>------------------------------------</td>
+        </tr>
+       
+    </table>
 
-                </td>
-                <td>
-                    @d.WishlistItem.NumberOfPersons
-                </td>
-                <td>
-                    @d.Activiteit.Price
-                </td>
-                <td>
-                    @d.TotalPrice
-                </td>
-                <td>
-                    ▲----R-E-S-T-A-U-R-A-N-T---▲
-                </td>
-            </tr>
-            <tr></tr>
-        }
-    }
-</table>
+    @Html.ActionLink("Add acty 2 to list to wishlists", "AddItemToSesWishlist", "WishList", new
+{
+    numberOfpersones = 2,
+    activityId = 2,
+}, new { @class = "btn btn-default" })
+@Html.ActionLink("Add acty 1 to list to wishlists", "AddItemToSesWishlist", "WishList", new
+{
+    numberOfpersones = 1,
+    activityId = 1,
+}, new { @class = "btn btn-default" })
+    <br /><br />
+@Html.ActionLink("SaveWishlist", "SaveWishlist", "WishList", new
+{
+    numberOfpersones = 1,
+    activityId = 1,
+}, new { @class = "btn btn-default" })
 
-@Html.ActionLink("Get you wishlist you stored earlier (well, you get wislistid = 1) ;)", "GetSavedWishlist", "WishList", new
+@Html.ActionLink("Retrieve Wishlist id = 1", "GetSavedWishlist", "WishList", new
 {
     wislistId = 1,
-}, null)
+}, new { @class = "btn btn-default" })
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.Label("Enter activity code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("wislistId")
+                @ViewBag.ValidationMessage
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="GetWishlist" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+

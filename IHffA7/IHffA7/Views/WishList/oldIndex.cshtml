@@ -1,0 +1,94 @@
+﻿@model IEnumerable<IHffA7.Models.WishlistViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>WISHLIST</h2>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>aantal kaarten</th>
+        <th>Prijs per kaart</th>
+        <th>Prijs Totaal</th>
+    </tr>
+    @if (Model != null)
+    {
+<tr> <td>FILMS</td> </tr>
+        foreach (var c in Model)
+        {
+            if (c.Activity.typeActivity == 1)
+            {
+<tr>
+                <td>
+                    @c.Activity.Filmscreenings.Single().Films.title;
+                    <br />
+                    @c.Activity.startTime
+                    <br />
+                    @c.endTime
+                    <br />
+                    @c.Filmscreenings.Single().Rooms.name
+                    <br/>
+                    @c.Filmscreenings.Single().Rooms.Locations.name
+
+                </td>
+                <td>
+                    @c.WishlistItem.NumberOfPersons
+                </td>
+                <td>
+                    @c.Activiteit.Price
+                </td>
+                <td>
+                    @c.TotalPrice
+                </td>
+                <td>
+                    @Html.ActionLink("Remove", "RemoveFilmFromSesWishlist", "WishList", new
+               {
+                   numberOfpersones = c.WishlistItem.NumberOfPersons,
+                   activityId = c.Activiteit.Id,
+                   start = c.Activiteit.StartTime,
+                   end = c.Activiteit.EndTime
+               }, null);
+                </td>
+                <td>
+                    ▼--------------F-I-L-M--------------▼
+                </td>
+            </tr>
+            <tr></tr>
+        }
+    }
+    <tr>
+        }
+        <td>------------------------------------</td>
+    </tr>
+    @if (Model.Restaurants != null)
+    {<tr> <td>RESTAURANTS</td> </tr>
+        foreach (var d in Model.Restaurants)
+        {
+            <tr>
+                <td>
+                    @d.Location.Name
+                    <br />
+                    @d.Activiteit.StartTime
+                    <br />
+                    @d.Location.Name
+
+                </td>
+                <td>
+                    @d.WishlistItem.NumberOfPersons
+                </td>
+                <td>
+                    @d.Activiteit.Price
+                </td>
+                <td>
+                    @d.TotalPrice
+                </td>
+                <td>
+                    ▲----R-E-S-T-A-U-R-A-N-T---▲
+                </td>
+            </tr>
+            <tr></tr>
+        }
+    }
+</table>
+
+@c.Activity.Filmscreenings.Single().Rooms.Locations.name
