@@ -33,7 +33,7 @@ namespace IHffA7.Controllers
                 @ViewBag.ValidationMessage = "Code bestaat niet.";
                 return View("Index", GetActivitiesFromSession());
             }
-            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities((int)wishlistId);
+            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities((int)wislistId);
             foreach (var item in activities)
             {
                 AddActivityToSesWishlist(item.NumberOfPersons, item.Activity.id);
