@@ -35,9 +35,7 @@ namespace IHffA7.Models.repositories
                     films.Add(film);
                 }
             }
-
-            return films;
-            
+            return films;          
         }
         public List<Films> GetFilmTuesday()
         {
@@ -52,9 +50,7 @@ namespace IHffA7.Models.repositories
                         films.Add(film);
                     }
             }
-
             return films;
-
         }
         public List<Films> GetFilmWednesday()
         {
@@ -69,9 +65,7 @@ namespace IHffA7.Models.repositories
                         films.Add(film);
                     }
             }
-
             return films;
-
         }
         public List<Films> GetFilmThursday()
         {
@@ -86,9 +80,7 @@ namespace IHffA7.Models.repositories
                         films.Add(film);
                     }
             }
-
             return films;
-
         }
         public List<Films> GetFilmFriday()
         {
@@ -103,9 +95,7 @@ namespace IHffA7.Models.repositories
                         films.Add(film);
                     }
             }
-
             return films;
-
         }
     }
 }
