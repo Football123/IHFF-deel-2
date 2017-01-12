@@ -25,7 +25,6 @@ namespace IHffA7.Models.repositories
 
         public void SaveSpecialsScreening(Specialscreenings specailscreening)
         {
-            //activities toevoegen hoeft niet omdat het er al in zit (specailscreening.Activities)
             ctx.Specialscreenings.Add(specailscreening);
             ctx.SaveChanges();
         }
@@ -46,22 +45,6 @@ namespace IHffA7.Models.repositories
             ctx.Locations.Add(location);
             ctx.SaveChanges();
         }
-
-        /*public void SaveRestaurant(Activities restaurantActivitty)
-        {
-            Restaurants restaurant = restaurantActivitty.Restaurants.Single();
-            for (DateTime start =restaurant.lunchStart; start<= restaurant.lunchEnd; start = start.AddMinutes(30))
-            {
-                Activities activity = new Activities();
-                activity.typeActivity = 3;
-                activity.highlight = restaurantActivitty.highlight;
-                activity.price = restaurantActivitty.price;
-                activity.startTime = start;
-                restaurant.Activities.Add(activity);
-            }
-            ctx.Restaurants.Add(restaurant);
-            ctx.SaveChanges();
-        }*/
 
         public void SaveRestaurant(RestaurantsFormModel restaurantFrom)
         {

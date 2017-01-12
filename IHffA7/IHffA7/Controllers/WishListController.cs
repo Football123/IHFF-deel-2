@@ -137,10 +137,13 @@ namespace IHffA7.Controllers
                 {
                     wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
                     wishListRepo.ReservationOfActivities(wishlistSessionList, reservation);
+                    ViewBag.SuccesMessage = "betaling voltooid";
+                    return View("Index", GetActivitiesFromSession());
                 }
                     
             }
-                return View();
+            ViewBag.SuccesMessage = "Betaling mislukt!";
+            return View();
         }
     }
 }

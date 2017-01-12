@@ -84,26 +84,6 @@ namespace IHffA7.Controllers
             ViewBag.locationId = new SelectList(db.Locations, "id", "name");
             return View();
         }
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateRestaurant(Restaurants restaurant)
-        {
-            if (ModelState.IsValid)
-            {
-                try {
-                    activitiesRepo.SaveRestaurant(restaurant);
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
-                    return HttpNotFound();
-                }
-            }
-            //viewbaag moet weer opniew worden gemaakt
-            ViewBag.locationId = new SelectList(db.Locations, "id", "name"); 
-
-            return View(restaurant);
-        }*/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
