@@ -343,6 +343,7 @@
     <Content Include="Views\Filmscreenings\Edit.cshtml" />
     <Content Include="Views\Filmscreenings\Index.cshtml" />
     <Content Include="Views\Activities\CreateFilm.cshtml" />
+    <Content Include="Views\Film\detailpage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

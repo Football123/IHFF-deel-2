@@ -4,9 +4,24 @@
 }
 
 <h2>Filmoverzicht</h2>
-<h3>Filter op dag</h3>
-<table>
+<table> 
+    @foreach (var film in Model)
     {
-           
-    }
+        <tr>
+            <th>@film.title</th>
+        </tr>
+        <tr>
+            <td>@film.descriptionNL</td>
+        </tr>
+        <tr>
+            <td>@Html.ActionLink("Meer info", "detailpage", "Film", new { filmId = film.id }, new { @class = "btn btn-default" })</td>
+        </tr>
+    }  
 </table>
+
+<h3>Filter op dag</h3>
+@Html.ActionLink("Maandag", "GetFilmMaandag", "Film", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Dinsdag", "GetFilmDinsdag", "Film", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Woensdag", "GetFilmWoensdag", "Film", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Donderdag", "GetFilmDonderdag", "Film", null, new { @class = "btn btn-default" })
+@Html.ActionLink("Vrijdag", "GetFilmVrijdag", "Film", null, new { @class = "btn btn-default" })
