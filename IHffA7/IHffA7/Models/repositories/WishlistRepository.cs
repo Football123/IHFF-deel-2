@@ -41,15 +41,14 @@ namespace IHffA7.Models.repositories
                 .Include(r => r.Restaurants.Select(rr => rr.Locations));
                 list.Add(new WishlistViewModel(eagerloadActivity.Single(), item.NumberOfpersones));
             }
-            list.OrderBy(order => order.Activity.typeActivity)
-                .OrderBy(oderder2 => oderder2.Activity.startTime);
-            return list;
+            return list.OrderBy(order => order.TypeActivity);
+            
         }
         public IEnumerable<WishlistViewModel> GetActivities(int wishlistId)
         {
             IList<WishlistViewModel> list = new List<WishlistViewModel>();
             //eagerloading to reduce queries to db to 1. without it lazyloading wil fire one by each loop
-            var eagerloading = GetWishlistItems(wishlistId)
+            var eagerloadingWishlistItems = GetWishlistItems(wishlistId)
                 .Include(a => a.Activities)
                 .Include(f => f.Activities.Filmscreenings.Select(a => a.Films))
                 .Include(f => f.Activities.Filmscreenings.Select(r => r.Rooms.Locations))
@@ -57,14 +56,14 @@ namespace IHffA7.Models.repositories
                 .Include(s => s.Activities.Specialscreenings.Select(r => r.Rooms.Locations))
                 .Include(r=>r.Activities.Restaurants.Select(rr=>rr.Locations));
 
-            foreach (WishlistItems wishitem in eagerloading)
+            foreach (WishlistItems wishitem in eagerloadingWishlistItems)
             {
                 list.Add(new WishlistViewModel(wishitem.Activities, wishitem.numberOfPersons));
             }
-            return list;
+            return list.OrderBy(order => order.TypeActivity);
         }
 
-        public void SaveActivities(List<WishlistSession> wishlistSessionList)
+        public void SaveActivities(List<WishlistSession> wishlistSessionList, Reservations reservation)
         {
             Wishlists wislist = new Wishlists();
            
@@ -79,15 +78,18 @@ namespace IHffA7.Models.repositories
                 wislist.WishlistItems.Add(wishitems);
                 wislist.totalPrice = wislist.totalPrice + activiteit.price;
             }
+            if (reservation != null)
+            {
+                wislist.Reservations.Add(reservation);
+            }
             ctx.Wishlists.Add(wislist);
             ctx.SaveChanges();
         }
 
-        public void ReservationOfActivities(List<WishlistSession> wishlistSessionList)
+        public void ReservationOfActivities(List<WishlistSession> wishlistSessionList, Reservations reservation)
         {
-            Reservations reservation = new Reservations();
-            
-            throw new NotImplementedException();
+            SaveActivities(wishlistSessionList, reservation);
+
         }
 
 

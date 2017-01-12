@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using IHffA7.Models;
 using IHffA7.Models.repositories;
-using System.Security.Cryptography;
 
 namespace IHffA7.Controllers
 {
@@ -50,6 +49,7 @@ namespace IHffA7.Controllers
 
         public void AddActivityToSesWishlist(int numberOfpersones, int activityId)
         {
+            WishlistSession newitem = new WishlistSession(activityId, numberOfpersones);
             List<WishlistSession> wishlistSessionList = new List<WishlistSession>(); ;
             bool inList = false;
             if (Session["wishlistSessionList"] == null) //als niet bestaat, maak aan
@@ -61,12 +61,15 @@ namespace IHffA7.Controllers
             {
                 wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
                 //check op dubbelen, zo ja tel personen op
-                if (wishlistSessionList.Select(s => (s.ActivityId == activityId)).Count() >1)
-                {
-
-                    wishlistSessionList.First(s => (s.ActivityId == activityId)).NumberOfpersones += numberOfpersones;
-                    inList = true;
-                }
+                    try {
+                        wishlistSessionList.FindAll(x => (x.ActivityId == activityId))
+                                .Single().NumberOfpersones += numberOfpersones;
+                        inList = true;
+                    }
+                    catch
+                    {
+                    inList = false;
+                    }
             }
             if (!inList)
             {
@@ -110,7 +113,7 @@ namespace IHffA7.Controllers
             {
                 wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
                 try {
-                    wishListRepo.SaveActivities(wishlistSessionList);
+                    wishListRepo.SaveActivities(wishlistSessionList, null);
                     ViewBag.SuccesMessage = "succesvol opgeslagen";
                 }
                 catch
@@ -122,21 +125,22 @@ namespace IHffA7.Controllers
         }
         public ActionResult PayWishlist()
         {
-            List<WishlistSession> wishlistSessionList = new List<WishlistSession>(); ;
-            if (Session["wishlistSessionList"] != null)
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PayWishlist(Reservations reservation)
+        {
+            if (ModelState.IsValid)
             {
-                wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
-                try
+                List<WishlistSession> wishlistSessionList = new List<WishlistSession>(); ;
+                if (Session["wishlistSessionList"] != null)
                 {
-                    wishListRepo.ReservationOfActivities(wishlistSessionList);
-                    ViewBag.SuccesMessage = "Betaling gelukt!";
+                    wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
+                    wishListRepo.ReservationOfActivities(wishlistSessionList, reservation);
                 }
-                catch
-                {
-                    ViewBag.SuccesMessage = "Iets ging mis!";
-                }
+                    
             }
-            return View("Index", GetActivitiesFromSession());
+                return View();
         }
     }
 }

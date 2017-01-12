@@ -118,15 +118,15 @@
        
     </table>
 
-    @Html.ActionLink("Add acty 2 to list to wishlists", "AddItemToSesWishlist", "WishList", new
+    @Html.ActionLink("Add acty 10 to list to wishlists", "AddItemToSesWishlist", "WishList", new
 {
     numberOfpersones = 2,
-    activityId = 2,
+    activityId = 10,
 }, new { @class = "btn btn-default" })
-@Html.ActionLink("Add acty 1 to list to wishlists", "AddItemToSesWishlist", "WishList", new
+@Html.ActionLink("Add acty 12 to list to wishlists", "AddItemToSesWishlist", "WishList", new
 {
     numberOfpersones = 1,
-    activityId = 1,
+    activityId = 12,
 }, new { @class = "btn btn-default" })
     <br /><br />
 @Html.ActionLink("SaveWishlist", "SaveWishlist", "WishList", new
@@ -134,12 +134,6 @@
     numberOfpersones = 1,
     activityId = 1,
 }, new { @class = "btn btn-default" })
-
-@Html.ActionLink("Retrieve Wishlist id = 1", "GetSavedWishlist", "WishList", new
-{
-    wislistId = 1,
-}, new { @class = "btn btn-default" })
-
 
 @using (Html.BeginForm())
 {
@@ -163,6 +157,9 @@
         </div>
     </div>
 }
+
+@Html.ActionLink("Betalen", "PayWishlist", "WishList",null, new { @class = "btn btn-default" })
+
 
 
 
