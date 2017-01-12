@@ -24,10 +24,16 @@ namespace IHffA7.Controllers
             return View(activities);
         }
 
-        public ActionResult GetSavedWishlist(int wislistId)
+        [HttpPost, ActionName("Index")]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetSavedWishlist(int? wislistId)
         {
-            //int wislistId = 1;
-            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities(wislistId);
+            if (wislistId == null)
+            {
+                @ViewBag.ValidationMessage = "Code bestaat niet.";
+                return View("Index", GetActivitiesFromSession());
+            }
+            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities((int)wishlistId);
             foreach (var item in activities)
             {
                 AddActivityToSesWishlist(item.NumberOfPersons, item.Activity.id);
@@ -35,77 +41,12 @@ namespace IHffA7.Controllers
             return RedirectToAction("Index", activities);
         }
 
-        //niet verwijderen, is functioneel!
+        //wishlist bestaat nog niet, dus ook niet de items waar number of persons in staat
         public ActionResult AddItemToSesWishlist(int numberOfpersones, int activityId)
         {
             AddActivityToSesWishlist(numberOfpersones, activityId);
             return RedirectToAction("Index");
         }
-        //methode
-        public ActionResult RemoveFilmFromSesWishlist( int activityId)
-        {
-            List<SessionFilm> filmlist = new List<SessionFilm>();
-            if (Session["filmlist"] != null)
-            {
-                filmlist = (List<SessionFilm>)Session["filmlist"];
-                //var filmpkje= filmlist.Select(f => (f.ActivityId==activityId)).SingleOrDefault();
-                //filmlist.RemoveAt(1);
-                filmlist.RemoveAll(x => (x.ActivityId == activityId));
-                Session["filmlist"] = filmlist;
-
-                /*
-                filmlist.ToList();
-                foreach (var i in filmlist)
-                {
-                    if (film ==i)
-                    {
-                        filmlist.Remove(i);
-                        filmlist = (List<SessionFilm>)Session["filmlist"];
-                        break;
-                    }
-                }*/
-            }
-            else
-            { // untested what it actually does
-                ModelState.AddModelError("invalidItem", "invalid item");
-            }
-            return RedirectToAction("Index");
-        }
-
-//AddAFilmToSesWishlist
-        public void AddAFilmToSesWishlist(int numberOfpersones, int activityId)
-        {
-            SessionFilm film = new SessionFilm(numberOfpersones, activityId, null);
-            List<SessionFilm> filmlist = new List<SessionFilm>();
-            bool inList = false;
-            if (Session["filmlist"] == null) //als niet bestaat, maak aan
-            {
-                Session["filmlist"] = filmlist;
-                
-            }
-            else // anderes ophalen
-            {
-                filmlist = (List<SessionFilm>)Session["filmlist"];
-                //check op dubbelen
-                foreach(SessionFilm item in filmlist)
-                {
-                    if (item.ActivityId== activityId)
-                    {
-                        item.NumberOfpersones = +numberOfpersones;
-                        inList = true;
-                        break;
-                    }
-                }
-            }
-            if (!inList)
-            {
-                filmlist.Add(film);
-            }
-            // check of hij niet bestaal in de lijst
-
-            Session["filmlist"] = filmlist; // wijzigingen opslaan
-        }
-
 
         public void AddActivityToSesWishlist(int numberOfpersones, int activityId)
         {
@@ -120,9 +61,10 @@ namespace IHffA7.Controllers
             {
                 wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
                 //check op dubbelen, zo ja tel personen op
-                if (wishlistSessionList.Select(s => (s.ActivityId == activityId)).Count() ==1)
+                if (wishlistSessionList.Select(s => (s.ActivityId == activityId)).Count() >1)
                 {
-                    wishlistSessionList.Single(s => (s.ActivityId == activityId)).NumberOfpersones += numberOfpersones;
+
+                    wishlistSessionList.First(s => (s.ActivityId == activityId)).NumberOfpersones += numberOfpersones;
                     inList = true;
                 }
             }
@@ -170,6 +112,24 @@ namespace IHffA7.Controllers
                 try {
                     wishListRepo.SaveActivities(wishlistSessionList);
                     ViewBag.SuccesMessage = "succesvol opgeslagen";
+                }
+                catch
+                {
+                    ViewBag.SuccesMessage = "Iets ging mis!";
+                }
+            }
+            return View("Index", GetActivitiesFromSession());
+        }
+        public ActionResult PayWishlist()
+        {
+            List<WishlistSession> wishlistSessionList = new List<WishlistSession>(); ;
+            if (Session["wishlistSessionList"] != null)
+            {
+                wishlistSessionList = (List<WishlistSession>)Session["wishlistSessionList"];
+                try
+                {
+                    wishListRepo.ReservationOfActivities(wishlistSessionList);
+                    ViewBag.SuccesMessage = "Betaling gelukt!";
                 }
                 catch
                 {

@@ -27,31 +27,6 @@ namespace IHffA7.Models.repositories
             return activiteit;
         }
 
-        public IEnumerable<WishlistItemFilm> getFilmactivities(IList<SessionFilm> filmlist)
-        {
-            WishlistItemFilm wishlistItemFilm = new WishlistItemFilm();
-            foreach (var activity in filmlist)
-            {
-                var test = GetActivity(activity.ActivityId); 
-                var eagerloadActivities = GetActivity(activity.ActivityId)
-                    .Include(s => s.Filmscreenings)
-                    .Include(f => f.Filmscreenings.Select(ff => ff.Films))
-                    .Include(r => r.Filmscreenings.Select(rr => rr.Rooms))
-                    .Include(l => l.Filmscreenings.Select(ll => ll.Rooms.Locations));
-                var activities = eagerloadActivities.Single();
-                var screening = activities.Filmscreenings.Single();
-                var film = screening.Films;
-                var room = screening.Rooms;
-                var location = room.Locations;
-                WishlistItems wishlistItem = new WishlistItems();
-                wishlistItem.numberOfPersons = activity.NumberOfpersones;
-                wishlistItemFilm.Add(new WishlistItemFilm(wishlistItem, activities, screening, film, location, room, activity.NumberOfpersones * activities.price));
-            }
-            return wishlistItemFilm.WishlistFilmList;
-        }
-
-        
-
         //new gebruikte mthoene hier onder
         public IEnumerable<WishlistViewModel> GetActivities(List<WishlistSession> wishlistSessionList)
         {
@@ -107,25 +82,14 @@ namespace IHffA7.Models.repositories
             ctx.Wishlists.Add(wislist);
             ctx.SaveChanges();
         }
-        public void SaveFilmactivities(IList<SessionFilm> filmlist)
+
+        public void ReservationOfActivities(List<WishlistSession> wishlistSessionList)
         {
-            Wishlists wislist = new Wishlists();
-            wislist.paid = false;
-            ctx.Wishlists.Add(wislist);
-            foreach (var activity in filmlist)
-            {
-                int activityId = GetActivity(activity.ActivityId).Select(a => a.id).SingleOrDefault();
-                var wishslistitem = new WishlistItems();
-                if (activityId != null)
-                {
-                    wishslistitem.activityId = activityId;
-                    wishslistitem.wishlistId = wislist.id;
-                }
-
-                wislist.WishlistItems.Add(wishslistitem);
-            }
-            ctx.SaveChanges();
-
+            Reservations reservation = new Reservations();
+            
+            throw new NotImplementedException();
         }
+
+
     }
 }

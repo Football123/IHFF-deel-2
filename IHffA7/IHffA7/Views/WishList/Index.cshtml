@@ -13,7 +13,6 @@
     </tr>
     @if (Model != null)
     {
-        <tr> <td>FILMS</td> </tr>
         foreach (var c in Model)
         {
             if (c.Activity.typeActivity == 1)
@@ -136,7 +135,35 @@
     activityId = 1,
 }, new { @class = "btn btn-default" })
 
-@Html.ActionLink("Retrieve eWishlist id = 1", "GetSavedWishlist", "WishList", new
+@Html.ActionLink("Retrieve Wishlist id = 1", "GetSavedWishlist", "WishList", new
 {
     wislistId = 1,
 }, new { @class = "btn btn-default" })
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.Label("Enter activity code", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Editor("wislistId")
+                @ViewBag.ValidationMessage
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="GetWishlist" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
