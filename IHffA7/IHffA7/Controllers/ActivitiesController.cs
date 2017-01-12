@@ -22,27 +22,6 @@ namespace IHffA7.Controllers
             return View(activitiesRepo.GetActivities());
         }
 
-        // GET: Activities/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Activities activities = db.Activities.Find(id);
-            if (activities == null)
-            {
-                return HttpNotFound();
-            }
-            return View(activities);
-        }
-
-        // GET: Activities/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
         public ActionResult CreateSpecial()
         {
             return View();
@@ -129,17 +108,6 @@ namespace IHffA7.Controllers
         {
             ViewBag.specialId = new SelectList(db.Specials, "id", "title", specialsId);
             ViewBag.roomId = new SelectList(db.Rooms, "id", "name", roomId);
-        }
-        //not in use, but nice xample of and selectlit
-        public ActionResult Create3()
-        {
-            IEnumerable<SelectListItem> items = db.Filmscreenings.Select(c => new SelectListItem
-            {
-                Value = c.Films.id.ToString(),
-                Text = c.Films.title.ToString()
-            });
-            ViewBag.FilmId = items;
-            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -245,43 +213,6 @@ namespace IHffA7.Controllers
             return View(rooms);
         }
 
-        // POST: Activities/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,startTime,endTime,price,highlight,typeActivity")] Activities activities)
-        {
-            if (ModelState.IsValid)
-            {
-                try {
-                    db.Activities.Add(activities);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
-                    return HttpNotFound();
-                }
-            }
-
-            return View(activities);
-        }
-
-        // GET: Activities/Edit/5
-        public ActionResult EditOldAutoGen(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Activities activities = db.Activities.Find(id);
-            if (activities == null)
-            {
-                return HttpNotFound();
-            }
-            return View(activities);
-        }
         public ActionResult EditFilmScreening(int? id)
         {
             if (id == null)
@@ -293,7 +224,6 @@ namespace IHffA7.Controllers
 
                 Filmscreenings filmscreening = activitiesRepo.GetFilmscreening(id);
                 FillFilmscreeninsDropdownsWithSecection(filmscreening.roomId, filmscreening.filmId);
-                //FillFilmscreeninsDropdowns();
                 ViewBag.IsEditing = true;
                 return View("CreateFilmscreening", filmscreening);
             }
@@ -303,9 +233,6 @@ namespace IHffA7.Controllers
             }
         }
 
-        // POST: Activities/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditFilmScreening(Filmscreenings screenings)
@@ -329,7 +256,6 @@ namespace IHffA7.Controllers
             return View(screenings);
         }
 
-        // GET: Activities/Delete/5
         public ActionResult DeleteFilmScreening(int? id)
         {
             if (id == null)
@@ -354,15 +280,6 @@ namespace IHffA7.Controllers
             {
                 return HttpNotFound();
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

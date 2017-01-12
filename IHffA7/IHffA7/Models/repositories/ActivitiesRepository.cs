@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Web;
 
 namespace IHffA7.Models.repositories
 {
@@ -13,9 +14,9 @@ namespace IHffA7.Models.repositories
 
         public IQueryable<Activities> GetActivities()
         {
-            return ctx.Activities
-                .Include(s => s.Filmscreenings)
-                .Include(f => f.Filmscreenings.Select(ff => ff.Films));
+            return ctx.Activities.Where(a => a.typeActivity == 1 || a.typeActivity == 2)
+                .Include(f => f.Filmscreenings.Select(ff => ff.Films))
+                .Include((s => s.Specialscreenings.Select(ss => ss.Specials)));
         }
         public void SaveFilmScreening(Filmscreenings filmscreening)
         {
