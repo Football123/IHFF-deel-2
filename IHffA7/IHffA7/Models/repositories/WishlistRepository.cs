@@ -28,7 +28,7 @@ namespace IHffA7.Models.repositories
             return activiteit;
         }
 
-        public IEnumerable<WishlistItemFilm> getFilmactivities(int wishlistId)
+        public IEnumerable<WishlistItemFilm> GetActivities2(int wishlistId)
         {
             //IList<WishlistItemFilm> films = new List<WishlistItemFilm>();
             WishlistItemFilm wishlistItemFilm = new WishlistItemFilm();
@@ -109,5 +109,58 @@ namespace IHffA7.Models.repositories
 
         }
 
+        //new gebruikte mthoene hier onder
+        public IEnumerable<WishlistViewModel> getActivities(List<WishlistSession> wishlistSessionList)
+        {
+            IList<WishlistViewModel> list = new List<WishlistViewModel>();
+            foreach(WishlistSession item in wishlistSessionList)
+            {
+                var eagerloadActivity = GetActivity(item.ActivityId)
+                    .Include(s => s.Filmscreenings)
+                    .Include(f => f.Filmscreenings.Select(ff => ff.Films))
+                    .Include(r => r.Filmscreenings.Select(rr => rr.Rooms))
+                    .Include(l => l.Filmscreenings.Select(ll => ll.Rooms.Locations))
+                    .Include(l => l.Specialscreenings.Select(ll => ll.Rooms.Locations));
+                list.Add(new WishlistViewModel(eagerloadActivity.Single(),item.NumberOfpersones));
+            }
+            list.OrderBy(order => order.Activity.typeActivity)
+                .OrderBy(oderder2 => oderder2.Activity.startTime);
+            return list;
+        }
+        public IEnumerable<WishlistViewModel> GetActivities(int wishlistId)
+        {
+            IList<WishlistViewModel> list = new List<WishlistViewModel>();
+            //eagerloading to reduce queries to db to 1. without it lazyloading wil fire one by each loop
+            var eagerloading = GetWishlistItems(wishlistId, 1)
+                .Include(a => a.Activities)
+                .Include(s => s.Activities.Filmscreenings)
+                .Include(f => f.Activities.Filmscreenings.Select(a => a.Films))
+                .Include(f => f.Activities.Filmscreenings.Select(r => r.Rooms))
+                .Include(f => f.Activities.Filmscreenings.Select(r => r.Rooms.Locations));
+
+            foreach (WishlistItems wishitem in eagerloading)
+            {
+                list.Add(new WishlistViewModel(eagerloading.Single().Activities, wishitem.numberOfPersons));
+            }
+            return list;
+        }
+
+        public void SaveActivities(List<WishlistSession> wishlistSessionList)
+        {
+            Wishlists wislist = new Wishlists();
+            wislist.paid = false;
+            foreach (WishlistSession item in wishlistSessionList)
+            {
+                WishlistItems wishitems = new WishlistItems();
+                //check of de activity daadwerkelijk in db staat
+                Activities activiteit = GetActivity(item.ActivityId).Single();
+                wishitems.activityId = activiteit.id;
+                wishitems.numberOfPersons = 20;
+                wislist.WishlistItems.Add(wishitems);
+                wislist.totalPrice = wislist.totalPrice + activiteit.price;
+            }
+            var test = wislist;
+            ctx.SaveChanges();
+        }
     }
 }
