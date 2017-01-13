@@ -17,10 +17,8 @@ namespace IHffA7.Models.repositories
             
         }
         public IEnumerable<Films> GetFilms()
-        {
-            var i =
-                ctx.Films;
-            return i;
+        {     
+            return ctx.Films;
         }
         public List<Films> GetFilmMonday()
         {

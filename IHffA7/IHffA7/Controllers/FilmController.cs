@@ -19,11 +19,10 @@ namespace IHffA7.Controllers
             return View(film);
         }
   
-        private WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
         public ActionResult detailpage(int filmId)
         {        
             Films film = filmRepository.GetFilm(filmId);
-            ViewBag.activityod = new SelectList(ctx.Activities, "id", "startTime");
+            //ViewBag.activityod = new SelectList(ctx.Activities, "id", "startTime");
             return View(film);
         }
 
