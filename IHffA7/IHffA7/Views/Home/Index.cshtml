@@ -1,32 +1,28 @@
 ﻿@using IHffA7.Models
 @model IEnumerable<FilmsTodayModel>
 
-@{ 
-    ViewBag.NoItems = "Er draaien geen films vandaag! Voor een overzicht van alle films van deze week klik op 'Film' in het hoofdmenu.";
-}
-
 <img src="~/Content/Images/home/u0.png" />
 <h2>Today</h2>
 @if (Model == null)
 {
-    @ViewBag.NoItems
+    @:Er draaien geen films vandaag! Voor een overzicht van alle films van deze week klik op 'Film' in het hoofdmenu.
 }
 else
 {
     using (Html.BeginForm())
     {
-        foreach (var today in Model)
+        foreach (var item in Model)
         {
             <div class="todayItem">
-                @Html.Hidden("ActivityId", today.activityId)
-                <h2>@today.title</h2>
-                <img src="~/Content/Images/@today.filmLogo" width="216" height="320" />
+                @Html.Hidden("ActivityId", item.activityId)
+                <h2>@item.title</h2>
+                <img src="~/Content/Images/@item.filmLogo" width="216" height="320" />
                     <br />
-                @today.beginTime - @today.endTime
+                @item.beginTime - @item.endTime
                     <br />
-                @today.locationName - Zaal: @today.roomName
+                @item.locationName - Zaal: @item.roomName
                     <hr />
-                Vrije plaatsen: @today.availableSeats - &#8364 @today.price
+                Vrije plaatsen: @item.availableSeats - &#8364 @item.price
                     <br />
                 <input id="btnToevoegWishlist" type="submit" value="Voeg toe aan wishlist" />
             </div>
