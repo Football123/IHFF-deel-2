@@ -15,8 +15,11 @@ namespace IHffA7.Controllers
         public ActionResult Index()
         {
             IEnumerable<FilmsTodayModel> filmTodayItems = homeRepository.GetTodaysMovies();
+            IEnumerable<HighlightFilmsModel> highlightFilmItems = homeRepository.GetHighlightMovies();
 
-            return View(filmTodayItems);
+            var tuple = new Tuple<IEnumerable<FilmsTodayModel>, IEnumerable<HighlightFilmsModel>>(filmTodayItems, highlightFilmItems);
+
+            return View(tuple);
         }
 
         [HttpPost]

@@ -21,7 +21,7 @@ textarea {
     max-width: 280px;
 }
 /****************************HOME******************************/
-.todayItem {
+.homeItem {
     width: 25%;
     min-height: 400px;
     float: left;

@@ -1,9 +1,9 @@
 ﻿@using IHffA7.Models
-@model IEnumerable<FilmsTodayModel>
+@model Tuple<IEnumerable<FilmsTodayModel>, IEnumerable<HighlightFilmsModel>>
 
 <img src="~/Content/Images/home/u0.png" />
 <h2>Today</h2>
-@if (Model == null)
+@if (Model.Item1 == null)
 {
     @:Er draaien geen films vandaag! Voor een overzicht van alle films van deze week klik op 'Film' in het hoofdmenu.
 }
@@ -11,19 +11,47 @@ else
 {
     using (Html.BeginForm())
     {
-        foreach (var item in Model)
+        foreach (var todayItem in Model.Item1)
         {
-            <div class="todayItem">
-                @Html.Hidden("ActivityId", item.activityId)
-                <h2>@item.title</h2>
-                <img src="~/Content/Images/@item.filmLogo" width="216" height="320" />
-                    <br />
-                @item.beginTime - @item.endTime
-                    <br />
-                @item.locationName - Zaal: @item.roomName
-                    <hr />
-                Vrije plaatsen: @item.availableSeats - &#8364 @item.price
-                    <br />
+            <div class="homeItem">
+                @Html.Hidden("ActivityId", todayItem.activityId)
+                <h2>@todayItem.title</h2>
+                <img src="~/Content/Images/@todayItem.filmLogo" width="216" height="320" />
+                <br />
+                @todayItem.beginTime - @todayItem.endTime
+                <br />
+                @todayItem.locationName - Zaal: @todayItem.roomName
+                <hr />
+                Vrije plaatsen: @todayItem.availableSeats - &#8364 @todayItem.price
+                <br />
+                <input id="btnToevoegWishlist" type="submit" value="Voeg toe aan wishlist" />
+            </div>
+        }
+    }
+}
+
+<h2>Highlights</h2>
+@if (Model.Item2 == null)
+{
+    @:Er draaien geen highlights meer de komende dagen!
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        foreach (var highlightItem in Model.Item2)
+        {
+            <div class="homeItem">
+                @Html.Hidden("ActivityId", highlightItem.activityId)
+                <h2>@highlightItem.title</h2>
+                <img src="~/Content/Images/@highlightItem.filmLogo" width="216" height="320" />
+                <br />
+                @highlightItem.beginTime - @highlightItem.endTime
+                <br />
+                @highlightItem.locationName - Zaal: @highlightItem.roomName
+                <hr />
+                Vrije plaatsen: @highlightItem.availableSeats - &#8364 @highlightItem.price
+                <br />
                 <input id="btnToevoegWishlist" type="submit" value="Voeg toe aan wishlist" />
             </div>
         }

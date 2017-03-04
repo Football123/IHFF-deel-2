@@ -184,6 +184,7 @@
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HighlightFilmsModel.cs" />
     <Compile Include="Models\RestaurantsFormModel.cs" />
     <Compile Include="Models\ActivitiesViewModel.cs" />
     <Compile Include="Models\activityType.cs" />
