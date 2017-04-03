@@ -27,6 +27,17 @@ namespace IHffA7.Models.repositories
             return activiteit;
         }
 
+        public Activities GetWholeActivity(int activityId)
+        {
+            var activity = GetActivity(activityId)
+                .Include(f => f.Filmscreenings.Select(a => a.Films))
+                .Include(f => f.Filmscreenings.Select(r => r.Rooms.Locations))
+                .Include(f => f.Specialscreenings.Select(a => a.Specials))
+                .Include(f => f.Specialscreenings.Select(r => r.Rooms.Locations))
+                .Include(r => r.Restaurants.Select(rr => rr.Locations));
+            return activity.Single();
+        }
+
         //new gebruikte mthoene hier onder
         public IEnumerable<WishlistViewModel> GetActivities(List<WishlistSession> wishlistSessionList)
         {
@@ -63,18 +74,18 @@ namespace IHffA7.Models.repositories
             return list.OrderBy(order => order.TypeActivity);
         }
 
-        public void SaveActivities(List<WishlistSession> wishlistSessionList, Reservations reservation)
+        public void SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation)
         {
             Wishlists wislist = new Wishlists();
            
             wislist.paid = false;
-            foreach (WishlistSession item in wishlistSessionList)
+            foreach (WishlistViewModel activity in wishlist)
             {
                 WishlistItems wishitems = new WishlistItems();
                 //check of de activity daadwerkelijk in db staat
-                Activities activiteit = GetActivity(item.ActivityId).Single();
+                Activities activiteit = activity.Activity;
                 wishitems.activityId = activiteit.id;
-                wishitems.numberOfPersons = item.NumberOfpersones;
+                wishitems.numberOfPersons = activity.NumberOfPersons;
                 wislist.WishlistItems.Add(wishitems);
                 wislist.totalPrice = wislist.totalPrice + activiteit.price;
             }
@@ -86,9 +97,9 @@ namespace IHffA7.Models.repositories
             ctx.SaveChanges();
         }
 
-        public void ReservationOfActivities(List<WishlistSession> wishlistSessionList, Reservations reservation)
+        public void ReservationOfActivities(List<WishlistViewModel> wishlist, Reservations reservation)
         {
-            SaveActivities(wishlistSessionList, reservation);
+            SaveActivities(wishlist, reservation);
 
         }
 

@@ -2,7 +2,21 @@
 @{
     ViewBag.Title = "Index";
 }
-<p>@ViewBag.SuccesMessage</p>
+
+@if (ViewBag.succes != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.succes
+    </div>
+}
+
+@if (ViewBag.errors != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.errors
+    </div>
+}
+
 <h2>WISHLIST</h2>
 <table>
     <tr>

@@ -12,6 +12,7 @@ namespace IHffA7.Models
         public Reservations Reservation { get; set; }
         public int NumberOfPersons { get; set; }
         public decimal totalprice { get; set; }
+        //for the orderby nodig
         public int TypeActivity { get; set; }
         public WishlistViewModel(Activities activity, int numerOferPersons)
         {
