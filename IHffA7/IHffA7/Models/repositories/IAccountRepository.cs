@@ -8,7 +8,7 @@ namespace IHffA7.Models.repositories
 {
     interface IAccountRepository
     {
-        Accounts GetAccount(string emailadres, string wachtwoord);
+        Accounts GetAccount(string inlognaam, string wachtwoord);
         void AddAccount(Accounts account);
     }
 }

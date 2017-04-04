@@ -36,18 +36,18 @@ namespace IHffA7.Controllers
             if (ModelState.IsValid)
             {
                 Accounts account = accountRepository.GetAccount(
-                    login_account.Emailadres, login_account.Wachtwoord);
+                    login_account.Inlognaam, login_account.Wachtwoord);
 
                 if (account != null)
                 {
-                    FormsAuthentication.SetAuthCookie(account.Emailadres, false);
+                    FormsAuthentication.SetAuthCookie(account.Inlognaam, false);
                     Session["loggedin_account"] = account;
                     return RedirectToAction("Index", "Contact");
                 }
                 else
                 {
                     ModelState.AddModelError("login-error",
-                        "De ingevulde gebruikersnaam of het wachtwoord is incorrect.");
+                        "De ingevulde inlognaam of het wachtwoord is incorrect.");
                 }
             }
             return View(login_account);
@@ -63,43 +63,5 @@ namespace IHffA7.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Login", "Account");
         }
-
-        ////
-        //// GET: /Account/Register
-
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
-
-        ////
-        //// POST: /Account/Register
-
-        //[HttpPost]
-        //public ActionResult Register(Account account)
-        //{
-        //    // Controleer of emailadres al bestaat:
-
-        //    var checkEmail =
-        //        (from entry in ctx.Accounts where (entry.Emailadres == account.Emailadres) select entry).SingleOrDefault();
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (checkEmail == null)
-        //        {
-        //            //Account aanmaken
-        //            accountRepository.AddAccount(account);
-        //            //Account aangemaakt...? Ga terug naar de index-pagina
-        //            return RedirectToAction("Index", "Contact");
-        //        }
-        //        else
-        //        {
-        //            ViewBag.existMessage = "Dit emailadres bestaat al in de database";
-        //            return View(account);
-        //        }
-        //    }
-        //    // niet (correct) account-gegevens ingevoerd...? (modelstate = fout) Ga terug naar Registreren-pagina
-        //    return View(account);
-        //}
     }
 }

@@ -9,9 +9,9 @@ namespace IHffA7.Models.repositories
     {
         private WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
 
-        public Accounts GetAccount(string emailadres, string wachtwoord)
+        public Accounts GetAccount(string inlognaam, string wachtwoord)
         {
-            return ctx.Accounts.SingleOrDefault(e => e.Emailadres == emailadres && e.Wachtwoord == wachtwoord);
+            return ctx.Accounts.SingleOrDefault(i => i.Inlognaam == inlognaam && i.Wachtwoord == wachtwoord);
         }
 
         public void AddAccount(Accounts account)

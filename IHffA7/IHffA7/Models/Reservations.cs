@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace IHffA7.Models
 {
     using System;
@@ -17,17 +15,9 @@ namespace IHffA7.Models
     public partial class Reservations
     {
         public int id { get; set; }
-
         public int wishlistId { get; set; }
-
-        [Required]
         public string name { get; set; }
-
-        [Required]
-        [DataType(DataType.EmailAddress)]
         public string email { get; set; }
-
-        [Required]
         public string paymentMethod { get; set; }
     
         public virtual Wishlists Wishlists { get; set; }

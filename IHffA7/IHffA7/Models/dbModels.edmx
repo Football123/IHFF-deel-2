@@ -10,8 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Naam" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Emailadres" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Inlognaam" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Wachtwoord" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Activities">
@@ -706,8 +705,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Naam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Emailadres" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Inlognaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Wachtwoord" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
@@ -852,8 +850,7 @@
             <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Accounts">
               <MappingFragment StoreEntitySet="Accounts">
                 <ScalarProperty Name="Wachtwoord" ColumnName="Wachtwoord" />
-                <ScalarProperty Name="Emailadres" ColumnName="Emailadres" />
-                <ScalarProperty Name="Naam" ColumnName="Naam" />
+                <ScalarProperty Name="Inlognaam" ColumnName="Inlognaam" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

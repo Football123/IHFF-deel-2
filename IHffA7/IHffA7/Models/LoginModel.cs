@@ -8,10 +8,10 @@ namespace IHffA7.Models
 {
     public class LoginModel
     {
-        //Emailadres:
-        [Required(ErrorMessage = "Emailadres is verplicht")]
-        [Display(Name = "Emailadres")]
-        public string Emailadres { get; set; }
+        //Inlognaam:
+        [Required(ErrorMessage = "Inlognaam is verplicht")]
+        [Display(Name = "Inlognaam")]
+        public string Inlognaam { get; set; }
 
         //Wachtwoord:
         [Required(ErrorMessage = "Wachtwoord is verplicht")]

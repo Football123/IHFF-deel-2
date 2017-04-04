@@ -15,8 +15,7 @@ namespace IHffA7.Models
     public partial class Accounts
     {
         public int Id { get; set; }
-        public string Naam { get; set; }
-        public string Emailadres { get; set; }
+        public string Inlognaam { get; set; }
         public string Wachtwoord { get; set; }
     }
 }

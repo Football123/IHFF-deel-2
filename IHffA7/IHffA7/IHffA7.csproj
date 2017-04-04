@@ -183,7 +183,6 @@
     <Compile Include="Models\Accounts.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
