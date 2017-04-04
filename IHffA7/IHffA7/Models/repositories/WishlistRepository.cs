@@ -27,6 +27,10 @@ namespace IHffA7.Models.repositories
             return activiteit;
         }
 
+        public Reservations getReservation(int wishlistId)
+        {
+            return ctx.Reservations.SingleOrDefault(r => (r.wishlistId == wishlistId));
+        }
         public Activities GetWholeActivity(int activityId)
         {
             var activity = GetActivity(activityId)
@@ -100,7 +104,6 @@ namespace IHffA7.Models.repositories
         public void ReservationOfActivities(List<WishlistViewModel> wishlist, Reservations reservation)
         {
             SaveActivities(wishlist, reservation);
-
         }
 
 

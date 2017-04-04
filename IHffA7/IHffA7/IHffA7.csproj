@@ -354,6 +354,8 @@
     <Content Include="Views\Activities\CreateRestaurant.cshtml" />
     <Content Include="Views\WishList\Index.cshtml" />
     <Content Include="Views\Film\detailpage.cshtml" />
+    <Content Include="Views\WishList\PayWishlist.cshtml" />
+    <Content Include="Views\WishList\EditActivityFromSesWishlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

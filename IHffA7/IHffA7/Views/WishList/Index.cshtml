@@ -52,6 +52,13 @@
                        @c.totalprice
                     </td>
                     <td>
+                        @Html.HiddenFor(activivyId =>  c.Activity.id, null)
+                        <a class="btn btn-danger edit" href="/WishList/EditActivityFromSesWishlist?activityId=10">Wijzig</a>
+                        @Html.ActionLink("Wijzig", "EditActivityFromSesWishlist", "WishList", new
+                                           {
+                                               activityId = c.Activity.id
+                                           }, new { @class = "btn btn-info edit" })
+
                         @Html.ActionLink("Verwijder", "RemoveActivityFromSesWishlist", "WishList", new
                    {
                        activityId = c.Activity.id
@@ -89,6 +96,11 @@
                        activityId = c.Activity.id
                    }, new { @class = "btn btn-default" })
 
+                        @Html.ActionLink("Wijzig", "EditActivityFromSesWishlist", "WishList", new
+                                           {
+                                               activityId = c.Activity.id
+                                           }, new { @class = "btn btn-info edit" })
+
                     </td>
                 </tr>
                 <tr></tr>
@@ -113,6 +125,12 @@
                         @c.totalprice
                     </td>
                     <td>
+                        @Html.ActionLink("Wijzig", "EditActivityFromSesWishlist", "WishList", new
+                                           {
+                                               activityId = c.Activity.id
+                                           }, new { @class = "btn btn-info edit" })
+
+
                         @Html.ActionLink("Verwijder", "RemoveActivityFromSesWishlist", "WishList", new
                    {
                        activityId = c.Activity.id
@@ -156,10 +174,9 @@
     <div class="form-horizontal">
         <hr />
         <div class="form-group">
-            @Html.Label("Enter activity code", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Enter activity code", htmlAttributes: new { @class = "control-label col-md-2", @required = "true" })
             <div class="col-md-10">
-                @Html.Editor("wislistId")
-                @ViewBag.ValidationMessage
+                @Html.TextBox("wislistId",null, htmlAttributes: new { @class = "form-control col-md-2" })
             </div>
         </div>
 
@@ -172,7 +189,59 @@
     </div>
 }
 
-@Html.ActionLink("Betalen", "PayWishlist", "WishList",null, new { @class = "btn btn-default" })
+@Html.ActionLink("Betalen", "PayWishlist", "WishList",null, new { @class = "btn btn-primary" })
+
+<div id="modalEdit"></div>
+
+<script>
+ /*   $(function () {
+        $(".edit").click(function (e) {
+            var dataToPost = $("#MyForm").serialize()
+            $.ajax(
+            {
+                type: "POST",
+                data: JSON.stringify(dataToPost),
+                url: "Working/Save",
+                contentType: 'application/json; charset=utf-8'
+            })
+        })
+    })*/
+
+
+    $(document).ready(function () {
+
+        $(".edit").click(function()
+        {
+            var activityId = $(this).closest("hidden").val;
+            $.ajax({
+                url: '/WishList/EditActivityFromSesWishlist',
+                type: 'GET',
+                dataType: "json",
+                contenType: 'application/json',
+                data: activityId
+            }),function(data){
+                $("#modelEdit").html(""+data+"")
+            }
+        })
+    });
+	
+
+        /*var myData = {
+            Parameter1: $("#someElementId").val(),
+            Parameter2: $("#anotherElementId").val(),
+            ListParameter: { /* Define IEnumerable collections as json array as well */}
+            // more params here
+        }  
+        $.ajax({
+            url: 'someUrl',
+            type: 'GET',
+            dataType: "json",
+            contentType: 'application/json',
+            data: JSON.stringify(myData)
+        },function(data){
+            $('#modalEdit').html(""+ data+ "");
+        }); /*
+</script>
 
 
 
