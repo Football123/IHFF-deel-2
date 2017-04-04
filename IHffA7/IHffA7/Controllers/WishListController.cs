@@ -123,7 +123,7 @@ namespace IHffA7.Controllers
             return View("Index", GetActivitiesFromSession());
         }
 
-        //ajaxGET from index
+        //ajax GET from index
         //returns if valid a bootstap modal to edit wishlist item
         [HttpGet]
         public ActionResult EditActivityFromSesWishlist(int activityId)
@@ -156,7 +156,6 @@ namespace IHffA7.Controllers
                         case 3:
                             actionId = activiteit.Activity.Restaurants.First().id;
                             action = "Restaurants";
-                            ViewBag.ActionId = new SelectList(wishListRepo.getRestaurants(), "id", "locationId", actionId);
                             break;
                         default:
                             ViewBag.errors = "Activiteitttype niet herkent";
@@ -174,11 +173,13 @@ namespace IHffA7.Controllers
             return View("Index", GetActivitiesFromSession());
         }
 
+        //ajax GET from EditActivityFromSesWishlist
+        //returns if valid a dropdown modal to edit wishlist item
         [HttpGet]
-        public ActionResult GetScreeningsOrVisit(string action, int actionId)
+        public ActionResult GetScreeningsOrVisit(string actionType, int actionId)
         {
             IEnumerable<Activities> screenings = null;
-            switch (action)
+            switch (actionType)
             {
                 case "Films":
                     screenings = wishListRepo.getFilmActivities(actionId);

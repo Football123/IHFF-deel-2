@@ -18,12 +18,15 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         @Html.HiddenFor(model => model.OldActivityId)
 
+                        @if (Model.Action != "Restaurants")
+                        {
                         <div class="form-group">
-                            @Html.LabelFor(model => model.ActionId , Model.Action, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.LabelFor(model => model.ActionId, Model.Action, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.DropDownList("ActionId", null, htmlAttributes: new { @class = "form-control dropdown" })
+                                @Html.DropDownList("ActionId", null, htmlAttributes: new { @class = "form-control" })
                             </div>
                         </div>
+                        }
 
                         <div class="form-group" id="filmActivities"></div>
 
@@ -55,13 +58,17 @@
 
 
 <script type="text/javascript">
-        jQuery(document).ready(function () {
+    jQuery(document).ready(function () {
+
+        $.get("/WishList/GetScreeningsOrVisit", { actionId: $("#ActionId").val(), actionType: "@Model.Action" }, function (data, status) {
+                $("#filmActivities").html(data);
+            })
 
             $("#ActionId").change("click", function (e) {
                 e.preventDefault();
                 var actionId = jQuery(this).val();
-                var action = "@Model.Action"
-                $.get("/WishList/GetScreeningsOrVisit", { actionId: actionId, action: action }, function (data, status) {
+                var actionType = "@Model.Action";
+                $.get("/WishList/GetScreeningsOrVisit", { actionId: actionId, actionType: actionType }, function (data, status) {
                     $("#filmActivities").html(data);
                 })
             });
