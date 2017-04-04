@@ -1,0 +1,7 @@
+﻿
+@model IHffA7.Models.EditActivityViewModel
+
+@Html.LabelFor(model => model.NewActivityId, Model.Action, htmlAttributes: new { @class = "control-label col-md-2" })
+<div class="col-md-10">
+    @Html.DropDownList("NewActivityId", null, htmlAttributes: new { @class = "form-control" })
+</div>

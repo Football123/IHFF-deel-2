@@ -62,7 +62,7 @@
                 e.preventDefault();
                 var actionId = jQuery(this).val();
                 var action = "@Model.Action"
-                $.get('/WishList/GetScreeningsOrVisit', { actionId, action }, function (data, status) {
+                $.get("/WishList/GetScreeningsOrVisit", { actionId: actionId, action: action }, function (data, status) {
                     $("#filmActivities").html(data);
                 })
             });

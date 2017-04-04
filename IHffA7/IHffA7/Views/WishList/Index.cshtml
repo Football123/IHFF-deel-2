@@ -199,7 +199,7 @@
                 e.preventDefault();
                 var test = jQuery(this).text();
                 var activityId = $(this).parent().find('.activityId').val();
-                $.get('/WishList/EditActivityFromSesWishlist', { activityId }, function (data, status) {
+                $.get('/WishList/EditActivityFromSesWishlist', { activityId: activityId }, function (data, status) {
                     $("#modalEdit").html(data);
                 })
             });
