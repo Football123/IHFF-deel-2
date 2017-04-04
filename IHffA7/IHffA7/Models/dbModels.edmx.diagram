@@ -36,6 +36,7 @@
         <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Locations" Width="1.5" PointX="6.125" PointY="7.875" />
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Restaurants_Locations" />
         <AssociationConnector Association="WhatsUp1617S_martinstinsModel.FK_Rooms_Locations" />
+        <EntityTypeShape EntityType="WhatsUp1617S_martinstinsModel.Accounts" Width="1.5" PointX="8.375" PointY="8.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
