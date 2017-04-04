@@ -51,6 +51,13 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Filmscreenings.Where(s => s.filmId == filmId).Select(s => s.Activities);
         }
+
+        public IQueryable<Activities> getSpecialActivities(int specialId)
+        {
+            return ctx.Specialscreenings.Where(s => s.specialId == specialId).Select(s => s.Activities);
+        }
+        
+
         public Activities GetWholeActivity(int activityId)
         {
             var activity = GetActivity(activityId)
@@ -59,7 +66,7 @@ namespace IHffA7.Models.repositories
                 .Include(f => f.Specialscreenings.Select(a => a.Specials))
                 .Include(f => f.Specialscreenings.Select(r => r.Rooms.Locations))
                 .Include(r => r.Restaurants.Select(rr => rr.Locations));
-            return activity.Single();
+            return activity.SingleOrDefault();
         }
 
         //new gebruikte mthoene hier onder

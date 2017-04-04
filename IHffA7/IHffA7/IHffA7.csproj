@@ -363,7 +363,6 @@
     <Content Include="Views\WishList\PayWishlist.cshtml" />
     <Content Include="Views\WishList\EditActivityFromSesWishlist.cshtml" />
     <Content Include="Views\WishList\GetFilmScreenings.cshtml" />
-    <Content Include="Views\WishList\EditActivityFromSesWishlist - Copy.cshtml" />
     <Content Include="Views\WishList\GetScreeningsOrVisit.cshtml" />
   </ItemGroup>
   <ItemGroup>
