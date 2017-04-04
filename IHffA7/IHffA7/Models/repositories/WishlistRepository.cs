@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Net;
-using System.Web.Helpers;
 
 
 namespace IHffA7.Models.repositories
@@ -108,8 +107,6 @@ namespace IHffA7.Models.repositories
 
         public Wishlists SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation)
         {
-            string token = Crypto.HashPassword(Crypto.GenerateSalt()+DateTime.Now.Ticks.ToString());
-
             Wishlists wislist = new Wishlists();
            
             wislist.paid = false;
@@ -127,7 +124,6 @@ namespace IHffA7.Models.repositories
             {
                 wislist.Reservations.Add(reservation);
             }
-            wishlist.usercode = token;
             ctx.Wishlists.Add(wislist);
             ctx.SaveChanges();
             return wislist;
