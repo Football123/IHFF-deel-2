@@ -237,9 +237,6 @@ namespace IHffA7.Controllers
 
         public ActionResult SaveWishlist()
         {
-            string unhashedPassword = "hello";
-            string hashedPassword = Crypto.HashPassword(unhashedPassword);
-            var test = Crypto.VerifyHashedPassword(hashedPassword, unhashedPassword);
 
             var end = "";
 
