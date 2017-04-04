@@ -108,14 +108,14 @@ namespace IHffA7.Controllers
         public ActionResult EditActivityFromSesWishlist(int activityId)
         {
             List<WishlistViewModel> wishlist = GetActivitiesFromSession();
-       
             WishlistViewModel activiteit;
             if (wishlist != null)
             {
                 try
                 {
-                    activiteit = wishlist.FindAll(x => (x.Activity.id == 111))
+                    activiteit = wishlist.FindAll(x => (x.Activity.id == activityId))
                         .Single();
+                    ViewBag.succes = "item gevonden";
                     return PartialView(activiteit);
                 }
                 catch
