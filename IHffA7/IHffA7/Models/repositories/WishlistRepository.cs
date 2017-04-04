@@ -31,6 +31,17 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Reservations.SingleOrDefault(r => (r.wishlistId == wishlistId));
         }
+
+        //TODO als de film repository bestaat/werkt moet deze dus niet meer hier staan
+        public IQueryable<Films> getFilms()
+        {
+            return ctx.Films;
+        }
+        //TODO als de film repository bestaat/werkt moet deze dus niet meer hier staan
+        public IQueryable<Activities> getFilmActivities(int filmId)
+        {
+            return ctx.Filmscreenings.Where(s => s.filmId == filmId).Select(s => s.Activities);
+        }
         public Activities GetWholeActivity(int activityId)
         {
             var activity = GetActivity(activityId)

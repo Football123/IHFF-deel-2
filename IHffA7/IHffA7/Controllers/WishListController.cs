@@ -104,6 +104,8 @@ namespace IHffA7.Controllers
             return RedirectToAction("Index");
         }
 
+        //ajaxGET from index
+        //returns if valid a modal
         [HttpGet]
         public ActionResult EditActivityFromSesWishlist(int activityId)
         {
@@ -116,6 +118,8 @@ namespace IHffA7.Controllers
                     activiteit = wishlist.FindAll(x => (x.Activity.id == activityId))
                         .Single();
                     ViewBag.succes = "item gevonden";
+                    ViewBag.filmsDropDown = new SelectList(wishListRepo.getFilms(), "id", "title", activiteit.Activity.Filmscreenings.First().Films.id);
+                
                     return PartialView(activiteit);
                 }
                 catch
@@ -124,6 +128,24 @@ namespace IHffA7.Controllers
                 }
             }
             ViewBag.errors = "geen item gevonden";
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult GetFilmScreenings(int filmId)
+        {
+            IEnumerable<Activities> screenings = wishListRepo.getFilmActivities(filmId);
+            var Starttijden = screenings.Select(a => a.startTime);
+            ViewBag.filmScreeiningsDropDown = new SelectList(screenings, "id", "startTime", null);
+            var debug = screenings.FirstOrDefault();
+            return PartialView(screenings.FirstOrDefault());
+        }
+
+        [HttpPost]
+        public ActionResult EditActivityFromSesWishlist(WishlistViewModel wishlistItem)
+        {
+            var debug = wishlistItem;
+            ViewBag.succes = "Item succesvol gewijzig";
             return RedirectToAction("Index");
         }
         public ActionResult EditActivityFromSesWishlistOLDEREE(int activityId)
@@ -136,6 +158,7 @@ namespace IHffA7.Controllers
                 {
                     activiteit = wishlist.FindAll(x => (x.Activity.id == activityId))
                         .Single();
+                    ViewBag.filmsDropDown = new SelectList(wishListRepo.getFilms(), "id", "title", activiteit.Activity.Filmscreenings.First().Films.id);
                     return PartialView(activiteit);
                 }
                 catch
