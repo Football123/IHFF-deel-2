@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Helpers;
 using IHffA7.Models;
 using IHffA7.Models.repositories;
 
@@ -236,13 +237,18 @@ namespace IHffA7.Controllers
 
         public ActionResult SaveWishlist()
         {
+            string unhashedPassword = "hello";
+            string hashedPassword = Crypto.HashPassword(unhashedPassword);
+            var test = Crypto.VerifyHashedPassword(hashedPassword, unhashedPassword);
+
+            var end = "";
 
             List<WishlistViewModel> wishlist = GetActivitiesFromSession();
             if (wishlist != null)
             {
                 try {
-                    wishListRepo.SaveActivities(wishlist, null);
-                    ViewBag.succes = "succesvol opgeslagen";
+                    var newWishlist = wishListRepo.SaveActivities(wishlist, null);
+                    ViewBag.succes = "succesvol opgeslagen "+newWishlist.id;
                 }
                 catch
                 {

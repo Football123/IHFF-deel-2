@@ -105,7 +105,7 @@ namespace IHffA7.Models.repositories
             return list.OrderBy(order => order.TypeActivity);
         }
 
-        public void SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation)
+        public Wishlists SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation)
         {
             Wishlists wislist = new Wishlists();
            
@@ -126,6 +126,7 @@ namespace IHffA7.Models.repositories
             }
             ctx.Wishlists.Add(wislist);
             ctx.SaveChanges();
+            return wislist;
         }
 
         public void ReservationOfActivities(List<WishlistViewModel> wishlist, Reservations reservation)
