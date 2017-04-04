@@ -43,8 +43,8 @@ namespace IHffA7.Controllers
                 AddActivityToSesWishlist(activity.NumberOfPersons, activity.Activity);
             }
             ViewBag.succes = "Wishslist geladen";
-            
-            return RedirectToAction("Index", activities);
+
+            return View("Index", GetActivitiesFromSession());
         }
 
         //wishlist bestaat nog niet, dus ook niet de items waar number of persons in staat
@@ -100,8 +100,13 @@ namespace IHffA7.Controllers
             {
                 wishlist.RemoveAll(x => (x.Activity.id == activityId));
                 Session["wishlistSessionList"] = wishlist;
+                ViewBag.succes = "item verwijderd";
             }
-            return RedirectToAction("Index");
+            else
+            {
+                ViewBag.errors = "Item kon niet worden gevonden";
+            }
+            return View("Index", GetActivitiesFromSession());
         }
 
         //ajaxGET from index
@@ -118,9 +123,33 @@ namespace IHffA7.Controllers
                     activiteit = wishlist.FindAll(x => (x.Activity.id == activityId))
                         .Single();
                     ViewBag.succes = "item gevonden";
-                    ViewBag.filmsDropDown = new SelectList(wishListRepo.getFilms(), "id", "title", activiteit.Activity.Filmscreenings.First().Films.id);
-                
-                    return PartialView(activiteit);
+                    ViewBag.dropDown = new SelectList(wishListRepo.getFilms(), "id", "title", activiteit.Activity.Filmscreenings.First().Films.id);
+                    int actionId;
+                    string action;
+                    int activityType = activiteit.Activity.typeActivity;
+                    switch (activityType)
+                    {
+                        case 1:
+                            actionId = activiteit.Activity.Filmscreenings.First().Films.id;
+                            action = "Films";
+                            ViewBag.ActionId = new SelectList(wishListRepo.getFilms(), "id", "title", actionId);
+                            break;
+                        case 2:
+                            actionId = activiteit.Activity.Specialscreenings.First().Specials.id;
+                            action = "Specials";
+                            ViewBag.ActionId = new SelectList(wishListRepo.getSpecials(), "id", "title", actionId);
+                            break;
+                        case 3:
+                            actionId = activiteit.Activity.Restaurants.First().id;
+                            action = "Restaurants";
+                            ViewBag.ActionId = new SelectList(wishListRepo.getRestaurants(), "id", "locationId", actionId);
+                            break;
+                        default:
+                            ViewBag.errors = "Activiteitttype niet herkent";
+                            return View("Index", GetActivitiesFromSession());
+                    }
+                    EditActivityViewModel viewModel = new EditActivityViewModel(activiteit.Activity.id, actionId, action, activiteit.NumberOfPersons);
+                    return PartialView(viewModel);
                 }
                 catch
                 {
@@ -132,21 +161,33 @@ namespace IHffA7.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetFilmScreenings(int filmId)
+        public ActionResult GetScreeningsOrVisit(string action, int actionId)
         {
-            IEnumerable<Activities> screenings = wishListRepo.getFilmActivities(filmId);
-            var Starttijden = screenings.Select(a => a.startTime);
-            ViewBag.filmScreeiningsDropDown = new SelectList(screenings, "id", "startTime", null);
-            var debug = screenings.FirstOrDefault();
-            return PartialView(screenings.FirstOrDefault());
+            IEnumerable<Activities> screenings = wishListRepo.getFilmActivities(actionId);
+            ViewBag.NewActivityId = new SelectList(screenings, "id", "startTime", null);
+            return PartialView(new EditActivityViewModel(-1, -1, action, -1));
         }
 
         [HttpPost]
-        public ActionResult EditActivityFromSesWishlist(WishlistViewModel wishlistItem)
+        public ActionResult StoreEditActivityFromSesWishlist(EditActivityViewModel editedActivity)
         {
-            var debug = wishlistItem;
             ViewBag.succes = "Item succesvol gewijzig";
-            return RedirectToAction("Index");
+            AddItemToSesWishlist(editedActivity.NumberOfPersons, editedActivity.NewActivityId);
+           // RemoveActivityFromSesWishlist(editedActivity.OldActivityId);
+            List<WishlistViewModel> wishlist = GetActivitiesFromSession();
+            if (wishlist != null)
+            {
+                wishlist.RemoveAll(x => (x.Activity.id == editedActivity.OldActivityId));
+                Session["wishlistSessionList"] = wishlist;
+            }
+            else
+            {
+                ViewBag.errors = "Item kon niet worden gevonden";
+            }
+            //end dirty remove
+            AddItemToSesWishlist(editedActivity.NumberOfPersons, editedActivity.NewActivityId);
+            ViewBag.succes = "item gewijzigd";
+            return View("Index", GetActivitiesFromSession());
         }
         public ActionResult EditActivityFromSesWishlistOLDEREE(int activityId)
         {

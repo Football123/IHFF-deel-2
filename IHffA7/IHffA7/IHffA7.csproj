@@ -184,6 +184,7 @@
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EditActivityViewModel.cs" />
     <Compile Include="Models\HighlightFilmsModel.cs" />
     <Compile Include="Models\RestaurantsFormModel.cs" />
     <Compile Include="Models\ActivitiesViewModel.cs" />
@@ -357,6 +358,8 @@
     <Content Include="Views\WishList\PayWishlist.cshtml" />
     <Content Include="Views\WishList\EditActivityFromSesWishlist.cshtml" />
     <Content Include="Views\WishList\GetFilmScreenings.cshtml" />
+    <Content Include="Views\WishList\EditActivityFromSesWishlist - Copy.cshtml" />
+    <Content Include="Views\WishList\GetScreeningsOrVisit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

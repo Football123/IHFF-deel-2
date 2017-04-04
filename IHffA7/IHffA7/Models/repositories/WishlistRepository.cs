@@ -37,6 +37,15 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Films;
         }
+        public IQueryable<Specials> getSpecials()
+        {
+            return ctx.Specials;
+        }
+
+        public IQueryable<Restaurants> getRestaurants()
+        {
+            return ctx.Restaurants;
+        }
         //TODO als de film repository bestaat/werkt moet deze dus niet meer hier staan
         public IQueryable<Activities> getFilmActivities(int filmId)
         {
