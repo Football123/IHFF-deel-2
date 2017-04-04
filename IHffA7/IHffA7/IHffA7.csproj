@@ -180,12 +180,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Accounts.cs">
+      <DependentUpon>dbModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Activities.cs">
       <DependentUpon>dbModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EditActivityViewModel.cs" />
     <Compile Include="Models\HighlightFilmsModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\repositories\AccountRepository.cs" />
+    <Compile Include="Models\repositories\IAccountRepository.cs" />
     <Compile Include="Models\RestaurantsFormModel.cs" />
     <Compile Include="Models\ActivitiesViewModel.cs" />
     <Compile Include="Models\activityType.cs" />

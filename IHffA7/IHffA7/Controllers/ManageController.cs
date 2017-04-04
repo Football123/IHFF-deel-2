@@ -13,7 +13,7 @@ namespace IHffA7.Controllers
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationSignInManager _signInManager;
+/*        private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public ManageController()
@@ -383,5 +383,5 @@ namespace IHffA7.Controllers
         }
 
 #endregion
-    }
+*/    }
 }

@@ -12,14 +12,10 @@ namespace IHffA7.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Reservations
+    public partial class Accounts
     {
-        public int id { get; set; }
-        public int wishlistId { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string paymentMethod { get; set; }
-    
-        public virtual Wishlists Wishlists { get; set; }
+        public int Id { get; set; }
+        public string Inlognaam { get; set; }
+        public string Wachtwoord { get; set; }
     }
 }

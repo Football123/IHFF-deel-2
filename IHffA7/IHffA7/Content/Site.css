@@ -109,17 +109,18 @@ nav ul li {
     /*border: blue 1px solid;*/
     position: relative;
     margin-bottom: 2em;
+    clear: both;
 }
 
 .restaurantRightBlock {
-    /*background-image: url("~/Content/Images/restaurants/u1614.jpg");
-    background-color: red;*/
+    background-image: url("~/Content/Images/restaurants/u1643.png");
+    /*background-color: red;*/
     float: right;
     width: 50%;
     /*border: green 1px solid;*/
     min-height: 200px;
     position: relative;
-    margin-bottom: 3.6em;
+    /*margin-bottom: 3.6em;*/
 }
 
 .restaurantMiddleBlock {
