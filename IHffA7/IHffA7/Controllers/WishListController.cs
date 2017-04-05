@@ -284,6 +284,11 @@ namespace IHffA7.Controllers
                     
             }
             ViewBag.errors = "Betaling mislukt!";
+            List<string> methodes = new List<string>();
+            methodes.Add("Ideal");
+            methodes.Add("Paypal");
+            methodes.Add("Creditcard");
+            ViewBag.paymentMethod = new SelectList(methodes, null);
             return View();
         }
     }

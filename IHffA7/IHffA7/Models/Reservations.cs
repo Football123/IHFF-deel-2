@@ -6,6 +6,7 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using System.ComponentModel.DataAnnotations;
 
 namespace IHffA7.Models
 {
@@ -16,8 +17,18 @@ namespace IHffA7.Models
     {
         public int id { get; set; }
         public int wishlistId { get; set; }
+
+        [Required]
+        [Display(Name = "Naam")]
         public string name { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "E-mail adres")]
         public string email { get; set; }
+
+        [Required]
+        [Display(Name = "Betaal methode")]
         public string paymentMethod { get; set; }
     
         public virtual Wishlists Wishlists { get; set; }
