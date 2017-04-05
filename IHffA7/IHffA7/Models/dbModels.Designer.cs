@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'E:\iHFF_MVC_A7_GITHUB_2\IHffA7\IHffA7\Models\dbModels.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Gebruiker\Source\Repos\IHFF-deel-2\IHffA7\IHffA7\Models\dbModels.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

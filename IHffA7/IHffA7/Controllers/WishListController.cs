@@ -26,15 +26,10 @@ namespace IHffA7.Controllers
 
         [HttpPost, ActionName("Index")]
         [ValidateAntiForgeryToken]
-        public ActionResult GetSavedWishlist(int? wislistId)
+        public ActionResult GetSavedWishlist(string wislistToken)
         {
-            if (wislistId == null)
-            {
-                @ViewBag.errors = "Code niet geldig";
-                return View("Index", GetActivitiesFromSession());
-            }
-            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities((int)wislistId);
-            if(activities.Count() <1)
+            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities(wislistToken);
+            if(activities == null || activities.Count() < 1)
             {
                 @ViewBag.errors = "Code niet gevonden";
                 return View("Index", GetActivitiesFromSession());
@@ -237,18 +232,13 @@ namespace IHffA7.Controllers
 
         public ActionResult SaveWishlist()
         {
-            string unhashedPassword = "hello";
-            string hashedPassword = Crypto.HashPassword(unhashedPassword);
-            var test = Crypto.VerifyHashedPassword(hashedPassword, unhashedPassword);
-
-            var end = "";
 
             List<WishlistViewModel> wishlist = GetActivitiesFromSession();
             if (wishlist != null)
             {
                 try {
                     var newWishlist = wishListRepo.SaveActivities(wishlist, null);
-                    ViewBag.succes = "succesvol opgeslagen "+newWishlist.id;
+                    ViewBag.succes = "succesvol opgeslagen "+newWishlist.token;
                 }
                 catch
                 {

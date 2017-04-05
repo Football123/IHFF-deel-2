@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Net;
-
+using System.Web.Helpers;
 
 namespace IHffA7.Models.repositories
 {
@@ -20,6 +20,7 @@ namespace IHffA7.Models.repositories
             return ctx.WishlistItems
                 .Where(w => (w.wishlistId == wishlistId)); 
         }
+
         private IQueryable<Activities> GetActivity(int activityId)
         {
             var activiteit = ctx.Activities
@@ -67,6 +68,14 @@ namespace IHffA7.Models.repositories
                 .Include(f => f.Specialscreenings.Select(r => r.Rooms.Locations))
                 .Include(r => r.Restaurants.Select(rr => rr.Locations));
             return activity.SingleOrDefault();
+        }
+
+        public IEnumerable<WishlistViewModel> GetActivities(string wishlistToken)
+        {
+            Wishlists wishlist = ctx.Wishlists.SingleOrDefault(w => (w.token == wishlistToken));
+            if (wishlist == null)
+                return null;
+            return GetActivities(wishlist.id);
         }
 
         //new gebruikte mthoene hier onder
@@ -124,6 +133,7 @@ namespace IHffA7.Models.repositories
             {
                 wislist.Reservations.Add(reservation);
             }
+            wislist.token = Crypto.HashPassword(Crypto.GenerateSalt() + DateTime.Now.Ticks.ToString());
             ctx.Wishlists.Add(wislist);
             ctx.SaveChanges();
             return wislist;
