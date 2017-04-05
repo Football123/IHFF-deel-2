@@ -11,7 +11,7 @@ using IHffA7.Models.repositories;
 
 namespace IHffA7.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ActivitiesController : Controller
     {
         private ActivitiesRepository activitiesRepo = new ActivitiesRepository();
