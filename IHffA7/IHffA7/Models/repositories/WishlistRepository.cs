@@ -47,6 +47,11 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Restaurants;
         }
+
+        public Wishlists getWishList(string token)
+        {
+            return ctx.Wishlists.SingleOrDefault(w => (w.token == token));
+        }
         //TODO als de film repository bestaat/werkt moet deze dus niet meer hier staan
         public IQueryable<Activities> getFilmActivities(int filmId)
         {
@@ -70,11 +75,8 @@ namespace IHffA7.Models.repositories
             return activity.SingleOrDefault();
         }
 
-        public IEnumerable<WishlistViewModel> GetActivities(string wishlistToken)
+        public IEnumerable<WishlistViewModel> GetActivities(Wishlists wishlist)
         {
-            Wishlists wishlist = ctx.Wishlists.SingleOrDefault(w => (w.token == wishlistToken));
-            if (wishlist == null)
-                return null;
             return GetActivities(wishlist.id);
         }
 
@@ -113,12 +115,24 @@ namespace IHffA7.Models.repositories
             }
             return list.OrderBy(order => order.TypeActivity);
         }
-
         public Wishlists SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation)
         {
-            Wishlists wislist = new Wishlists();
-           
-            wislist.paid = false;
+            return SaveActivities(wishlist, reservation, null);
+        }
+        public Wishlists SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation, Wishlists wishlistInSession)
+        {
+            Wishlists wislistToSave;
+            //als de wishlist al een keer is opgehaald uit de db, update deze dan. 
+            if (wishlistInSession != null)
+            {
+                wislistToSave = wishlistInSession;
+                wislistToSave.WishlistItems = null;
+                ctx.SaveChanges();
+            }
+            else
+                wislistToSave = new Wishlists();
+
+            wislistToSave.paid = false;
             foreach (WishlistViewModel activity in wishlist)
             {
                 WishlistItems wishitems = new WishlistItems();
@@ -126,20 +140,23 @@ namespace IHffA7.Models.repositories
                 Activities activiteit = activity.Activity;
                 wishitems.activityId = activiteit.id;
                 wishitems.numberOfPersons = activity.NumberOfPersons;
-                wislist.WishlistItems.Add(wishitems);
-                wislist.totalPrice = wislist.totalPrice + activiteit.price;
+                wislistToSave.WishlistItems.Add(wishitems);
+                //wislist.totalPrice = wislist.totalPrice + activiteit.price;
             }
             if (reservation != null)
             {
-                wislist.Reservations.Add(reservation);
+                wislistToSave.paid = true;
+                wislistToSave.Reservations.Add(reservation);
             }
-            wislist.token = Crypto.HashPassword(Crypto.GenerateSalt() + DateTime.Now.Ticks.ToString());
-            ctx.Wishlists.Add(wislist);
+            wislistToSave.token = Crypto.HashPassword(Crypto.GenerateSalt() + DateTime.Now.Ticks.ToString());
+            wislistToSave.totalPrice = wishlist.Sum(w => w.totalprice);
+            if (wishlistInSession == null)
+                ctx.Wishlists.Add(wislistToSave);
             ctx.SaveChanges();
-            return wislist;
+            return wislistToSave;
         }
 
-        public void ReservationOfActivities(List<WishlistViewModel> wishlist, Reservations reservation)
+        public void ReservationOfActivities(List<WishlistViewModel> wishlist, Reservations reservation, Wishlists wishlistInSession)
         {
             SaveActivities(wishlist, reservation);
         }

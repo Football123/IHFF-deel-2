@@ -131,12 +131,15 @@
                 <tr></tr>
             }
         }
-    }
-    
         <tr>
             }
-            <td>------------------------------------</td>
+            <td></td>
+            <td></td>
+            <td><b>Totaal</b></td>
+            <td>@Model.Sum(c => c.totalprice)</td>
         </tr>
+    }
+   
        
     </table>
 
@@ -151,12 +154,12 @@
     activityId = 12,
 }, new { @class = "btn btn-default" })
     <br /><br />
-@Html.ActionLink("SaveWishlist", "SaveWishlist", "WishList", new
-{
-    numberOfpersones = 1,
-    activityId = 1,
-}, new { @class = "btn btn-default" })
+@Html.ActionLink("SaveWishlist", "SaveWishlist", "WishList",null
+, new { @class = "btn btn-default" })
 
+@Html.ActionLink("Betalen", "PayWishlist", "WishList", null, new { @class = "btn btn-primary pull-right" })
+
+<hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -178,8 +181,6 @@
         </div>
     </div>
 }
-
-@Html.ActionLink("Betalen", "PayWishlist", "WishList",null, new { @class = "btn btn-primary" })
 
 
         <div class="modal fade" id="modalEdit" role="dialog"></div>

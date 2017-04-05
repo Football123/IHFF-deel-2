@@ -28,10 +28,17 @@ namespace IHffA7.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GetSavedWishlist(string wislistToken)
         {
-            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities(wislistToken);
-            if(activities == null || activities.Count() < 1)
+            Wishlists wishlist = wishListRepo.getWishList(wislistToken);
+            if(wishlist ==null)
             {
-                @ViewBag.errors = "Code niet gevonden";
+                ViewBag.errors = "Code niet gevonden";
+                return View("Index", GetActivitiesFromSession());
+            }
+            Session["wishlist"] = wishlist;
+            IEnumerable<WishlistViewModel> activities = wishListRepo.GetActivities(wishlist);
+            if(activities.Count() < 1)
+            {
+                ViewBag.errors = "Code niet gevonden";
                 return View("Index", GetActivitiesFromSession());
             }
             foreach (var activity in activities)
@@ -201,7 +208,6 @@ namespace IHffA7.Controllers
         [HttpPost]
         public ActionResult StoreEditActivityFromSesWishlist(EditActivityViewModel editedActivity)
         {
-            ViewBag.succes = "Item succesvol gewijzig";
             //betekent dat er geen nieuwe activiteit is geselecteerd, maar aantalpersonen wel!
             //aantal personen wordt gewijzigd door item te verwijderen en opnieuw aan te maken. 
             if (editedActivity.NewActivityId == 0)
@@ -217,7 +223,7 @@ namespace IHffA7.Controllers
 
 
 
-        public List<WishlistViewModel> GetActivitiesFromSession()
+        private List<WishlistViewModel> GetActivitiesFromSession()
         {
             List<WishlistViewModel> activitiesList;
             var currentWishList = Session["wishlistSessionList"];
@@ -238,7 +244,7 @@ namespace IHffA7.Controllers
             {
                 try {
                     var newWishlist = wishListRepo.SaveActivities(wishlist, null);
-                    ViewBag.succes = "succesvol opgeslagen "+newWishlist.token;
+                    ViewBag.succes = "succesvol opgeslagen. Uw code is "+newWishlist.token;
                 }
                 catch
                 {
@@ -249,18 +255,29 @@ namespace IHffA7.Controllers
         }
         public ActionResult PayWishlist()
         {
+            List<string> methodes = new List<string>();
+            methodes.Add("Ideal");
+            methodes.Add("Paypal");
+            methodes.Add("Creditcard");
+            ViewBag.paymentMethod = new SelectList(methodes, null);
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PayWishlist(Reservations reservation)
         {
             if (ModelState.IsValid)
             {
+                Wishlists wishlistInSession = null;
+                if (Session["wishlist"] != null)
+                {
+                    wishlistInSession = (Wishlists)Session["wishlist"];
+                }
                 List<WishlistViewModel> wishlist = GetActivitiesFromSession();
                 if (wishlist != null)
                 {
-                    wishListRepo.ReservationOfActivities(wishlist, reservation);
+                    wishListRepo.ReservationOfActivities(wishlist, reservation, wishlistInSession);
                     ViewBag.succes = "Betaling voltooid";
                     return View("Index", GetActivitiesFromSession());
                 }
