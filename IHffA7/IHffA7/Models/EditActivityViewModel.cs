@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace IHffA7.Models
 {
@@ -15,15 +16,10 @@ namespace IHffA7.Models
 
         public string Action { get; set; }
 
+        [Required]
+        [Display(Name = "Aantal personen")]
         public int NumberOfPersons { get; set; }
 
-        /*public EditActivityViewModel(int oldActivityId, int newActivityId, int actionId, string action)
-        {
-            OldActivityId = oldActivityId;
-            ActionId = actionId;
-            Action = action;
-            NewActivityId = newActivityId;
-        }*/
 
         public EditActivityViewModel(int oldActivityId, int actionId, string action, int numberOfPersons)
         {
@@ -32,6 +28,16 @@ namespace IHffA7.Models
             Action = action;
             NewActivityId = -1;
             NumberOfPersons = numberOfPersons;
+        }
+
+        public EditActivityViewModel(string action)
+        {
+            OldActivityId = -1;
+            ActionId = 0;
+            Action = action;
+            NewActivityId = -1;
+            //default value of 
+            NumberOfPersons = 1;
         }
         public EditActivityViewModel()
         {

@@ -364,6 +364,7 @@
     <Content Include="Views\WishList\EditActivityFromSesWishlist.cshtml" />
     <Content Include="Views\WishList\GetFilmScreenings.cshtml" />
     <Content Include="Views\WishList\GetScreeningsOrVisit.cshtml" />
+    <Content Include="Views\WishList\FastAddActivityToSesWishlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

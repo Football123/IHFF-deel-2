@@ -3,6 +3,9 @@
     ViewBag.Title = "Index";
 }
 
+
+
+
 @if (ViewBag.succes != null)
 {
     <div class="alert alert-success">
@@ -18,6 +21,8 @@
 }
 
 <h2>WISHLIST</h2>
+<button class="fastAddFilm btn btn-info pull-right" data-toggle="modal" data-target="#modalFastAdd"><span class="glyphicon glyphicon-plus"></span> SnelToegoevenFilm</button>
+<button class="fastAddSpecial btn btn-warning pull-right" data-toggle="modal" data-target="#modalFastAdd"><span class="glyphicon glyphicon-plus"></span> Snel Toegoeven Special</button>
 <table>
     <tr>
         <th>Item</th>
@@ -142,18 +147,6 @@
    
        
     </table>
-
-    @Html.ActionLink("Add acty 10 to list to wishlists", "AddItemToSesWishlist", "WishList", new
-{
-    numberOfpersones = 2,
-    activityId = 10,
-}, new { @class = "btn btn-default" })
-@Html.ActionLink("Add acty 12 to list to wishlists", "AddItemToSesWishlist", "WishList", new
-{
-    numberOfpersones = 1,
-    activityId = 12,
-}, new { @class = "btn btn-default" })
-    <br /><br />
 @Html.ActionLink("SaveWishlist", "SaveWishlist", "WishList",null
 , new { @class = "btn btn-default" })
 
@@ -183,7 +176,9 @@
 }
 
 
-        <div class="modal fade" id="modalEdit" role="dialog"></div>
+<div class="modal fade" id="modalEdit" role="dialog"></div>
+
+<div class="modal fade" id="modalFastAdd" role="dialog"></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -194,6 +189,21 @@
                 var activityId = $(this).parent().find('.activityId').val();
                 $.get('/WishList/EditActivityFromSesWishlist', { activityId: activityId }, function (data, status) {
                     $("#modalEdit").html(data);
+                })
+            });
+
+            
+            $("button.fastAddFilm").on("click", function (e) {
+                e.preventDefault();
+                $.get('/WishList/FastAddActivityToSesWishlist', { activityType: 1 }, function (data, status) {
+                    $("#modalFastAdd").html(data);
+                })
+            });
+
+            $("button.fastAddSpecial").on("click", function (e) {
+                e.preventDefault();
+                $.get('/WishList/FastAddActivityToSesWishlist', { activityType: 2 }, function (data, status) {
+                    $("#modalFastAdd").html(data);
                 })
             });
         });

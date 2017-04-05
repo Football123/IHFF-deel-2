@@ -127,6 +127,42 @@ namespace IHffA7.Controllers
         }
 
         //ajax GET from index
+        //returns a bootstap modal to add an new item to the wishlist
+        [HttpGet]
+        public ActionResult FastAddActivityToSesWishlist(int activityType)
+        {
+                try
+                {
+                    string action;
+                    switch (activityType)
+                    {
+                        case 1:
+                            action = "Films";
+                            ViewBag.ActionId = new SelectList(wishListRepo.getFilms(), "id", "title", null);
+                            break;
+                        case 2:
+                            action = "Specials";
+                            ViewBag.ActionId = new SelectList(wishListRepo.getSpecials(), "id", "title", null);
+                            break;
+                        case 3:
+                            action = "Restaurants";
+                            break;
+                        default:
+                            ViewBag.errors = "Activiteitttype niet herkent";
+                            return View("Index", GetActivitiesFromSession());
+                    }
+                    EditActivityViewModel viewModel = new EditActivityViewModel(action);
+                    return PartialView(viewModel);
+                }
+                catch
+                {
+                    ViewBag.errors = "Wishlistitem niet gevonden";
+                }
+            
+            ViewBag.errors = "Wishlistitem niet gevonden";
+            return View("Index", GetActivitiesFromSession());
+        }
+        //ajax GET from index
         //returns if valid a bootstap modal to edit wishlist item
         [HttpGet]
         public ActionResult EditActivityFromSesWishlist(int activityId)
@@ -255,11 +291,7 @@ namespace IHffA7.Controllers
         }
         public ActionResult PayWishlist()
         {
-            List<string> methodes = new List<string>();
-            methodes.Add("Ideal");
-            methodes.Add("Paypal");
-            methodes.Add("Creditcard");
-            ViewBag.paymentMethod = new SelectList(methodes, null);
+            PaymentMethodsDropDown();
             return View();
         }
 
@@ -288,8 +320,18 @@ namespace IHffA7.Controllers
             methodes.Add("Ideal");
             methodes.Add("Paypal");
             methodes.Add("Creditcard");
-            ViewBag.paymentMethod = new SelectList(methodes, null);
+            PaymentMethodsDropDown();
             return View();
         }
+
+        private void PaymentMethodsDropDown()
+        {
+            List<string> methodes = new List<string>();
+            methodes.Add("Ideal");
+            methodes.Add("Paypal");
+            methodes.Add("Creditcard");
+            ViewBag.paymentMethod = new SelectList(methodes, null);
+        }
     }
+
 }
