@@ -19,16 +19,10 @@ namespace IHffA7.Controllers
         private IAccountRepository accountRepository = new AccountRepository();
         private WhatsUp1617S_martinstinsGenerated ctx = new WhatsUp1617S_martinstinsGenerated();
 
-        //
-        // GET: /Account/Login
-
         public ActionResult Login()
         {
             return View();
         }
-
-        //
-        // POST: /Account/Login
 
         [HttpPost]
         public ActionResult Login(LoginModel login_account)
@@ -42,7 +36,7 @@ namespace IHffA7.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(account.Inlognaam, false);
                     Session["loggedin_account"] = account;
-                    return RedirectToAction("Index", "Contact");
+                    return RedirectToAction("Index", "Activities");
                 }
                 else
                 {
@@ -52,9 +46,6 @@ namespace IHffA7.Controllers
             }
             return View(login_account);
         }
-
-        //
-        // POST: /Account/LogOff
 
         [HttpPost]
         [Authorize]

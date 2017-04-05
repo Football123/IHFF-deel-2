@@ -3,21 +3,21 @@
 
 <h2>Inloggen</h2>
 
-@Html.ValidationSummary()
 @using (Html.BeginForm())
 {
     <fieldset>
         <legend>Geef uw login gegevens:</legend>
+            @Html.ValidationMessage("login-error", new { @style = "color: red;" })
         <ol>
-            <li>
+            <li style="list-style-type: none;">
                 @Html.LabelFor(m => m.Inlognaam)
                 @Html.TextBoxFor(m => m.Inlognaam)
-                @Html.ValidationMessageFor(m => m.Inlognaam)
+                @Html.ValidationMessageFor(m => m.Inlognaam, null, new { @style = "color: red;" })
             </li>
-            <li>
+            <li style="list-style-type: none;">
                 @Html.LabelFor(w => w.Wachtwoord)
                 @Html.PasswordFor(w => w.Wachtwoord)
-                @Html.ValidationMessageFor(w => w.Wachtwoord)
+                @Html.ValidationMessageFor(w => w.Wachtwoord, null, new { @style = "color: red;" })
             </li>
         </ol>
         <input type="submit" value="Log in" />

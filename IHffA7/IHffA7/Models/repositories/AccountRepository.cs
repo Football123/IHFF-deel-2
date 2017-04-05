@@ -13,12 +13,5 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Accounts.SingleOrDefault(i => i.Inlognaam == inlognaam && i.Wachtwoord == wachtwoord);
         }
-
-        public void AddAccount(Accounts account)
-        {
-            //Database add
-            ctx.Accounts.Add(account);
-            ctx.SaveChanges();
-        }
     }
 }
