@@ -135,6 +135,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="totalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="paid" Type="bit" Nullable="false" />
+          <Property Name="token" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_Filmscreenings_Activities">
           <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
@@ -413,7 +414,7 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="paymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Wishlists" Relationship="Self.FK_Reservations_Wishlists" FromRole="Reservations" ToRole="Wishlists" />
+          <NavigationProperty Name="Wishlists" Relationship="WhatsUp1617S_martinstinsModel.FK_Reservations_Wishlists" FromRole="Reservations" ToRole="Wishlists" />
         </EntityType>
         <EntityType Name="Restaurants">
           <Key>
@@ -477,17 +478,7 @@
           <Property Name="activityId" Type="Int32" Nullable="false" />
           <Property Name="numberOfPersons" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Activities" Relationship="Self.FK_WishlistItems_Activities" FromRole="WishlistItems" ToRole="Activities" />
-          <NavigationProperty Name="Wishlists" Relationship="Self.FK_WishlistItems_Wishlists" FromRole="WishlistItems" ToRole="Wishlists" />
-        </EntityType>
-        <EntityType Name="Wishlists">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="totalPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="paid" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservations_Wishlists" FromRole="Wishlists" ToRole="Reservations" />
-          <NavigationProperty Name="WishlistItems" Relationship="Self.FK_WishlistItems_Wishlists" FromRole="Wishlists" ToRole="WishlistItems" />
+          <NavigationProperty Name="Wishlists" Relationship="WhatsUp1617S_martinstinsModel.FK_WishlistItems_Wishlists" FromRole="WishlistItems" ToRole="Wishlists" />
         </EntityType>
         <Association Name="FK_Filmscreenings_Activities">
           <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
@@ -549,18 +540,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Reservations_Wishlists">
-          <End Role="Wishlists" Type="Self.Wishlists" Multiplicity="1" />
-          <End Role="Reservations" Type="Self.Reservations" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Wishlists">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Reservations">
-              <PropertyRef Name="wishlistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Specialscreenings_Rooms">
           <End Role="Rooms" Type="Self.Rooms" Multiplicity="1" />
           <End Role="Specialscreenings" Type="Self.Specialscreenings" Multiplicity="*" />
@@ -585,18 +564,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_WishlistItems_Wishlists">
-          <End Role="Wishlists" Type="Self.Wishlists" Multiplicity="1" />
-          <End Role="WishlistItems" Type="Self.WishlistItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Wishlists">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="WishlistItems">
-              <PropertyRef Name="wishlistId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="RestaurantVisits">
           <End Role="Activities" Type="Self.Activities" Multiplicity="*" />
           <End Role="Restaurants" Type="Self.Restaurants" Multiplicity="*" />
@@ -611,7 +578,6 @@
           <EntitySet Name="Specials" EntityType="Self.Specials" />
           <EntitySet Name="Specialscreenings" EntityType="Self.Specialscreenings" />
           <EntitySet Name="WishlistItems" EntityType="Self.WishlistItems" />
-          <EntitySet Name="Wishlists" EntityType="Self.Wishlists" />
           <AssociationSet Name="FK_Filmscreenings_Activities" Association="Self.FK_Filmscreenings_Activities">
             <End Role="Activities" EntitySet="Activities" />
             <End Role="Filmscreenings" EntitySet="Filmscreenings" />
@@ -632,10 +598,6 @@
             <End Role="Rooms" EntitySet="Rooms" />
             <End Role="Filmscreenings" EntitySet="Filmscreenings" />
           </AssociationSet>
-          <AssociationSet Name="FK_Reservations_Wishlists" Association="Self.FK_Reservations_Wishlists">
-            <End Role="Wishlists" EntitySet="Wishlists" />
-            <End Role="Reservations" EntitySet="Reservations" />
-          </AssociationSet>
           <AssociationSet Name="FK_Specialscreenings_Rooms" Association="Self.FK_Specialscreenings_Rooms">
             <End Role="Rooms" EntitySet="Rooms" />
             <End Role="Specialscreenings" EntitySet="Specialscreenings" />
@@ -643,10 +605,6 @@
           <AssociationSet Name="FK_Specialscreenings_Specials" Association="Self.FK_Specialscreenings_Specials">
             <End Role="Specials" EntitySet="Specials" />
             <End Role="Specialscreenings" EntitySet="Specialscreenings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WishlistItems_Wishlists" Association="Self.FK_WishlistItems_Wishlists">
-            <End Role="Wishlists" EntitySet="Wishlists" />
-            <End Role="WishlistItems" EntitySet="WishlistItems" />
           </AssociationSet>
           <AssociationSet Name="RestaurantVisits" Association="Self.RestaurantVisits">
             <End Role="Activities" EntitySet="Activities" />
@@ -662,6 +620,15 @@
             <End Role="Rooms" EntitySet="Rooms" />
           </AssociationSet>
           <EntitySet Name="Accounts" EntityType="WhatsUp1617S_martinstinsModel.Accounts" />
+          <EntitySet Name="Wishlists" EntityType="WhatsUp1617S_martinstinsModel.Wishlists" />
+          <AssociationSet Name="FK_Reservations_Wishlists" Association="WhatsUp1617S_martinstinsModel.FK_Reservations_Wishlists">
+            <End Role="Wishlists" EntitySet="Wishlists" />
+            <End Role="Reservations" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WishlistItems_Wishlists" Association="WhatsUp1617S_martinstinsModel.FK_WishlistItems_Wishlists">
+            <End Role="Wishlists" EntitySet="Wishlists" />
+            <End Role="WishlistItems" EntitySet="WishlistItems" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Locations">
           <Key>
@@ -708,6 +675,41 @@
           <Property Name="Inlognaam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Wachtwoord" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Wishlists">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="totalPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="paid" Type="Boolean" Nullable="false" />
+          <Property Name="token" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reservations" Relationship="WhatsUp1617S_martinstinsModel.FK_Reservations_Wishlists" FromRole="Wishlists" ToRole="Reservations" />
+          <NavigationProperty Name="WishlistItems" Relationship="WhatsUp1617S_martinstinsModel.FK_WishlistItems_Wishlists" FromRole="Wishlists" ToRole="WishlistItems" />
+        </EntityType>
+        <Association Name="FK_Reservations_Wishlists">
+          <End Type="WhatsUp1617S_martinstinsModel.Wishlists" Role="Wishlists" Multiplicity="1" />
+          <End Type="WhatsUp1617S_martinstinsModel.Reservations" Role="Reservations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wishlists">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Reservations">
+              <PropertyRef Name="wishlistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WishlistItems_Wishlists">
+          <End Type="WhatsUp1617S_martinstinsModel.Wishlists" Role="Wishlists" Multiplicity="1" />
+          <End Type="WhatsUp1617S_martinstinsModel.WishlistItems" Role="WishlistItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wishlists">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WishlistItems">
+              <PropertyRef Name="wishlistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -817,15 +819,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Wishlists">
-            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Wishlists">
-              <MappingFragment StoreEntitySet="Wishlists">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
-                <ScalarProperty Name="paid" ColumnName="paid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="RestaurantVisits" TypeName="WhatsUp1617S_martinstinsModel.RestaurantVisits" StoreEntitySet="RestaurantVisits">
             <EndProperty Name="Activities">
               <ScalarProperty Name="id" ColumnName="activityId" />
@@ -852,6 +845,16 @@
                 <ScalarProperty Name="Wachtwoord" ColumnName="Wachtwoord" />
                 <ScalarProperty Name="Inlognaam" ColumnName="Inlognaam" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wishlists">
+            <EntityTypeMapping TypeName="WhatsUp1617S_martinstinsModel.Wishlists">
+              <MappingFragment StoreEntitySet="Wishlists">
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="paid" ColumnName="paid" />
+                <ScalarProperty Name="totalPrice" ColumnName="totalPrice" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

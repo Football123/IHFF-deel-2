@@ -17,13 +17,13 @@ namespace IHffA7.Models
 
         public int NumberOfPersons { get; set; }
 
-        public EditActivityViewModel(int oldActivityId, int newActivityId, int actionId, string action)
+        /*public EditActivityViewModel(int oldActivityId, int newActivityId, int actionId, string action)
         {
             OldActivityId = oldActivityId;
             ActionId = actionId;
             Action = action;
             NewActivityId = newActivityId;
-        }
+        }*/
 
         public EditActivityViewModel(int oldActivityId, int actionId, string action, int numberOfPersons)
         {

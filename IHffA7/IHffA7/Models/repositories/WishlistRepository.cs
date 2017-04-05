@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Net;
-
+using System.Web.Helpers;
 
 namespace IHffA7.Models.repositories
 {
@@ -20,6 +20,7 @@ namespace IHffA7.Models.repositories
             return ctx.WishlistItems
                 .Where(w => (w.wishlistId == wishlistId)); 
         }
+
         private IQueryable<Activities> GetActivity(int activityId)
         {
             var activiteit = ctx.Activities
@@ -46,11 +47,23 @@ namespace IHffA7.Models.repositories
         {
             return ctx.Restaurants;
         }
+
+        public Wishlists getWishList(string token)
+        {
+            return ctx.Wishlists.SingleOrDefault(w => (w.token == token));
+        }
         //TODO als de film repository bestaat/werkt moet deze dus niet meer hier staan
         public IQueryable<Activities> getFilmActivities(int filmId)
         {
             return ctx.Filmscreenings.Where(s => s.filmId == filmId).Select(s => s.Activities);
         }
+
+        public IQueryable<Activities> getSpecialActivities(int specialId)
+        {
+            return ctx.Specialscreenings.Where(s => s.specialId == specialId).Select(s => s.Activities);
+        }
+        
+
         public Activities GetWholeActivity(int activityId)
         {
             var activity = GetActivity(activityId)
@@ -59,7 +72,12 @@ namespace IHffA7.Models.repositories
                 .Include(f => f.Specialscreenings.Select(a => a.Specials))
                 .Include(f => f.Specialscreenings.Select(r => r.Rooms.Locations))
                 .Include(r => r.Restaurants.Select(rr => rr.Locations));
-            return activity.Single();
+            return activity.SingleOrDefault();
+        }
+
+        public IEnumerable<WishlistViewModel> GetActivities(Wishlists wishlist)
+        {
+            return GetActivities(wishlist.id);
         }
 
         //new gebruikte mthoene hier onder
@@ -97,12 +115,24 @@ namespace IHffA7.Models.repositories
             }
             return list.OrderBy(order => order.TypeActivity);
         }
-
-        public void SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation)
+        public Wishlists SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation)
         {
-            Wishlists wislist = new Wishlists();
-           
-            wislist.paid = false;
+            return SaveActivities(wishlist, reservation, null);
+        }
+        public Wishlists SaveActivities(List<WishlistViewModel> wishlist, Reservations reservation, Wishlists wishlistInSession)
+        {
+            Wishlists wislistToSave;
+            //als de wishlist al een keer is opgehaald uit de db, update deze dan. 
+            if (wishlistInSession != null)
+            {
+                wislistToSave = wishlistInSession;
+                wislistToSave.WishlistItems = null;
+                ctx.SaveChanges();
+            }
+            else
+                wislistToSave = new Wishlists();
+
+            wislistToSave.paid = false;
             foreach (WishlistViewModel activity in wishlist)
             {
                 WishlistItems wishitems = new WishlistItems();
@@ -110,18 +140,23 @@ namespace IHffA7.Models.repositories
                 Activities activiteit = activity.Activity;
                 wishitems.activityId = activiteit.id;
                 wishitems.numberOfPersons = activity.NumberOfPersons;
-                wislist.WishlistItems.Add(wishitems);
-                wislist.totalPrice = wislist.totalPrice + activiteit.price;
+                wislistToSave.WishlistItems.Add(wishitems);
+                //wislist.totalPrice = wislist.totalPrice + activiteit.price;
             }
             if (reservation != null)
             {
-                wislist.Reservations.Add(reservation);
+                wislistToSave.paid = true;
+                wislistToSave.Reservations.Add(reservation);
             }
-            ctx.Wishlists.Add(wislist);
+            wislistToSave.token = Crypto.HashPassword(Crypto.GenerateSalt() + DateTime.Now.Ticks.ToString());
+            wislistToSave.totalPrice = wishlist.Sum(w => w.totalprice);
+            if (wishlistInSession == null)
+                ctx.Wishlists.Add(wislistToSave);
             ctx.SaveChanges();
+            return wislistToSave;
         }
 
-        public void ReservationOfActivities(List<WishlistViewModel> wishlist, Reservations reservation)
+        public void ReservationOfActivities(List<WishlistViewModel> wishlist, Reservations reservation, Wishlists wishlistInSession)
         {
             SaveActivities(wishlist, reservation);
         }

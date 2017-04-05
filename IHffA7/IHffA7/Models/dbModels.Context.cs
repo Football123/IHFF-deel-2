@@ -34,8 +34,8 @@ namespace IHffA7.Models
         public virtual DbSet<Specials> Specials { get; set; }
         public virtual DbSet<Specialscreenings> Specialscreenings { get; set; }
         public virtual DbSet<WishlistItems> WishlistItems { get; set; }
-        public virtual DbSet<Wishlists> Wishlists { get; set; }
         public virtual DbSet<Locations> Locations { get; set; }
         public virtual DbSet<Accounts> Accounts { get; set; }
+        public virtual DbSet<Wishlists> Wishlists { get; set; }
     }
 }

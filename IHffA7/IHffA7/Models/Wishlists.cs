@@ -24,6 +24,7 @@ namespace IHffA7.Models
         public int id { get; set; }
         public decimal totalPrice { get; set; }
         public bool paid { get; set; }
+        public string token { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservations> Reservations { get; set; }
